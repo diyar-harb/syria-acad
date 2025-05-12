@@ -1,0 +1,77 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "success": "تم بنجاح",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "rememberMe": "تذكرني"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "courses": "الدورات",
+    "teachers": "المعلمين",
+    "about": "عن المنصة",
+    "contact": "اتصل بنا",
+    "profile": "الملف الشخصي",
+    "dashboard": "لوحة التحكم"
+  },
+  "home": {
+    "welcome": "مرحباً بكم في سوريا أكاديمي",
+    "description": "منصة تعليمية متكاملة تقدم تجربة تعلم فريدة ومتكاملة",
+    "education": "التعليم",
+    "features": "مميزات المنصة",
+    "questionBank": "بنك أسئلة متكامل",
+    "questionBankDesc": "مجموعة واسعة من الأسئلة المصنفة حسب الموضوع والمستوى",
+    "teacherDashboard": "لوحة تحكم للمعلم",
+    "teacherDashboardDesc": "إدارة الفصول والطلاب وإنشاء الاختبارات بسهولة",
+    "parentDashboard": "لوحة تحكم لولي الأمر",
+    "parentDashboardDesc": "متابعة تقدم الطالب ونتائج الاختبارات",
+    "analytics": "تحليلات متقدمة",
+    "analyticsDesc": "تقارير وإحصائيات مفصلة عن أداء الطلاب",
+    "quickLinks": "روابط سريعة",
+    "courses": "الدورات",
+    "teachers": "المعلمين",
+    "exams": "الاختبارات",
+    "howItWorks": "كيف تعمل المنصة",
+    "createAccount": "إنشاء حساب",
+    "createAccountDesc": "سجل في المنصة كمعلم أو ولي أمر",
+    "manageContent": "إدارة المحتوى",
+    "manageContentDesc": "أضف الأسئلة والاختبارات",
+    "trackProgress": "متابعة التقدم",
+    "trackProgressDesc": "تابع أداء الطلاب وتحليل النتائج",
+    "startLearning": "ابدأ رحلة التعلم الآن",
+    "joinCommunity": "انضم إلى مجتمعنا التعليمي واستفد من جميع المميزات",
+    "startNow": "ابدأ الآن",
+    "exploreContent": "استكشف المحتوى",
+    "goToDashboard": "الذهاب إلى لوحة التحكم"
+  },
+  "courses": {
+    "title": "الدورات المتاحة",
+    "search": "ابحث عن دورة",
+    "filter": "تصفية النتائج",
+    "sort": "ترتيب حسب",
+    "enroll": "سجل الآن",
+    "free": "مجاني",
+    "paid": "مدفوع"
+  },
+  "error": {
+    "title": "عذراً! حدث خطأ",
+    "message": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+    "tryAgain": "حاول مرة أخرى"
+  }
+} 

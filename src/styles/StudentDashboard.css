@@ -1,0 +1,249 @@
+.student-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  margin-right: 250px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.date {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.stat-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.stat-info p {
+  margin: 0.5rem 0 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.recent-courses,
+.upcoming-exams {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recent-courses h2,
+.upcoming-exams h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: var(--progress-bg);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.progress-bar span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.notifications {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notifications h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notification-card {
+  background-color: var(--notification-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.notification-card:hover {
+  transform: translateX(5px);
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.notification-date {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.notification-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Dark Mode Styles */
+.student-dashboard.dark {
+  background-color: var(--dark-bg-color);
+}
+
+.student-dashboard.dark .dashboard-content {
+  color: var(--dark-text-color);
+}
+
+.student-dashboard.dark header h1 {
+  color: var(--dark-text-color);
+}
+
+.student-dashboard.dark .date {
+  color: var(--dark-text-secondary);
+}
+
+.student-dashboard.dark .stat-card {
+  background-color: var(--dark-card-bg);
+}
+
+.student-dashboard.dark .stat-info h3 {
+  color: var(--dark-text-secondary);
+}
+
+.student-dashboard.dark .stat-info p {
+  color: var(--dark-text-color);
+}
+
+.student-dashboard.dark .recent-courses,
+.student-dashboard.dark .upcoming-exams,
+.student-dashboard.dark .notifications {
+  background-color: var(--dark-card-bg);
+}
+
+.student-dashboard.dark h2 {
+  color: var(--dark-text-color);
+}
+
+.student-dashboard.dark .progress-bar {
+  background-color: var(--dark-progress-bg);
+}
+
+.student-dashboard.dark .notification-card {
+  background-color: var(--dark-notification-bg);
+}
+
+.student-dashboard.dark .notification-header h3 {
+  color: var(--dark-text-color);
+}
+
+.student-dashboard.dark .notification-date,
+.student-dashboard.dark .notification-card p {
+  color: var(--dark-text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-right: 0;
+    padding: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .date {
+    margin-top: 0.5rem;
+  }
+} 

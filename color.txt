@@ -1,0 +1,5 @@
+1color: #8C694A
+2color:#D9B282
+3color:=#80A69B
+4color:#12403B
+5color:#065F73

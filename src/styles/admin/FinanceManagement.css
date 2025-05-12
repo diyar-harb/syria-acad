@@ -1,0 +1,160 @@
+.finance-tabs {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: var(--hover-color);
+}
+
+.tab-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.finance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h3 {
+  margin: 0 0 1rem 0;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.summary-card .amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+}
+
+.summary-card .change {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.change.positive {
+  color: #10b981;
+}
+
+.change.negative {
+  color: #ef4444;
+}
+
+.export-finance {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.export-finance:hover {
+  background-color: var(--primary-hover);
+}
+
+.export-finance i {
+  font-size: 1rem;
+}
+
+.action-button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+.action-button.view {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.action-button.refund {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.action-button.approve {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.action-button.reject {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.action-button:hover {
+  opacity: 0.9;
+}
+
+/* Dark Mode Styles */
+.dark .finance-tabs {
+  background-color: var(--dark-bg-color);
+}
+
+.dark .tab-button {
+  color: var(--dark-text-color);
+}
+
+.dark .tab-button:hover {
+  background-color: var(--dark-hover-color);
+}
+
+.dark .summary-card {
+  background-color: var(--dark-bg-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .summary-card h3,
+.dark .summary-card .amount {
+  color: var(--dark-text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .finance-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-tabs {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+  }
+} 

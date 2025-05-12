@@ -1,0 +1,43 @@
+.exams-page {
+  padding-top: 80px;
+}
+
+.exams-hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+  color: var(--light-color);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.exams-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.exams-hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.exams-content {
+  padding: 4rem 0;
+}
+
+.temp-message {
+  text-align: center;
+  padding: 3rem;
+  background: var(--light-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.temp-message h2 {
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.temp-message p {
+  color: var(--text-color);
+  font-size: 1.1rem;
+}

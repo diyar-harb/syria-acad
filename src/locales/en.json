@@ -1,0 +1,77 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me"
+  },
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "teachers": "Teachers",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "dashboard": "Dashboard"
+  },
+  "home": {
+    "welcome": "Welcome to Syria Academy",
+    "description": "An integrated educational platform offering a unique and comprehensive learning experience",
+    "education": "Education",
+    "features": "Platform Features",
+    "questionBank": "Comprehensive Question Bank",
+    "questionBankDesc": "A wide range of questions categorized by subject and level",
+    "teacherDashboard": "Teacher Dashboard",
+    "teacherDashboardDesc": "Easily manage classes, students, and create exams",
+    "parentDashboard": "Parent Dashboard",
+    "parentDashboardDesc": "Track student progress and exam results",
+    "analytics": "Advanced Analytics",
+    "analyticsDesc": "Detailed reports and statistics on student performance",
+    "quickLinks": "Quick Links",
+    "courses": "Courses",
+    "teachers": "Teachers",
+    "exams": "Exams",
+    "howItWorks": "How It Works",
+    "createAccount": "Create Account",
+    "createAccountDesc": "Register as a teacher or parent",
+    "manageContent": "Manage Content",
+    "manageContentDesc": "Add questions and exams",
+    "trackProgress": "Track Progress",
+    "trackProgressDesc": "Monitor student performance and analyze results",
+    "startLearning": "Start Your Learning Journey Now",
+    "joinCommunity": "Join our educational community and benefit from all features",
+    "startNow": "Start Now",
+    "exploreContent": "Explore Content",
+    "goToDashboard": "Go to Dashboard"
+  },
+  "courses": {
+    "title": "Available Courses",
+    "search": "Search for a course",
+    "filter": "Filter Results",
+    "sort": "Sort by",
+    "enroll": "Enroll Now",
+    "free": "Free",
+    "paid": "Paid"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "message": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try Again"
+  }
+} 

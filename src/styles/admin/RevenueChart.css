@@ -1,0 +1,10 @@
+.chart-wrapper {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* تعديلات للوضع المظلم */
+.dark .chart-wrapper canvas {
+  filter: brightness(0.8);
+} 
