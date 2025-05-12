@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/syria-acad/static/css/main.ed174ab0.css",
+    "main.js": "/syria-acad/static/js/main.89119d93.js",
+    "static/media/logo.png": "/syria-acad/static/media/logo.2788006606067db9f55a.png",
+    "index.html": "/syria-acad/index.html",
+    "main.ed174ab0.css.map": "/syria-acad/static/css/main.ed174ab0.css.map",
+    "main.89119d93.js.map": "/syria-acad/static/js/main.89119d93.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed174ab0.css",
+    "static/js/main.89119d93.js"
+  ]
+}
