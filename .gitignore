@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 
@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -43,3 +44,12 @@ Thumbs.db
 my-app.rar
 project_structure.txt
 color.txt
+
+# Firebase
+serviceAccountKey.json
+firebase-debug.log
+firebase-debug.*.log
+
+# Backend
+backend/node_modules/
+backend/.env

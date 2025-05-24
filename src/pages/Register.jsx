@@ -1,27 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import '../styles/Auth.css';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // سيتم إضافة منطق التسجيل لاحقاً
-    console.log('تسجيل حساب جديد:', formData);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleSignupClick = (type) => {
+    navigate(`/${type}-signup`);
   };
 
   return (
@@ -33,55 +19,17 @@ const Register = () => {
         transition={{ duration: 0.6 }}
       >
         <h1>إنشاء حساب جديد</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">الاسم الكامل</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">البريد الإلكتروني</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">كلمة المرور</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">تأكيد كلمة المرور</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            إنشاء حساب
+        <div className="signup-options">
+          <button className="btn btn-signup" onClick={() => handleSignupClick('student')}>
+            كطالب
           </button>
-        </form>
+          <button className="btn btn-signup" onClick={() => handleSignupClick('teacher')}>
+            كمدرس
+          </button>
+          <button className="btn btn-signup" onClick={() => handleSignupClick('parent')}>
+            كولي أمر
+          </button>
+        </div>
         <p className="auth-link">
           لديك حساب بالفعل؟ <Link to="/login">تسجيل الدخول</Link>
         </p>

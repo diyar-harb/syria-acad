@@ -42,7 +42,7 @@ const Home = () => {
             <motion.p variants={fadeIn}>منصة التعليم الذكية التي تساعدك على تحقيق أقصى استفادة من دراستك</motion.p>
             <motion.div className="hero-buttons" variants={fadeIn}>
               <Link to="/register" className="btn btn-primary">ابدأ الآن</Link>
-              <Link to="/courses" className="btn btn-secondary">استكشف الدورات</Link>
+              <Link to="/exams" className="btn btn-secondary">الاختبارات</Link>
             </motion.div>
           </motion.div>
         </div>

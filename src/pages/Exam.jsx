@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { questions, exams } from '../data/mockExams';
+import { examService } from '../services/api';
 import '../styles/Exam.css';
 
 const Exam = () => {
@@ -15,51 +15,41 @@ const Exam = () => {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [showInstructions, setShowInstructions] = useState(true);
-
-  const calculateScore = () => {
-    if (!currentExam) return;
-    
-    let totalScore = 0;
-    let totalPoints = 0;
-    let correctAnswers = 0;
-    let totalQuestions = currentExam.questions.length;
-
-    currentExam.questions.forEach(questionId => {
-      const question = questions.find(q => q.id === questionId);
-      if (question) {
-        totalPoints += question.points;
-        if (answers[questionId] === question.correctAnswer) {
-          totalScore += question.points;
-          correctAnswers++;
-        }
-      }
-    });
-
-    const percentage = (totalScore / totalPoints) * 100;
-    const passed = percentage >= currentExam.passingGrade;
-
-    setScore(percentage);
-    setFeedback({
-      passed,
-      correctAnswers,
-      totalQuestions,
-      totalScore,
-      totalPoints
-    });
-  };
-
-  const handleSubmit = () => {
-    calculateScore();
-    setShowResults(true);
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const exam = exams.find(e => e.id === parseInt(examId));
-    if (exam) {
+    const fetchExam = async () => {
+      try {
+        const exam = await examService.getExam(examId);
       setCurrentExam(exam);
       setTimeLeft(exam.duration * 60);
+        setLoading(false);
+      } catch (error) {
+        setError('حدث خطأ في تحميل الاختبار');
+        setLoading(false);
     }
+    };
+
+    fetchExam();
   }, [examId]);
+
+  const handleSubmit = async () => {
+    try {
+      const result = await examService.submitExam(examId, answers);
+      setScore(result.score);
+      setFeedback({
+        passed: result.passed,
+        correctAnswers: result.correctAnswers,
+        totalQuestions: result.totalQuestions,
+        totalScore: result.totalScore,
+        totalPoints: result.totalPoints
+      });
+      setShowResults(true);
+    } catch (error) {
+      setError('حدث خطأ في تقديم الاختبار');
+    }
+  };
 
   useEffect(() => {
     if (timeLeft > 0 && !showResults && !showInstructions) {
@@ -95,8 +85,16 @@ const Exam = () => {
     setShowInstructions(false);
   };
 
-  if (!currentExam) {
+  if (loading) {
     return <div className="loading">جاري التحميل...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (!currentExam) {
+    return <div className="error-message">الاختبار غير موجود</div>;
   }
 
   if (showInstructions) {
@@ -148,23 +146,6 @@ const Exam = () => {
           <p>النقاط: {feedback.totalScore} من {feedback.totalPoints}</p>
           <p>الحالة: {feedback.passed ? 'ناجح' : 'راسب'}</p>
         </div>
-        <div className="answers-review">
-          <h3>مراجعة الإجابات:</h3>
-          {currentExam.questions.map((questionId, index) => {
-            const question = questions.find(q => q.id === questionId);
-            const userAnswer = answers[questionId];
-            const isCorrect = userAnswer === question.correctAnswer;
-            
-            return (
-              <div key={questionId} className={`answer-item ${isCorrect ? 'correct' : 'incorrect'}`}>
-                <h4>السؤال {index + 1}: {question.question}</h4>
-                <p>إجابتك: {userAnswer || 'لم تجب'}</p>
-                <p>الإجابة الصحيحة: {question.correctAnswer}</p>
-                <p className="explanation">التفسير: {question.explanation}</p>
-              </div>
-            );
-          })}
-        </div>
         <button 
           className="btn btn-primary"
           onClick={() => navigate('/dashboard')}
@@ -175,8 +156,7 @@ const Exam = () => {
     );
   }
 
-  const currentQuestionId = currentExam.questions[currentQuestionIndex];
-  const question = questions.find(q => q.id === currentQuestionId);
+  const currentQuestion = currentExam.questions[currentQuestionIndex];
 
   return (
     <div className="exam-container">
@@ -194,17 +174,17 @@ const Exam = () => {
 
       <div className="question-container">
         <div className="question">
-          <h3>{question.question}</h3>
-          <span className="difficulty">الصعوبة: {question.difficulty}</span>
-          <span className="points">النقاط: {question.points}</span>
+          <h3>{currentQuestion.question}</h3>
+          <span className="difficulty">الصعوبة: {currentQuestion.difficulty}</span>
+          <span className="points">النقاط: {currentQuestion.points}</span>
         </div>
 
         <div className="options">
-          {question.options.map((option, index) => (
+          {currentQuestion.options.map((option, index) => (
             <motion.div
               key={index}
-              className={`option ${answers[question.id] === option ? 'selected' : ''}`}
-              onClick={() => handleAnswerSelect(question.id, option)}
+              className={`option ${answers[currentQuestion.id] === option ? 'selected' : ''}`}
+              onClick={() => handleAnswerSelect(currentQuestion.id, option)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

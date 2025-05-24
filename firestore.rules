@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // وظيفة للتحقق من تسجيل الدخول
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // وظيفة للتحقق من ملكية المستند
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    // وظيفة للتحقق من دور المستخدم
+    function hasRole(role) {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    // قواعد مجموعة الاختبار للسماح بالوصول غير المصادق عليه
+    match /test/{document=**} {
+      allow read, write: if true; // السماح بالقراءة والكتابة للجميع
+    }
+
+    // قواعد المستخدمين
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || hasRole('admin'));
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && isOwner(userId);
+      allow delete: if isAuthenticated() && hasRole('admin');
+    }
+
+    // قواعد الاختبارات
+    match /exams/{examId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && hasRole('teacher');
+      allow update: if isAuthenticated() && hasRole('teacher');
+      allow delete: if isAuthenticated() && hasRole('admin');
+    }
+
+    // قواعد الإجابات
+    match /answers/{answerId} {
+      allow read: if isAuthenticated() && (isOwner(resource.data.userId) || hasRole('teacher'));
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && hasRole('admin');
+      allow delete: if isAuthenticated() && hasRole('admin');
+    }
+
+    // قواعد عامة تتطلب المصادقة (تأكد من أن القواعد الأكثر تحديداً تأتي قبلها)
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { testFirebaseConnection } from './services/firebaseTest';
+import { testBackendConnection } from './services/testConnection';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -21,6 +23,14 @@ import Contact from './pages/Contact';
 import './styles/global.css';
 
 const App = () => {
+  useEffect(() => {
+    // اختبار الاتصال بـ Firebase عند بدء التطبيق
+    testFirebaseConnection();
+    
+    // اختبار الاتصال بالخادم
+    testBackendConnection();
+  }, []);
+
   return (
     <ThemeProvider>
       <Router>
