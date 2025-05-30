@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import '../styles/Auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignupClick = (type) => {
     navigate(`/${type}-signup`);

@@ -20,6 +20,8 @@ import TeacherSignup from './pages/TeacherSignup';
 import ParentSignup from './pages/ParentSignup';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Courses from './pages/Courses';
+import ResetPassword from './pages/ResetPassword';
 import './styles/global.css';
 
 const App = () => {
@@ -53,6 +55,8 @@ const App = () => {
               <Route path="/teacher-signup" element={<TeacherSignup />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
           </main>
           <Footer />

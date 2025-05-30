@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
@@ -12,12 +13,12 @@ const Footer = () => {
         <div className="footer-section">
           <h3>روابط سريعة</h3>
           <ul>
-            <li><a href="/">الرئيسية</a></li>
-            <li><a href="/forum">المنتدى</a></li>
-            <li><a href="/learning">المحتوى التعليمي</a></li>
-            <li><a href="/courses">الدورات</a></li>
-            <li><a href="/about">عن المنصة</a></li>
-            <li><a href="/contact">اتصل بنا</a></li>
+            <li><Link to="/">الرئيسية</Link></li>
+            <li><Link to="/forum">المنتدى</Link></li>
+            <li><Link to="/learning">المحتوى التعليمي</Link></li>
+            <li><Link to="/courses">الدورات</Link></li>
+            <li><Link to="/about">عن المنصة</Link></li>
+            <li><Link to="/contact">اتصل بنا</Link></li>
           </ul>
         </div>
         <div className="footer-section">

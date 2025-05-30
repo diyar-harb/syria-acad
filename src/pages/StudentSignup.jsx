@@ -8,6 +8,8 @@ function StudentSignup() {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -192,27 +194,193 @@ function StudentSignup() {
 
               <div className="form-group">
                 <label>كلمة المرور</label>
+                <div className="password-input-container" style={{ 
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
                 <input
-                  type="password"
+                    type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   className={errors.password ? 'error' : ''}
                   placeholder="أدخل كلمة المرور"
-                />
+                    style={{ 
+                      paddingRight: '45px',
+                      width: '100%',
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="password-toggle-btn"
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '8px',
+                      color: '#666',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '50%',
+                      width: '35px',
+                      height: '35px'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+                      e.currentTarget.style.color = '#333';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#666';
+                    }}
+                    aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                  >
+                    {showPassword ? (
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        style={{
+                          transition: 'transform 0.3s ease',
+                          transform: 'scale(1.1)'
+                        }}
+                      >
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                      </svg>
+                    ) : (
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        style={{
+                          transition: 'transform 0.3s ease',
+                          transform: 'scale(1.1)'
+                        }}
+                      >
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 {errors.password && <span className="error-message">{errors.password}</span>}
               </div>
 
               <div className="form-group">
                 <label>تأكيد كلمة المرور</label>
+                <div className="password-input-container" style={{ 
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
                 <input
-                  type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={errors.confirmPassword ? 'error' : ''}
                   placeholder="أعد إدخال كلمة المرور"
-                />
+                    style={{ 
+                      paddingRight: '45px',
+                      width: '100%',
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="password-toggle-btn"
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '8px',
+                      color: '#666',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '50%',
+                      width: '35px',
+                      height: '35px'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+                      e.currentTarget.style.color = '#333';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#666';
+                    }}
+                    aria-label={showConfirmPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                  >
+                    {showConfirmPassword ? (
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        style={{
+                          transition: 'transform 0.3s ease',
+                          transform: 'scale(1.1)'
+                        }}
+                      >
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                      </svg>
+                    ) : (
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        style={{
+                          transition: 'transform 0.3s ease',
+                          transform: 'scale(1.1)'
+                        }}
+                      >
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
               </div>
 

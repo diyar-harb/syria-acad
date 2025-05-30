@@ -84,13 +84,72 @@ export const authService = {
   },
 
   async refreshToken() {
-    const response = await api.post('/auth/refresh-token');
-    return response.data;
+    // Retrieve the expired or unauthorized token from local storage
+    const expiredToken = localStorage.getItem('token');
+    if (!expiredToken) {
+      // If no token exists, we can't refresh, so just log out
+      this.logout();
+      throw new Error('No token available to refresh.');
+    }
+    
+    try {
+      // Send the expired token in the Authorization header for the refresh request
+      const response = await api.post('/auth/refresh-token', {}, { // Pass an empty body, headers as third arg
+        headers: {
+          'Authorization': `Bearer ${expiredToken}`
+        }
+      });
+      // The backend should return a new token in the response data
+      return response.data;
+    } catch (error) {
+      console.error('Error refreshing token:', error);
+      // If refresh fails, clear token and redirect to login
+      this.logout();
+      throw error; // Re-throw to be caught by the interceptor if needed
+    }
   },
 
   logout() {
     localStorage.removeItem('token');
     cache.clear();
+  },
+
+  // Request password reset
+  async requestPasswordReset(email) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/request-password-reset`, { email });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
+  // Verify reset OTP
+  async verifyResetOTP(email, otp) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/verify-reset-otp`, { email, otp });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
+  // Reset password
+  async resetPassword(email, otp, newPassword) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/reset-password`, {
+        email,
+        otp,
+        newPassword
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
+  handleError(error) {
+    // Implementation of handleError method
   }
 };
 

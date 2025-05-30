@@ -3,6 +3,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -14,20 +16,56 @@ const app = express();
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'development' ? 1000 : 100 // Increase limit for development
+  max: process.env.NODE_ENV === 'development' ? 1000 : 100,
+  message: {
+    error: {
+      message: 'تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً',
+      status: 429
+    }
+  }
 });
 
-// Middleware
-app.use(helmet());
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com"]
+    }
+  }
+}));
+
+// CORS configuration
+const allowedOrigins = process.env.CORS_ORIGIN.split(',');
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'],
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(morgan('dev'));
+
+// Compression middleware
+app.use(compression());
+
+// Body parsing middleware
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+
+// Logging middleware
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// Rate limiting
 app.use(limiter);
 
 // Security headers
@@ -35,8 +73,12 @@ app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   next();
 });
+
+// Static files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -67,6 +109,16 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // CORS errors
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      error: {
+        message: 'غير مسموح بالوصول من هذا المصدر',
+        status: 403
+      }
+    });
+  }
+
   // Default error
   res.status(err.status || 500).json({
     error: {
@@ -86,7 +138,7 @@ app.use((req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);

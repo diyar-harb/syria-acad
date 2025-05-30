@@ -100,10 +100,12 @@
 }
 
 .error-message {
-  color: var(--error-color);
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  display: block;
+  color: #f44336;
+  background-color: #ffebee;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .checkbox-group {
@@ -160,6 +162,21 @@
 
 .submit-button:hover {
   background-color: var(--primary-hover);
+}
+
+.verification-message {
+  color: #4CAF50;
+  background-color: #E8F5E9;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.submit-button:disabled,
+.back-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /* Dark Mode Styles */

@@ -52,15 +52,36 @@ router.post('/login', async (req, res) => {
 });
 
 // تجديد التوكن
-router.post('/refresh-token', authenticateUser, async (req, res) => {
+router.post('/refresh-token', async (req, res) => {
   try {
-    const userRecord = await auth.getUser(req.user.uid);
-    const token = await auth.createCustomToken(userRecord.uid);
-    
-    res.json({ token, uid: userRecord.uid });
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'توكن غير موجود أو غير صالح' });
+    }
+
+    const idToken = authHeader.split(' ')[1];
+
+    let decodedToken;
+    try {
+         // Verify the ID token with checkRevoked = true
+         // This allows getting the UID even if the token is expired, unless explicitly revoked
+         decodedToken = await auth.verifyIdToken(idToken, true); // true for checkRevoked
+    } catch (error) {
+        console.error('خطأ في التحقق من التوكن المنتهي الصلاحية لغرض التجديد:', error);
+        // If verification fails (expired or revoked), return 401
+        return res.status(401).json({ error: 'فشل التحقق من التوكن لغرض التجديد. يرجى إعادة تسجيل الدخول.' });
+    }
+
+    const uid = decodedToken.uid;
+    const userRecord = await auth.getUser(uid); // Ensure user still exists and is active
+
+    // Create a new custom token for this user
+    const newToken = await auth.createCustomToken(userRecord.uid);
+
+    res.json({ token: newToken, uid: userRecord.uid });
   } catch (error) {
-    console.error('خطأ في تجديد التوكن:', error);
-    res.status(401).json({ error: 'فشل تجديد التوكن' });
+    console.error('خطأ عام في مسار تجديد التوكن:', error);
+    res.status(500).json({ error: 'خطأ في الخادم أثناء تجديد التوكن' });
   }
 });
 
