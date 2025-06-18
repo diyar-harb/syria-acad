@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/syria-acad/static/css/main.ed174ab0.css",
-    "main.js": "/syria-acad/static/js/main.89119d93.js",
+    "main.css": "/syria-acad/static/css/main.b9088699.css",
+    "main.js": "/syria-acad/static/js/main.7a0996b7.js",
     "static/media/logo.png": "/syria-acad/static/media/logo.2788006606067db9f55a.png",
     "index.html": "/syria-acad/index.html",
-    "main.ed174ab0.css.map": "/syria-acad/static/css/main.ed174ab0.css.map",
-    "main.89119d93.js.map": "/syria-acad/static/js/main.89119d93.js.map"
+    "main.b9088699.css.map": "/syria-acad/static/css/main.b9088699.css.map",
+    "main.7a0996b7.js.map": "/syria-acad/static/js/main.7a0996b7.js.map"
   },
   "entrypoints": [
-    "static/css/main.ed174ab0.css",
-    "static/js/main.89119d93.js"
+    "static/css/main.b9088699.css",
+    "static/js/main.7a0996b7.js"
   ]
 }
