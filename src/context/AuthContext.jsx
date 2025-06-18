@@ -16,7 +16,9 @@ export const AuthProvider = ({ children }) => {
       const fetchUser = async () => {
         try {
           const userData = await authService.getCurrentUser();
-          setUser(userData);
+          // إضافة uid من auth.currentUser إذا لم تكن موجودة
+          const uid = window?.firebase?.auth?.currentUser?.uid || userData.uid;
+          setUser({ ...userData, uid });
           setError(null);
         } catch (err) {
           console.error('Failed to fetch user data on startup:', err);
@@ -57,7 +59,9 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.login(credentials);
       // After successful login, fetch the user data using getCurrentUser
       const userData = await authService.getCurrentUser();
-      setUser(userData); // Update user state after login
+      // إضافة uid من auth.currentUser إذا لم تكن موجودة
+      const uid = window?.firebase?.auth?.currentUser?.uid || userData.uid;
+      setUser({ ...userData, uid }); // Update user state after login
       // localStorage.setItem('token', response.token); // token is already set in authService.login
       setError(null);
       return response;

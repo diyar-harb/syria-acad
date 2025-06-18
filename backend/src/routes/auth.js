@@ -11,15 +11,15 @@ router.post('/register', async (req, res) => {
 
     // التحقق من وجود البيانات المطلوبة
     if (!email || !password) {
-      return res.status(400).json({ 
-        error: 'يجب توفير البريد الإلكتروني وكلمة المرور' 
+      return res.status(400).json({
+        error: 'يجب توفير البريد الإلكتروني وكلمة المرور',
       });
     }
 
     // التحقق من الدور (role)
     if (!role || !['teacher', 'student'].includes(role)) {
-      return res.status(400).json({ 
-        error: 'الدور غير صالح. يجب أن يكون إما معلم أو طالب' 
+      return res.status(400).json({
+        error: 'الدور غير صالح. يجب أن يكون إما معلم أو طالب',
       });
     }
 
@@ -27,66 +27,81 @@ router.post('/register', async (req, res) => {
     const userRecord = await auth.createUser({
       email,
       password,
-      emailVerified: true // تعيين البريد كمفعل مباشرة
+      emailVerified: true, // تعيين البريد كمفعل مباشرة
     });
 
     // إنشاء ملف المستخدم في Firestore
-    await db.collection('users').doc(userRecord.uid).set({
-      email,
-      role,
-      profile: profile || {},
-      createdAt: new Date(),
-      lastLogin: new Date(),
-      isActive: true
-    });
+    await db
+      .collection('users')
+      .doc(userRecord.uid)
+      .set({
+        email,
+        role,
+        profile: profile || {},
+        createdAt: new Date(),
+        lastLogin: new Date(),
+        isActive: true,
+      });
 
     // إذا كان الدور معلم، احفظه أيضاً في مجموعة teachers مع خاصية role
     if (role === 'teacher') {
-      await db.collection('teachers').doc(userRecord.uid).set({
-        email,
-        role: 'teacher',
-        profile: profile || {},
-        createdAt: new Date(),
-        isActive: true
-      });
+      await db
+        .collection('teachers')
+        .doc(userRecord.uid)
+        .set({
+          email,
+          role: 'teacher',
+          fullName: req.body.fullName || (profile && profile.fullName) || '',
+          phone: req.body.phone || '',
+          qualification: req.body.qualification || '',
+          experience: req.body.experience || '',
+          specialization: req.body.specialization || '',
+          subjects: req.body.subjects || (profile && profile.specialties) || [],
+          grades: req.body.grades || (profile && profile.educationLevels) || [],
+          certificates: req.body.certificates || [],
+          courses: req.body.courses || [],
+          achievements: req.body.achievements || [],
+          profile: profile || {},
+          createdAt: new Date(),
+          isActive: true,
+        });
     }
 
     // إنشاء توكن مخصص للمستخدم الجديد
     const token = await auth.createCustomToken(userRecord.uid);
 
     // إرجاع رد ناجح مع التوكن
-    res.status(201).json({ 
+    res.status(201).json({
       message: 'تم إنشاء الحساب بنجاح',
       uid: userRecord.uid,
       token,
-      role
+      role,
     });
-
   } catch (error) {
     console.error('خطأ في التسجيل:', error);
-    
+
     // معالجة أخطاء Firebase المختلفة
     if (error.code === 'auth/email-already-exists') {
-      return res.status(400).json({ 
-        error: 'البريد الإلكتروني مستخدم بالفعل' 
+      return res.status(400).json({
+        error: 'البريد الإلكتروني مستخدم بالفعل',
       });
     }
-    
+
     if (error.code === 'auth/invalid-email') {
-      return res.status(400).json({ 
-        error: 'البريد الإلكتروني غير صالح' 
+      return res.status(400).json({
+        error: 'البريد الإلكتروني غير صالح',
       });
     }
-    
+
     if (error.code === 'auth/weak-password') {
-      return res.status(400).json({ 
-        error: 'كلمة المرور ضعيفة جداً' 
+      return res.status(400).json({
+        error: 'كلمة المرور ضعيفة جداً',
       });
     }
 
     // أي خطأ آخر
-    res.status(500).json({ 
-      error: 'حدث خطأ أثناء إنشاء الحساب' 
+    res.status(500).json({
+      error: 'حدث خطأ أثناء إنشاء الحساب',
     });
   }
 });
@@ -102,7 +117,7 @@ router.post('/login', async (req, res) => {
       {
         email,
         password,
-        returnSecureToken: true
+        returnSecureToken: true,
       }
     );
 
@@ -133,13 +148,15 @@ router.post('/refresh-token', async (req, res) => {
 
     let decodedToken;
     try {
-         // Verify the ID token with checkRevoked = true
-         // This allows getting the UID even if the token is expired, unless explicitly revoked
-         decodedToken = await auth.verifyIdToken(idToken, true); // true for checkRevoked
+      // Verify the ID token with checkRevoked = true
+      // This allows getting the UID even if the token is expired, unless explicitly revoked
+      decodedToken = await auth.verifyIdToken(idToken, true); // true for checkRevoked
     } catch (error) {
-        console.error('خطأ في التحقق من التوكن المنتهي الصلاحية لغرض التجديد:', error);
-        // If verification fails (expired or revoked), return 401
-        return res.status(401).json({ error: 'فشل التحقق من التوكن لغرض التجديد. يرجى إعادة تسجيل الدخول.' });
+      console.error('خطأ في التحقق من التوكن المنتهي الصلاحية لغرض التجديد:', error);
+      // If verification fails (expired or revoked), return 401
+      return res
+        .status(401)
+        .json({ error: 'فشل التحقق من التوكن لغرض التجديد. يرجى إعادة تسجيل الدخول.' });
     }
 
     const uid = decodedToken.uid;
@@ -178,4 +195,4 @@ router.get('/me', authenticateUser, async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;

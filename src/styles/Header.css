@@ -107,7 +107,9 @@ main {
   background: var(--bg-secondary);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
 }
 
 .theme-btn:hover::before {
@@ -229,7 +231,9 @@ main {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
 }
 
 .btn:hover::before {
@@ -343,16 +347,16 @@ main {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0;
   z-index: 1000;
-    opacity: 0;
+  opacity: 0;
   visibility: hidden;
-    transform: translateY(-10px);
+  transform: translateY(-10px);
   transition: all var(--transition-normal);
-  }
+}
 
 .dropdown-menu.show {
-    opacity: 1;
+  opacity: 1;
   visibility: visible;
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .dropdown-item {

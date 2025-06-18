@@ -3,7 +3,7 @@
  * @param {string} password - Password to validate
  * @returns {string|null} Error message if validation fails, null if password is valid
  */
-const validatePassword = (password) => {
+const validatePassword = password => {
   if (!password) {
     return 'كلمة المرور مطلوبة';
   }
@@ -28,5 +28,5 @@ const validatePassword = (password) => {
 };
 
 module.exports = {
-  validatePassword
-}; 
+  validatePassword,
+};

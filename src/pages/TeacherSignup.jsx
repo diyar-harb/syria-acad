@@ -27,6 +27,13 @@ function TeacherSignup() {
     degreeCertificate: null,
     idDocument: null,
     activationCode: '',
+    phone: '',
+    qualification: '',
+    experience: '',
+    specialization: '',
+    certificates: [],
+    courses: [],
+    achievements: [],
   });
   const [errors, setErrors] = useState({});
   const [showActivation, setShowActivation] = useState(false);
@@ -98,6 +105,16 @@ function TeacherSignup() {
           email: formData.email,
           password: formData.password,
           role: 'teacher',
+          fullName: formData.fullName,
+          phone: formData.phone || '',
+          qualification: formData.qualification || '',
+          experience: formData.experience || '',
+          specialization: formData.specialization || '',
+          subjects: formData.specialties || [],
+          grades: formData.educationLevels || [],
+          certificates: formData.certificates || [],
+          courses: formData.courses || [],
+          achievements: formData.achievements || [],
           profile: {
             fullName: formData.fullName,
             specialties: formData.specialties,
@@ -165,6 +182,10 @@ function TeacherSignup() {
         await setDoc(
           doc(db, 'teachers', user.uid),
           {
+            fullName: formData.fullName,
+            email: formData.email,
+            subjects: formData.specialties || [],
+            grades: formData.educationLevels || [],
             verified: true,
             status: 'active',
             verifiedAt: new Date(),

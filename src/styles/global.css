@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dubai:wght@400;700&display=swap');
 @import './variables.css';
 
 * {
@@ -13,7 +15,7 @@ html {
 }
 
 body {
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Noto Sans Arabic', 'Dubai', 'Cairo', sans-serif;
   line-height: 1.5;
   color: var(--text-primary);
   background: var(--bg-primary);
@@ -178,4 +180,74 @@ a:hover {
 
 .animate-fadeIn {
   animation: fadeIn 0.5s ease forwards;
+}
+
+.dashboard-btn {
+  font-family: 'Noto Sans Arabic', 'Dubai', 'Cairo', sans-serif;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #8c694a 0%, #80a69b 100%);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1.2rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 16px #d9b28233;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background 0.3s;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.dashboard-btn:active {
+  transform: scale(0.98);
+  background: linear-gradient(90deg, #80a69b 0%, #8c694a 100%);
+}
+.dashboard-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px #d9b28255;
+}
+.btn-wave {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  width: 0;
+  height: 0;
+  opacity: 1;
+  z-index: 2;
+  animation: btnWaveAnim 0.7s forwards;
+}
+@keyframes btnWaveAnim {
+  to {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+.dashboard-bg-svg {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+.floating-particle {
+  animation-timing-function: ease-in-out;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 8px #d9b28244);
+}
+@media (max-width: 600px) {
+  .dashboard-btn {
+    font-size: 1rem;
+    padding: 1rem;
+  }
 }

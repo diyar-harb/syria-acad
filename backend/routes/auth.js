@@ -13,10 +13,7 @@ router.post('/request-password-reset', async (req, res) => {
 
   try {
     // Check if user exists
-    const userResult = await pool.query(
-      'SELECT id, email FROM users WHERE email = $1',
-      [email]
-    );
+    const userResult = await pool.query('SELECT id, email FROM users WHERE email = $1', [email]);
 
     if (userResult.rows.length === 0) {
       return res.status(404).json({ error: 'البريد الإلكتروني غير مسجل' });
@@ -44,7 +41,7 @@ router.post('/request-password-reset', async (req, res) => {
         <h1>استعادة كلمة المرور</h1>
         <p>رمز التحقق الخاص بك هو: <strong>${otp}</strong></p>
         <p>هذا الرمز صالح لمدة 15 دقيقة فقط.</p>
-      `
+      `,
     });
 
     res.json({ message: 'تم إرسال رمز التحقق إلى بريدك الإلكتروني' });
@@ -137,15 +134,11 @@ router.post('/reset-password', async (req, res) => {
     // Update password and mark token as used
     await pool.query('BEGIN');
 
-    await pool.query(
-      'UPDATE users SET password = $1 WHERE id = $2',
-      [hashedPassword, userId]
-    );
+    await pool.query('UPDATE users SET password = $1 WHERE id = $2', [hashedPassword, userId]);
 
-    await pool.query(
-      'UPDATE reset_tokens SET used = true WHERE user_id = $1 AND used = false',
-      [userId]
-    );
+    await pool.query('UPDATE reset_tokens SET used = true WHERE user_id = $1 AND used = false', [
+      userId,
+    ]);
 
     await pool.query('COMMIT');
 
@@ -157,4 +150,4 @@ router.post('/reset-password', async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;

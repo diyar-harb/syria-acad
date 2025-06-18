@@ -19,22 +19,26 @@
 ## التثبيت
 
 1. استنساخ المستودع:
+
 ```bash
 git clone https://github.com/your-username/syria-acadime.git
 cd syria-acadime
 ```
 
 2. تثبيت التبعيات:
+
 ```bash
 npm install
 ```
 
 3. إنشاء ملف `.env`:
+
 ```bash
 cp .env.example .env
 ```
 
 4. تشغيل التطبيق في وضع التطوير:
+
 ```bash
 npm start
 ```
@@ -95,6 +99,7 @@ src/
 ## الدعم
 
 للمساعدة والدعم الفني، يرجى التواصل عبر:
+
 - البريد الإلكتروني: support@syria-acadime.com
 - الموقع: https://syria-acadime.com/support
 

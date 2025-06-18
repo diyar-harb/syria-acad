@@ -20,38 +20,42 @@ const limiter = rateLimit({
   message: {
     error: {
       message: 'تم تجاوز الحد المسموح من الطلبات. يرجى المحاولة لاحقاً',
-      status: 429
-    }
-  }
+      status: 429,
+    },
+  },
 });
 
 // Security middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com"]
-    }
-  }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: ["'self'", 'https://*.firebaseio.com', 'https://*.googleapis.com'],
+      },
+    },
+  })
+);
 
 // CORS configuration
 const allowedOrigins = process.env.CORS_ORIGIN.split(',');
-app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 // Compression middleware
 app.use(compression());
@@ -88,14 +92,14 @@ app.use('/api/test', testRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  
+
   // Firebase specific errors
   if (err.code === 'auth/invalid-token') {
     return res.status(401).json({
       error: {
         message: 'توكن غير صالح',
-        status: 401
-      }
+        status: 401,
+      },
     });
   }
 
@@ -104,8 +108,8 @@ app.use((err, req, res, next) => {
     return res.status(400).json({
       error: {
         message: err.message,
-        status: 400
-      }
+        status: 400,
+      },
     });
   }
 
@@ -114,8 +118,8 @@ app.use((err, req, res, next) => {
     return res.status(403).json({
       error: {
         message: 'غير مسموح بالوصول من هذا المصدر',
-        status: 403
-      }
+        status: 403,
+      },
     });
   }
 
@@ -123,8 +127,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     error: {
       message: err.message || 'خطأ في الخادم',
-      status: err.status || 500
-    }
+      status: err.status || 500,
+    },
   });
 });
 
@@ -133,8 +137,8 @@ app.use((req, res) => {
   res.status(404).json({
     error: {
       message: 'المسار غير موجود',
-      status: 404
-    }
+      status: 404,
+    },
   });
 });
 
@@ -142,4 +146,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);
-}); 
+});

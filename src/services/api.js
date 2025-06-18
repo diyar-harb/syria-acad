@@ -96,11 +96,17 @@ export const authService = {
 
   async getCurrentUser() {
     const cachedUser = getCachedData('currentUser');
-    if (cachedUser) return cachedUser;
+    if (cachedUser) {
+      // إضافة uid من auth.currentUser إذا لم تكن موجودة
+      const uid = auth.currentUser?.uid || cachedUser.uid;
+      return { ...cachedUser, uid };
+    }
 
     const response = await api.get('/auth/me');
-    cacheData('currentUser', response.data);
-    return response.data;
+    // إضافة uid من auth.currentUser إذا لم تكن موجودة
+    const uid = auth.currentUser?.uid || response.data.uid;
+    cacheData('currentUser', { ...response.data, uid });
+    return { ...response.data, uid };
   },
 
   async refreshToken() {

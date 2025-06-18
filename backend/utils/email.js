@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
   secure: process.env.SMTP_SECURE === 'true',
   auth: {
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
+    pass: process.env.SMTP_PASS,
+  },
 });
 
 /**
@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
  * @param {string} options.text - Plain text content
  * @param {string} options.html - HTML content
  */
-const sendEmail = async (options) => {
+const sendEmail = async options => {
   console.log('*** Email sending is DISABLED in development mode ***');
   console.log('To:', options.to);
   console.log('Subject:', options.subject);
@@ -29,5 +29,5 @@ const sendEmail = async (options) => {
 };
 
 module.exports = {
-  sendEmail
-}; 
+  sendEmail,
+};

@@ -22,6 +22,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Courses from './pages/Courses';
 import ResetPassword from './pages/ResetPassword';
+import TeacherProfile from './pages/TeacherProfile';
 import './styles/global.css';
 
 const App = () => {
@@ -57,6 +58,8 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+              <Route path="/teacher/profile" element={<TeacherProfile />} />
             </Routes>
           </main>
           <Footer />

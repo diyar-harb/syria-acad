@@ -5,6 +5,9 @@
   --secondary-color: #80a69b;
   --accent-color: #12403b;
   --accent-dark: #065f73;
+  --gold-gradient: linear-gradient(90deg, #d9b282 0%, #8c694a 100%);
+  --green-gradient: linear-gradient(90deg, #80a69b 0%, #12403b 100%);
+  --white-gradient: linear-gradient(90deg, #fff 0%, #f8f9fa 100%);
 
   /* Light Theme Colors */
   --bg-primary: #ffffff;

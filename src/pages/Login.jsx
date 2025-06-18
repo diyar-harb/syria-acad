@@ -39,12 +39,13 @@ const Login = () => {
     try {
       await authService.login(formData.email, formData.password);
       const user = await authService.getCurrentUser();
-      console.log('بيانات المستخدم بعد تسجيل الدخول:', user);
+      const uid = auth.currentUser?.uid;
+      localStorage.setItem('user', JSON.stringify({ ...user, uid }));
+      localStorage.setItem('userType', user.role);
+      localStorage.setItem('isLoggedIn', 'true');
+
       // توجيه المستخدم حسب دوره
       if (user.role === 'teacher') {
-        localStorage.setItem('userType', 'teacher');
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('teacherName', user.profile?.fullName || user.email);
         navigate('/teacher-dashboard');
       } else if (user.role === 'student') {
         navigate('/student-dashboard');
