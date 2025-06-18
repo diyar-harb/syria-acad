@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import '../styles/Dashboard.css';
-import logo from '../styles/img/logo.png';
+import React, { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import '../styles/Dashboard.css'
+import logo from '../styles/img/logo.png'
+import { db } from '../config/firebase'
+import { collection, addDoc } from 'firebase/firestore'
 
 const notoFont = 'Noto Sans Arabic',
   dubaiFont = 'Dubai',
-  fallbackFont = 'Cairo, sans-serif';
+  fallbackFont = 'Cairo, sans-serif'
 
-const teacherName = localStorage.getItem('teacherName') || 'الأستاذ';
+const teacherName = localStorage.getItem('teacherName') || 'الأستاذ'
 
 // Floating particles SVG icons
 const particles = [
@@ -23,7 +25,7 @@ const particles = [
         </g>
       </svg>
     ),
-    style: { top: '10%', left: '15%' },
+    style: { top: '10%', left: '15%' }
   }, // كتاب
   {
     icon: (
@@ -33,7 +35,7 @@ const particles = [
         <rect x="14" y="18" width="4" height="6" rx="2" fill="#d9b282" />
       </svg>
     ),
-    style: { top: '70%', left: '80%' },
+    style: { top: '70%', left: '80%' }
   }, // مصباح
   {
     icon: (
@@ -43,56 +45,59 @@ const particles = [
         <circle cx="16" cy="16" r="2" fill="#8c694a" />
       </svg>
     ),
-    style: { top: '60%', left: '30%' },
-  }, // ذرة
-];
+    style: { top: '60%', left: '30%' }
+  } // ذرة
+]
 
 const TeacherDashboard = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const mainRef = useRef(null);
+  const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState('overview')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const mainRef = useRef(null)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const teacherSubjects = user?.subjects || []
+  const teacherGrades = user?.grades || []
 
   useEffect(() => {
     // التحقق من حالة تسجيل الدخول
-    const userType = localStorage.getItem('userType');
-    const loggedIn = localStorage.getItem('isLoggedIn');
+    const userType = localStorage.getItem('userType')
+    const loggedIn = localStorage.getItem('isLoggedIn')
 
     if (loggedIn !== 'true' || userType !== 'teacher') {
-      navigate('/login');
+      navigate('/login')
     } else {
-      setIsLoggedIn(true);
+      setIsLoggedIn(true)
     }
-  }, [navigate]);
+  }, [navigate])
 
   useEffect(() => {
-    document.body.style.fontFamily = `${notoFont}, ${dubaiFont}, ${fallbackFont}`;
+    document.body.style.fontFamily = `${notoFont}, ${dubaiFont}, ${fallbackFont}`
     return () => {
-      document.body.style.fontFamily = '';
-    };
-  }, []);
+      document.body.style.fontFamily = ''
+    }
+  }, [])
 
   if (!isLoggedIn) {
-    return null; // أو يمكنك إظهار شاشة تحميل
+    return null // أو يمكنك إظهار شاشة تحميل
   }
 
   const stats = {
     totalStudents: 120,
     activeClasses: 5,
     totalQuestions: 250,
-    averageScore: 85,
-  };
+    averageScore: 85
+  }
 
   const recentActivities = [
     {
       id: 1,
       type: 'question',
       text: 'تم إضافة 10 أسئلة جديدة في مادة الرياضيات',
-      time: 'منذ ساعتين',
+      time: 'منذ ساعتين'
     },
     { id: 2, type: 'class', text: 'تم إنشاء فصل جديد: الفيزياء للصف العاشر', time: 'منذ 3 ساعات' },
-    { id: 3, type: 'exam', text: 'تم تصحيح اختبار نصف الفصل', time: 'منذ 5 ساعات' },
-  ];
+    { id: 3, type: 'exam', text: 'تم تصحيح اختبار نصف الفصل', time: 'منذ 5 ساعات' }
+  ]
 
   return (
     <div
@@ -101,16 +106,10 @@ const TeacherDashboard = () => {
         position: 'relative',
         minHeight: '100vh',
         overflow: 'hidden',
-        background: 'var(--bg-primary)',
-      }}
-    >
+        background: 'var(--bg-primary)'
+      }}>
       {/* Geometric SVG background */}
-      <svg
-        className="dashboard-bg-svg"
-        width="100%"
-        height="100%"
-        style={{ position: 'absolute', zIndex: 0, top: 0, left: 0, pointerEvents: 'none' }}
-      >
+      <svg className="dashboard-bg-svg" width="100%" height="100%" style={{ position: 'absolute', zIndex: 0, top: 0, left: 0, pointerEvents: 'none' }}>
         <defs>
           <radialGradient id="grad1" cx="50%" cy="50%" r="80%">
             <stop offset="0%" stopColor="var(--bg-primary)" stopOpacity="0.7" />
@@ -131,9 +130,8 @@ const TeacherDashboard = () => {
             ...p.style,
             zIndex: 1,
             animation: `float${i} 6s ease-in-out infinite alternate`,
-            filter: 'var(--shadow-md)',
-          }}
-        >
+            filter: 'var(--shadow-md)'
+          }}>
           {p.icon}
         </div>
       ))}
@@ -148,7 +146,7 @@ const TeacherDashboard = () => {
           width: 60,
           zIndex: 10,
           animation: 'logoFloat 3s ease-in-out infinite alternate',
-          filter: 'var(--shadow-md)',
+          filter: 'var(--shadow-md)'
         }}
       />
       <main
@@ -160,9 +158,8 @@ const TeacherDashboard = () => {
           alignItems: 'center',
           justifyContent: 'center',
           minHeight: '80vh',
-          zIndex: 2,
-        }}
-      >
+          zIndex: 2
+        }}>
         <h1
           style={{
             marginBottom: '2rem',
@@ -173,9 +170,8 @@ const TeacherDashboard = () => {
             textAlign: 'center',
             lineHeight: 1.4,
             letterSpacing: '0.5px',
-            textShadow: 'var(--shadow-md)',
-          }}
-        >
+            textShadow: 'var(--shadow-md)'
+          }}>
           مرحباً بك في منصة سوريا أكاديمي
           <br />
           <span
@@ -183,9 +179,8 @@ const TeacherDashboard = () => {
               color: 'var(--primary-color)',
               fontSize: '2.2rem',
               display: 'block',
-              marginTop: '0.5rem',
-            }}
-          >
+              marginTop: '0.5rem'
+            }}>
             أستاذ {teacherName} 👋
           </span>
         </h1>
@@ -196,29 +191,24 @@ const TeacherDashboard = () => {
             gap: '1.5rem',
             width: '100%',
             maxWidth: 400,
-            zIndex: 2,
-          }}
-        >
+            zIndex: 2
+          }}>
           <DashboardButton
             onClick={() => {
-              const user = JSON.parse(localStorage.getItem('user'));
+              const user = JSON.parse(localStorage.getItem('user'))
               if (!user) {
-                navigate('/login');
+                navigate('/login')
               } else {
-                navigate('/teacher/profile');
+                navigate('/teacher/profile')
               }
             }}
-            icon={<ProfileIcon />}
-          >
+            icon={<ProfileIcon />}>
             الملف الشخصي
           </DashboardButton>
           <DashboardButton onClick={() => navigate('/teacher/create-exam')} icon={<ExamIcon />}>
             إنشاء اختبار
           </DashboardButton>
-          <DashboardButton
-            onClick={() => navigate('/teacher/add-question')}
-            icon={<QuestionIcon />}
-          >
+          <DashboardButton onClick={() => navigate('/teacher/create-question')} icon={<QuestionIcon />}>
             إضافة سؤال
           </DashboardButton>
           <DashboardButton onClick={() => navigate('/teacher/statistics')} icon={<StatsIcon />}>
@@ -234,8 +224,8 @@ const TeacherDashboard = () => {
         @keyframes float2 { 0% { transform: translateY(0); } 100% { transform: translateY(-10px) scale(1.05); } }
       `}</style>
     </div>
-  );
-};
+  )
+}
 
 function DashboardButton({ onClick, icon, children }) {
   return (
@@ -257,50 +247,49 @@ function DashboardButton({ onClick, icon, children }) {
         transition: 'transform 0.2s, box-shadow 0.2s',
         outline: 'none',
         position: 'relative',
-        overflow: 'hidden',
+        overflow: 'hidden'
       }}
       onClick={e => {
         // موجة عند الضغط
-        const btn = e.currentTarget;
-        const wave = document.createElement('span');
-        wave.className = 'btn-wave';
-        wave.style.position = 'absolute';
-        wave.style.left = e.nativeEvent.offsetX + 'px';
-        wave.style.top = e.nativeEvent.offsetY + 'px';
-        wave.style.width = wave.style.height = '0px';
-        wave.style.background = 'rgba(255,255,255,0.3)';
-        wave.style.borderRadius = '50%';
-        wave.style.transform = 'translate(-50%, -50%)';
-        wave.style.pointerEvents = 'none';
-        wave.style.transition = 'width 0.5s, height 0.5s, opacity 0.7s';
-        btn.appendChild(wave);
+        const btn = e.currentTarget
+        const wave = document.createElement('span')
+        wave.className = 'btn-wave'
+        wave.style.position = 'absolute'
+        wave.style.left = e.nativeEvent.offsetX + 'px'
+        wave.style.top = e.nativeEvent.offsetY + 'px'
+        wave.style.width = wave.style.height = '0px'
+        wave.style.background = 'rgba(255,255,255,0.3)'
+        wave.style.borderRadius = '50%'
+        wave.style.transform = 'translate(-50%, -50%)'
+        wave.style.pointerEvents = 'none'
+        wave.style.transition = 'width 0.5s, height 0.5s, opacity 0.7s'
+        btn.appendChild(wave)
         setTimeout(() => {
-          wave.style.width = wave.style.height = '200px';
-          wave.style.opacity = '0';
-        }, 10);
-        setTimeout(() => btn.removeChild(wave), 700);
-        onClick();
+          wave.style.width = wave.style.height = '200px'
+          wave.style.opacity = '0'
+        }, 10)
+        setTimeout(() => btn.removeChild(wave), 700)
+        onClick()
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform = 'scale(1.04)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+        e.currentTarget.style.transform = 'scale(1.04)'
+        e.currentTarget.style.boxShadow = 'var(--shadow-lg)'
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-      }}
-    >
+        e.currentTarget.style.transform = 'scale(1)'
+        e.currentTarget.style.boxShadow = 'var(--shadow-md)'
+      }}>
       <span style={{ fontSize: '1.7rem', display: 'flex', alignItems: 'center' }}>{icon}</span>
       <span>{children}</span>
     </button>
-  );
+  )
 }
 
 DashboardButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   icon: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
-};
+  children: PropTypes.node.isRequired
+}
 
 function ProfileIcon() {
   return (
@@ -308,48 +297,25 @@ function ProfileIcon() {
       <circle cx="14" cy="9" r="5" fill="#fff" stroke="#8c694a" strokeWidth="2" />
       <ellipse cx="14" cy="20" rx="8" ry="5" fill="#fff" stroke="#8c694a" strokeWidth="2" />
     </svg>
-  );
+  )
 }
 function ExamIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect
-        x="4"
-        y="6"
-        width="20"
-        height="16"
-        rx="3"
-        fill="#fff"
-        stroke="#80a69b"
-        strokeWidth="2"
-      />
+      <rect x="4" y="6" width="20" height="16" rx="3" fill="#fff" stroke="#80a69b" strokeWidth="2" />
       <rect x="8" y="10" width="12" height="2" rx="1" fill="#d9b282" />
       <rect x="8" y="14" width="8" height="2" rx="1" fill="#d9b282" />
     </svg>
-  );
+  )
 }
 function QuestionIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect
-        x="4"
-        y="4"
-        width="20"
-        height="20"
-        rx="5"
-        fill="#fff"
-        stroke="#8c694a"
-        strokeWidth="2"
-      />
-      <path
-        d="M10 12a4 4 0 118 0c0 2-2 3-2 3h-4s-2-1-2-3z"
-        stroke="#d9b282"
-        strokeWidth="2"
-        fill="none"
-      />
+      <rect x="4" y="4" width="20" height="20" rx="5" fill="#fff" stroke="#8c694a" strokeWidth="2" />
+      <path d="M10 12a4 4 0 118 0c0 2-2 3-2 3h-4s-2-1-2-3z" stroke="#d9b282" strokeWidth="2" fill="none" />
       <circle cx="14" cy="19" r="1.5" fill="#d9b282" />
     </svg>
-  );
+  )
 }
 function StatsIcon() {
   return (
@@ -358,7 +324,7 @@ function StatsIcon() {
       <rect x="11" y="10" width="3" height="12" rx="1.5" fill="#8c694a" />
       <rect x="17" y="6" width="3" height="16" rx="1.5" fill="#d9b282" />
     </svg>
-  );
+  )
 }
 
-export default TeacherDashboard;
+export default TeacherDashboard

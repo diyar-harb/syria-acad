@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Footer.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import '../styles/Footer.css'
 
 const Footer = () => {
   return (
@@ -43,7 +43,7 @@ const Footer = () => {
         <p>&copy; {new Date().getFullYear()} Syria Acadime. جميع الحقوق محفوظة.</p>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

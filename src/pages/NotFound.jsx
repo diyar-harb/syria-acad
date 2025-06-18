@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
-import '../styles/NotFound.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
+import '../styles/NotFound.css'
 
 function NotFound() {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <div className={`not-found ${theme}`}>
@@ -17,7 +17,7 @@ function NotFound() {
         </Link>
       </div>
     </div>
-  );
+  )
 }
 
-export default NotFound;
+export default NotFound

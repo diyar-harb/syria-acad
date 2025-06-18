@@ -1,19 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { exams } from '../data/mockExams';
-import '../styles/ExamsList.css';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { exams } from '../data/mockExams'
+import '../styles/ExamsList.css'
 
 const ExamsList = () => {
-  const subjects = [...new Set(exams.map(exam => exam.subject))];
+  const subjects = [...new Set(exams.map(exam => exam.subject))]
 
   return (
-    <motion.div
-      className="exams-list"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div className="exams-list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <h1>الاختبارات المتاحة</h1>
 
       {subjects.map(subject => (
@@ -48,7 +43,7 @@ const ExamsList = () => {
         </div>
       ))}
     </motion.div>
-  );
-};
+  )
+}
 
-export default ExamsList;
+export default ExamsList

@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../styles/admin/RecentActivity.css';
+import React from 'react'
+import '../../styles/admin/RecentActivity.css'
 
 function RecentActivity() {
   // بيانات نموذجية للنشاطات
@@ -10,7 +10,7 @@ function RecentActivity() {
       action: 'تسجيل جديد',
       user: 'أحمد محمد',
       time: 'منذ 5 دقائق',
-      icon: 'fas fa-user-plus',
+      icon: 'fas fa-user-plus'
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ function RecentActivity() {
       action: 'إضافة دورة جديدة',
       user: 'د. سارة أحمد',
       time: 'منذ 15 دقيقة',
-      icon: 'fas fa-book',
+      icon: 'fas fa-book'
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ function RecentActivity() {
       action: 'اشتراك جديد',
       user: 'محمد علي',
       time: 'منذ 30 دقيقة',
-      icon: 'fas fa-credit-card',
+      icon: 'fas fa-credit-card'
     },
     {
       id: 4,
@@ -34,33 +34,30 @@ function RecentActivity() {
       action: 'إكمال اختبار',
       user: 'نورا خالد',
       time: 'منذ ساعة',
-      icon: 'fas fa-clipboard-check',
-    },
-  ];
+      icon: 'fas fa-clipboard-check'
+    }
+  ]
 
   const getActivityColor = type => {
     switch (type) {
       case 'user':
-        return 'var(--primary-color)';
+        return 'var(--primary-color)'
       case 'course':
-        return 'var(--success-color)';
+        return 'var(--success-color)'
       case 'payment':
-        return 'var(--warning-color)';
+        return 'var(--warning-color)'
       case 'exam':
-        return 'var(--info-color)';
+        return 'var(--info-color)'
       default:
-        return 'var(--text-secondary)';
+        return 'var(--text-secondary)'
     }
-  };
+  }
 
   return (
     <div className="recent-activity-list">
       {activities.map(activity => (
         <div key={activity.id} className="activity-item">
-          <div
-            className="activity-icon"
-            style={{ backgroundColor: getActivityColor(activity.type) }}
-          >
+          <div className="activity-icon" style={{ backgroundColor: getActivityColor(activity.type) }}>
             <i className={activity.icon} />
           </div>
           <div className="activity-details">
@@ -73,7 +70,7 @@ function RecentActivity() {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default RecentActivity;
+export default RecentActivity

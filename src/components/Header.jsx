@@ -1,46 +1,46 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
-import '../styles/Header.css';
-import logo from '../styles/img/logo.png';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
+import '../styles/Header.css'
+import logo from '../styles/img/logo.png'
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const userType = localStorage.getItem('userType');
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const navigate = useNavigate()
+  const { theme, toggleTheme } = useTheme()
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+  const userType = localStorage.getItem('userType')
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   const closeMenu = () => {
-    setIsMenuOpen(false);
-    setIsDropdownOpen(false);
-  };
+    setIsMenuOpen(false)
+    setIsDropdownOpen(false)
+  }
 
   const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userType');
-    navigate('/login');
-    closeMenu();
-  };
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('userType')
+    navigate('/login')
+    closeMenu()
+  }
 
   const handleDropdown = e => {
-    e.stopPropagation();
-    setIsDropdownOpen(prev => !prev);
-  };
+    e.stopPropagation()
+    setIsDropdownOpen(prev => !prev)
+  }
 
   // Close dropdown on outside click
   React.useEffect(() => {
-    const handleClick = () => setIsDropdownOpen(false);
+    const handleClick = () => setIsDropdownOpen(false)
     if (isDropdownOpen) {
-      window.addEventListener('click', handleClick);
+      window.addEventListener('click', handleClick)
     }
-    return () => window.removeEventListener('click', handleClick);
-  }, [isDropdownOpen]);
+    return () => window.removeEventListener('click', handleClick)
+  }, [isDropdownOpen])
 
   return (
     <header className={`header ${theme}`}>
@@ -108,11 +108,7 @@ const Header = () => {
                 )}
                 {isLoggedIn && (
                   <>
-                    <Link
-                      to={`/${userType}-dashboard`}
-                      className="btn btn-primary dashboard-btn"
-                      onClick={closeMenu}
-                    >
+                    <Link to={`/${userType}-dashboard`} className="btn btn-primary dashboard-btn" onClick={closeMenu}>
                       لوحة التحكم
                     </Link>
                     <button onClick={handleLogout} className="logout-btn">
@@ -122,11 +118,7 @@ const Header = () => {
                 )}
                 <div className="theme-toggle">
                   <button onClick={toggleTheme} className="theme-btn">
-                    {theme === 'light' ? (
-                      <i className="fas fa-moon"></i>
-                    ) : (
-                      <i className="fas fa-sun"></i>
-                    )}
+                    {theme === 'light' ? <i className="fas fa-moon"></i> : <i className="fas fa-sun"></i>}
                   </button>
                 </div>
               </li>
@@ -162,11 +154,7 @@ const Header = () => {
             )}
             {isLoggedIn && (
               <>
-                <Link
-                  to={`/${userType}-dashboard`}
-                  className="btn btn-primary dashboard-btn"
-                  onClick={closeMenu}
-                >
+                <Link to={`/${userType}-dashboard`} className="btn btn-primary dashboard-btn" onClick={closeMenu}>
                   لوحة التحكم
                 </Link>
                 <button onClick={handleLogout} className="logout-btn">
@@ -176,11 +164,7 @@ const Header = () => {
             )}
             <div className="theme-toggle">
               <button onClick={toggleTheme} className="theme-btn">
-                {theme === 'light' ? (
-                  <i className="fas fa-moon"></i>
-                ) : (
-                  <i className="fas fa-sun"></i>
-                )}
+                {theme === 'light' ? <i className="fas fa-moon"></i> : <i className="fas fa-sun"></i>}
               </button>
             </div>
           </div>
@@ -193,7 +177,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

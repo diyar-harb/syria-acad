@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaSearch, FaRegComment, FaRegHeart, FaShare } from 'react-icons/fa';
-import '../styles/Forum.css';
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { FaSearch, FaRegComment, FaRegHeart, FaShare } from 'react-icons/fa'
+import '../styles/Forum.css'
 
 const Forum = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const categories = [
     { id: 'all', name: 'جميع المواضيع' },
     { id: 'math', name: 'الرياضيات' },
     { id: 'physics', name: 'الفيزياء' },
     { id: 'general', name: 'مواضيع عامة' },
-    { id: 'homework', name: 'الواجبات المنزلية' },
-  ];
+    { id: 'homework', name: 'الواجبات المنزلية' }
+  ]
 
   const discussions = [
     {
@@ -26,7 +26,7 @@ const Forum = () => {
       comments: 8,
       date: '2024-03-15',
       tags: ['تفاضل وتكامل', 'رياضيات متقدمة'],
-      solved: true,
+      solved: true
     },
     {
       id: 2,
@@ -38,65 +38,39 @@ const Forum = () => {
       comments: 12,
       date: '2024-03-14',
       tags: ['ميكانيكا', 'قوانين نيوتن'],
-      solved: false,
-    },
-  ];
+      solved: false
+    }
+  ]
 
   const filterDiscussions = () => {
     return discussions.filter(discussion => {
-      const matchesCategory = activeCategory === 'all' || discussion.category === activeCategory;
-      const matchesSearch =
-        discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        discussion.content.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  };
+      const matchesCategory = activeCategory === 'all' || discussion.category === activeCategory
+      const matchesSearch = discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) || discussion.content.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+  }
 
   return (
     <div className="forum-container">
-      <motion.div
-        className="forum-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <motion.div className="forum-header" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <h1>المنتدى التعليمي</h1>
         <div className="search-bar">
           <FaSearch className="search-icon" />
-          <input
-            type="text"
-            placeholder="ابحث في المنتدى..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-          />
+          <input type="text" placeholder="ابحث في المنتدى..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
         </div>
         <button className="btn btn-primary create-post-btn">إنشاء موضوع جديد</button>
       </motion.div>
 
       <div className="forum-content">
-        <motion.div
-          className="categories-list"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
+        <motion.div className="categories-list" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
           {categories.map(category => (
-            <button
-              key={category.id}
-              className={`category-btn ${activeCategory === category.id ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category.id)}
-            >
+            <button key={category.id} className={`category-btn ${activeCategory === category.id ? 'active' : ''}`} onClick={() => setActiveCategory(category.id)}>
               {category.name}
             </button>
           ))}
         </motion.div>
 
-        <motion.div
-          className="discussions-list"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
+        <motion.div className="discussions-list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
           {filterDiscussions().map(discussion => (
             <motion.div
               key={discussion.id}
@@ -104,8 +78,7 @@ const Forum = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
+              transition={{ duration: 0.3 }}>
               <div className="discussion-header">
                 <h3>{discussion.title}</h3>
                 {discussion.solved && <span className="solved-badge">تم الحل</span>}
@@ -184,7 +157,7 @@ const Forum = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Forum;
+export default Forum

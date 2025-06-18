@@ -1,16 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import '../styles/Exams.css';
+import React from 'react'
+import { motion } from 'framer-motion'
+import '../styles/Exams.css'
 
 const Exams = () => {
   return (
     <div className="exams-page">
-      <motion.section
-        className="exams-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      <motion.section className="exams-hero" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
         <div className="container">
           <h1>الاختبارات</h1>
           <p>اختبارات تجريبية تحاكي الامتحانات الرسمية</p>
@@ -26,7 +21,7 @@ const Exams = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Exams;
+export default Exams

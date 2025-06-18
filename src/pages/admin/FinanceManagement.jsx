@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useTheme } from '../../context/ThemeContext';
-import AdminSidebar from '../../components/admin/AdminSidebar';
-import SmartDataGrid from '../../components/SmartDataGrid';
-import '../../styles/admin/FinanceManagement.css';
+import React, { useState, useEffect } from 'react'
+import { useTheme } from '../../context/ThemeContext'
+import AdminSidebar from '../../components/admin/AdminSidebar'
+import SmartDataGrid from '../../components/SmartDataGrid'
+import '../../styles/admin/FinanceManagement.css'
 
 function FinanceManagement() {
-  const { theme } = useTheme();
-  const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('subscriptions');
+  const { theme } = useTheme()
+  const [transactions, setTransactions] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('subscriptions')
   const [filters, setFilters] = useState({
     type: 'all',
     status: 'all',
-    dateRange: 'all',
-  });
+    dateRange: 'all'
+  })
 
   useEffect(() => {
     // محاكاة جلب البيانات من الخادم
@@ -28,7 +28,7 @@ function FinanceManagement() {
             status: 'مكتمل',
             date: '2024-03-20',
             user: 'أحمد محمد',
-            paymentMethod: 'بطاقة ائتمان',
+            paymentMethod: 'بطاقة ائتمان'
           },
           {
             id: 2,
@@ -37,27 +37,27 @@ function FinanceManagement() {
             status: 'قيد المعالجة',
             date: '2024-03-19',
             user: 'د. سارة أحمد',
-            paymentMethod: 'تحويل بنكي',
-          },
+            paymentMethod: 'تحويل بنكي'
+          }
           // ... المزيد من المعاملات
-        ];
-        setTransactions(mockTransactions);
-        setLoading(false);
+        ]
+        setTransactions(mockTransactions)
+        setLoading(false)
       } catch (error) {
-        console.error('Error fetching transactions:', error);
-        setLoading(false);
+        console.error('Error fetching transactions:', error)
+        setLoading(false)
       }
-    };
+    }
 
-    fetchTransactions();
-  }, []);
+    fetchTransactions()
+  }, [])
 
   const columns = {
     subscriptions: [
       {
         key: 'date',
         label: 'التاريخ',
-        render: item => new Date(item.date).toLocaleDateString('ar-SA'),
+        render: item => new Date(item.date).toLocaleDateString('ar-SA')
       },
       { key: 'user', label: 'المستخدم' },
       { key: 'amount', label: 'المبلغ', render: item => `$${item.amount}` },
@@ -68,29 +68,21 @@ function FinanceManagement() {
         label: 'الإجراءات',
         render: item => (
           <div className="actions">
-            <button
-              className="action-button view"
-              title="عرض التفاصيل"
-              onClick={() => handleViewDetails(item.id)}
-            >
+            <button className="action-button view" title="عرض التفاصيل" onClick={() => handleViewDetails(item.id)}>
               <i className="fas fa-eye" />
             </button>
-            <button
-              className="action-button refund"
-              title="استرداد"
-              onClick={() => handleRefund(item.id)}
-            >
+            <button className="action-button refund" title="استرداد" onClick={() => handleRefund(item.id)}>
               <i className="fas fa-undo" />
             </button>
           </div>
-        ),
-      },
+        )
+      }
     ],
     withdrawals: [
       {
         key: 'date',
         label: 'التاريخ',
-        render: item => new Date(item.date).toLocaleDateString('ar-SA'),
+        render: item => new Date(item.date).toLocaleDateString('ar-SA')
       },
       { key: 'user', label: 'المدرس' },
       { key: 'amount', label: 'المبلغ', render: item => `$${item.amount}` },
@@ -101,52 +93,40 @@ function FinanceManagement() {
         label: 'الإجراءات',
         render: item => (
           <div className="actions">
-            <button
-              className="action-button view"
-              title="عرض التفاصيل"
-              onClick={() => handleViewDetails(item.id)}
-            >
+            <button className="action-button view" title="عرض التفاصيل" onClick={() => handleViewDetails(item.id)}>
               <i className="fas fa-eye" />
             </button>
-            <button
-              className="action-button approve"
-              title="موافقة"
-              onClick={() => handleApprove(item.id)}
-            >
+            <button className="action-button approve" title="موافقة" onClick={() => handleApprove(item.id)}>
               <i className="fas fa-check" />
             </button>
-            <button
-              className="action-button reject"
-              title="رفض"
-              onClick={() => handleReject(item.id)}
-            >
+            <button className="action-button reject" title="رفض" onClick={() => handleReject(item.id)}>
               <i className="fas fa-times" />
             </button>
           </div>
-        ),
-      },
-    ],
-  };
+        )
+      }
+    ]
+  }
 
   const handleViewDetails = id => {
     // معالجة عرض تفاصيل المعاملة
-    console.log('View details:', id);
-  };
+    console.log('View details:', id)
+  }
 
   const handleRefund = id => {
     // معالجة استرداد المبلغ
-    console.log('Refund:', id);
-  };
+    console.log('Refund:', id)
+  }
 
   const handleApprove = id => {
     // معالجة الموافقة على السحب
-    console.log('Approve withdrawal:', id);
-  };
+    console.log('Approve withdrawal:', id)
+  }
 
   const handleReject = id => {
     // معالجة رفض السحب
-    console.log('Reject withdrawal:', id);
-  };
+    console.log('Reject withdrawal:', id)
+  }
 
   return (
     <div className={`admin-layout ${theme}`}>
@@ -162,16 +142,10 @@ function FinanceManagement() {
         </div>
 
         <div className="finance-tabs">
-          <button
-            className={`tab-button ${activeTab === 'subscriptions' ? 'active' : ''}`}
-            onClick={() => setActiveTab('subscriptions')}
-          >
+          <button className={`tab-button ${activeTab === 'subscriptions' ? 'active' : ''}`} onClick={() => setActiveTab('subscriptions')}>
             الاشتراكات
           </button>
-          <button
-            className={`tab-button ${activeTab === 'withdrawals' ? 'active' : ''}`}
-            onClick={() => setActiveTab('withdrawals')}
-          >
+          <button className={`tab-button ${activeTab === 'withdrawals' ? 'active' : ''}`} onClick={() => setActiveTab('withdrawals')}>
             طلبات السحب
           </button>
         </div>
@@ -179,10 +153,7 @@ function FinanceManagement() {
         <div className="filters-section">
           <div className="filter-group">
             <label>نوع المعاملة:</label>
-            <select
-              value={filters.type}
-              onChange={e => setFilters({ ...filters, type: e.target.value })}
-            >
+            <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })}>
               <option value="all">الكل</option>
               <option value="subscription">اشتراك</option>
               <option value="withdrawal">سحب</option>
@@ -191,10 +162,7 @@ function FinanceManagement() {
 
           <div className="filter-group">
             <label>الحالة:</label>
-            <select
-              value={filters.status}
-              onChange={e => setFilters({ ...filters, status: e.target.value })}
-            >
+            <select value={filters.status} onChange={e => setFilters({ ...filters, status: e.target.value })}>
               <option value="all">الكل</option>
               <option value="completed">مكتمل</option>
               <option value="pending">قيد المعالجة</option>
@@ -204,10 +172,7 @@ function FinanceManagement() {
 
           <div className="filter-group">
             <label>الفترة الزمنية:</label>
-            <select
-              value={filters.dateRange}
-              onChange={e => setFilters({ ...filters, dateRange: e.target.value })}
-            >
+            <select value={filters.dateRange} onChange={e => setFilters({ ...filters, dateRange: e.target.value })}>
               <option value="all">الكل</option>
               <option value="today">اليوم</option>
               <option value="week">الأسبوع</option>
@@ -234,17 +199,10 @@ function FinanceManagement() {
           </div>
         </div>
 
-        <SmartDataGrid
-          data={transactions}
-          columns={columns[activeTab]}
-          loading={loading}
-          pageSize={10}
-          sortable={true}
-          filterable={true}
-        />
+        <SmartDataGrid data={transactions} columns={columns[activeTab]} loading={loading} pageSize={10} sortable={true} filterable={true} />
       </div>
     </div>
-  );
+  )
 }
 
-export default FinanceManagement;
+export default FinanceManagement

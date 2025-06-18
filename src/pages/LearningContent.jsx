@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaPlay, FaBook, FaClipboard, FaDownload } from 'react-icons/fa';
-import '../styles/LearningContent.css';
-import { subjects, courses } from '../data/mockData';
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { FaPlay, FaBook, FaClipboard, FaDownload } from 'react-icons/fa'
+import '../styles/LearningContent.css'
+import { subjects, courses } from '../data/mockData'
 
 const LearningContent = () => {
-  const [selectedSubject, setSelectedSubject] = useState(subjects[0]);
-  const [activeTab, setActiveTab] = useState('lessons');
+  const [selectedSubject, setSelectedSubject] = useState(subjects[0])
+  const [activeTab, setActiveTab] = useState('lessons')
 
-  const subjectCourses = courses.filter(course => course.subject === selectedSubject.name);
+  const subjectCourses = courses.filter(course => course.subject === selectedSubject.name)
 
   const resources = [
     {
@@ -16,23 +16,23 @@ const LearningContent = () => {
       title: 'ملخص التفاضل والتكامل',
       type: 'pdf',
       size: '2.5 MB',
-      downloads: 234,
+      downloads: 234
     },
     {
       id: 2,
       title: 'تمارين محلولة - المتجهات',
       type: 'pdf',
       size: '1.8 MB',
-      downloads: 156,
+      downloads: 156
     },
     {
       id: 3,
       title: 'شرح قوانين نيوتن',
       type: 'video',
       duration: '15:30',
-      views: 789,
-    },
-  ];
+      views: 789
+    }
+  ]
 
   const renderContent = () => {
     switch (activeTab) {
@@ -40,13 +40,7 @@ const LearningContent = () => {
         return (
           <div className="lessons-grid">
             {subjectCourses.map(course => (
-              <motion.div
-                key={course.id}
-                className="lesson-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
-              >
+              <motion.div key={course.id} className="lesson-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }}>
                 <div className="lesson-thumbnail">
                   <img src={course.image} alt={course.title} />
                   <div className="lesson-overlay">
@@ -65,21 +59,14 @@ const LearningContent = () => {
               </motion.div>
             ))}
           </div>
-        );
+        )
 
       case 'resources':
         return (
           <div className="resources-list">
             {resources.map(resource => (
-              <motion.div
-                key={resource.id}
-                className="resource-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <div className="resource-icon">
-                  {resource.type === 'pdf' ? <FaBook /> : <FaPlay />}
-                </div>
+              <motion.div key={resource.id} className="resource-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+                <div className="resource-icon">{resource.type === 'pdf' ? <FaBook /> : <FaPlay />}</div>
                 <div className="resource-content">
                   <h3>{resource.title}</h3>
                   <div className="resource-meta">
@@ -95,7 +82,7 @@ const LearningContent = () => {
               </motion.div>
             ))}
           </div>
-        );
+        )
 
       case 'notes':
         return (
@@ -109,12 +96,7 @@ const LearningContent = () => {
             </div>
             <div className="notes-grid">
               {[1, 2, 3].map(index => (
-                <motion.div
-                  key={index}
-                  className="note-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                <motion.div key={index} className="note-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                   <div className="note-header">
                     <span className="note-date">15 مارس 2024</span>
                     <div className="note-actions">
@@ -132,12 +114,12 @@ const LearningContent = () => {
               ))}
             </div>
           </div>
-        );
+        )
 
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="learning-container">
@@ -145,11 +127,7 @@ const LearningContent = () => {
         <h2>المواد الدراسية</h2>
         <div className="subjects-list">
           {subjects.map(subject => (
-            <button
-              key={subject.id}
-              className={`subject-btn ${selectedSubject.id === subject.id ? 'active' : ''}`}
-              onClick={() => setSelectedSubject(subject)}
-            >
+            <button key={subject.id} className={`subject-btn ${selectedSubject.id === subject.id ? 'active' : ''}`} onClick={() => setSelectedSubject(subject)}>
               <img src={subject.image} alt={subject.name} className="subject-icon" />
               <span>{subject.name}</span>
             </button>
@@ -164,22 +142,13 @@ const LearningContent = () => {
             <p>{selectedSubject.description}</p>
           </div>
           <div className="content-tabs">
-            <button
-              className={`tab-btn ${activeTab === 'lessons' ? 'active' : ''}`}
-              onClick={() => setActiveTab('lessons')}
-            >
+            <button className={`tab-btn ${activeTab === 'lessons' ? 'active' : ''}`} onClick={() => setActiveTab('lessons')}>
               الدروس
             </button>
-            <button
-              className={`tab-btn ${activeTab === 'resources' ? 'active' : ''}`}
-              onClick={() => setActiveTab('resources')}
-            >
+            <button className={`tab-btn ${activeTab === 'resources' ? 'active' : ''}`} onClick={() => setActiveTab('resources')}>
               الموارد
             </button>
-            <button
-              className={`tab-btn ${activeTab === 'notes' ? 'active' : ''}`}
-              onClick={() => setActiveTab('notes')}
-            >
+            <button className={`tab-btn ${activeTab === 'notes' ? 'active' : ''}`} onClick={() => setActiveTab('notes')}>
               ملاحظاتي
             </button>
           </div>
@@ -188,7 +157,7 @@ const LearningContent = () => {
         <div className="content-body">{renderContent()}</div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default LearningContent;
+export default LearningContent

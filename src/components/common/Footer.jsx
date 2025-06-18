@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';
-import '../styles/Footer.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useTheme } from '../../context/ThemeContext'
+import '../styles/Footer.css'
 
 function Footer() {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <footer className={`footer ${theme}`}>
@@ -64,7 +64,7 @@ function Footer() {
         <p>&copy; {new Date().getFullYear()} EduMastery. جميع الحقوق محفوظة.</p>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

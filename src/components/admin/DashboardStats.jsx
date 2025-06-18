@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../styles/admin/DashboardStats.css';
+import React from 'react'
+import '../../styles/admin/DashboardStats.css'
 
 function DashboardStats({ stats }) {
   return (
@@ -48,7 +48,7 @@ function DashboardStats({ stats }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default DashboardStats;
+export default DashboardStats

@@ -1,16 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import '../styles/Questions.css';
+import React from 'react'
+import { motion } from 'framer-motion'
+import '../styles/Questions.css'
 
 const Questions = () => {
   return (
     <div className="questions-page">
-      <motion.section
-        className="questions-hero"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      <motion.section className="questions-hero" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
         <div className="container">
           <h1>بنك الأسئلة</h1>
           <p>اختبر معرفتك وتعلم من أخطائك</p>
@@ -26,7 +21,7 @@ const Questions = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Questions;
+export default Questions

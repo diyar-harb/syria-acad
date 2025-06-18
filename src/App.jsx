@@ -1,38 +1,39 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import { testFirebaseConnection } from './services/firebaseTest';
-import { testBackendConnection } from './services/testConnection';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import TeacherDashboard from './pages/TeacherDashboard';
-import ParentDashboard from './pages/ParentDashboard';
-import Exam from './pages/Exam';
-import Forum from './pages/Forum';
-import LearningContent from './pages/LearningContent';
-import QuestionBank from './pages/QuestionBank';
-import ExamsList from './pages/ExamsList';
-import StudentSignup from './pages/StudentSignup';
-import TeacherSignup from './pages/TeacherSignup';
-import ParentSignup from './pages/ParentSignup';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Courses from './pages/Courses';
-import ResetPassword from './pages/ResetPassword';
-import TeacherProfile from './pages/TeacherProfile';
-import './styles/global.css';
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ThemeProvider } from './context/ThemeContext'
+import { testFirebaseConnection } from './services/firebaseTest'
+import { testBackendConnection } from './services/testConnection'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import TeacherDashboard from './pages/TeacherDashboard'
+import ParentDashboard from './pages/ParentDashboard'
+import Exam from './pages/Exam'
+import Forum from './pages/Forum'
+import LearningContent from './pages/LearningContent'
+import QuestionBank from './pages/QuestionBank'
+import ExamsList from './pages/ExamsList'
+import StudentSignup from './pages/StudentSignup'
+import TeacherSignup from './pages/TeacherSignup'
+import ParentSignup from './pages/ParentSignup'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Courses from './pages/Courses'
+import ResetPassword from './pages/ResetPassword'
+import TeacherProfile from './pages/TeacherProfile'
+import CreateQuestion from './pages/CreateQuestion'
+import './styles/global.css'
 
 const App = () => {
   useEffect(() => {
     // اختبار الاتصال بـ Firebase عند بدء التطبيق
-    testFirebaseConnection();
+    testFirebaseConnection()
 
     // اختبار الاتصال بالخادم
-    testBackendConnection();
-  }, []);
+    testBackendConnection()
+  }, [])
 
   return (
     <ThemeProvider>
@@ -60,13 +61,14 @@ const App = () => {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
               <Route path="/teacher/profile" element={<TeacherProfile />} />
+              <Route path="/teacher/create-question" element={<CreateQuestion />} />
             </Routes>
           </main>
           <Footer />
         </div>
       </Router>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

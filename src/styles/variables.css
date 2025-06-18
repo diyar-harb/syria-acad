@@ -8,6 +8,13 @@
   --gold-gradient: linear-gradient(90deg, #d9b282 0%, #8c694a 100%);
   --green-gradient: linear-gradient(90deg, #80a69b 0%, #12403b 100%);
   --white-gradient: linear-gradient(90deg, #fff 0%, #f8f9fa 100%);
+  --blue-gradient: linear-gradient(90deg, #12403b 0%, #80a69b 100%);
+  --orange-gradient: linear-gradient(90deg, #d9b282 0%, #f8f9fa 100%);
+  --purple-gradient: linear-gradient(90deg, #8c694a 0%, #6a4c93 100%);
+  --soft-gold: #f7ecd0;
+  --soft-green: #e6f4ea;
+  --soft-blue: #e3f0f7;
+  --soft-purple: #f3e9f7;
 
   /* Light Theme Colors */
   --bg-primary: #ffffff;
@@ -50,13 +57,20 @@
   --z-index-tooltip: 1070;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --bg-primary: #1a1a1a;
   --bg-secondary: #2d2d2d;
   --bg-tertiary: #404040;
   --text-primary: #ffffff;
   --text-secondary: #d9b282;
   --border-color: #065f73;
+  --blue-gradient: linear-gradient(90deg, #12403b 0%, #065f73 100%);
+  --orange-gradient: linear-gradient(90deg, #d9b282 0%, #232323 100%);
+  --purple-gradient: linear-gradient(90deg, #8c694a 0%, #232323 100%);
+  --soft-gold: #3a2e1e;
+  --soft-green: #1a2a23;
+  --soft-blue: #1a232a;
+  --soft-purple: #2d233a;
 
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);

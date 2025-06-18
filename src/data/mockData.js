@@ -5,7 +5,7 @@ export const subjects = [
     grade: 'الحادي عشر',
     description: 'دراسة المفاهيم الرياضية المتقدمة والتحليل والهندسة',
     topics: ['التفاضل والتكامل', 'الهندسة التحليلية', 'المتجهات', 'المصفوفات'],
-    image: '/img/math.jpg',
+    image: '/img/math.jpg'
   },
   {
     id: 2,
@@ -13,9 +13,9 @@ export const subjects = [
     grade: 'الحادي عشر',
     description: 'دراسة القوانين الفيزيائية والظواهر الطبيعية',
     topics: ['الميكانيكا', 'الكهرباء والمغناطيسية', 'الحرارة', 'الضوء'],
-    image: '/img/physics.jpg',
-  },
-];
+    image: '/img/physics.jpg'
+  }
+]
 
 export const articles = [
   {
@@ -25,7 +25,7 @@ export const articles = [
     author: 'د. أحمد محمد',
     date: '2024-03-15',
     content: 'نصائح وإرشادات للتفوق في مادة الرياضيات للصف الحادي عشر...',
-    image: '/img/math-success.jpg',
+    image: '/img/math-success.jpg'
   },
   {
     id: 2,
@@ -34,9 +34,9 @@ export const articles = [
     author: 'د. سارة أحمد',
     date: '2024-03-14',
     content: 'اكتشف كيف تؤثر قوانين الفيزياء على حياتنا اليومية...',
-    image: '/img/physics-daily.jpg',
-  },
-];
+    image: '/img/physics-daily.jpg'
+  }
+]
 
 export const questions = [
   {
@@ -46,7 +46,7 @@ export const questions = [
     question: 'جد مشتقة الدالة f(x) = x³ + 2x² - 4x + 1',
     options: ['3x² + 4x - 4', '3x² + 2x - 4', '2x² + 4x - 4', 'x³ + 2x - 4'],
     correctAnswer: 0,
-    explanation: 'نستخدم قواعد الاشتقاق: مشتقة x³ هي 3x²، ومشتقة 2x² هي 4x، ومشتقة -4x هي -4',
+    explanation: 'نستخدم قواعد الاشتقاق: مشتقة x³ هي 3x²، ومشتقة 2x² هي 4x، ومشتقة -4x هي -4'
   },
   {
     id: 2,
@@ -55,9 +55,9 @@ export const questions = [
     question: 'ما هي وحدة قياس القوة في النظام الدولي؟',
     options: ['نيوتن', 'جول', 'باسكال', 'واط'],
     correctAnswer: 0,
-    explanation: 'النيوتن هو وحدة قياس القوة في النظام الدولي للوحدات (SI)',
-  },
-];
+    explanation: 'النيوتن هو وحدة قياس القوة في النظام الدولي للوحدات (SI)'
+  }
+]
 
 export const exams = [
   {
@@ -67,7 +67,7 @@ export const exams = [
     duration: 60,
     totalMarks: 50,
     questions: [1, 3, 5, 7, 9], // أرقام الأسئلة
-    date: '2024-03-20',
+    date: '2024-03-20'
   },
   {
     id: 2,
@@ -76,9 +76,9 @@ export const exams = [
     duration: 90,
     totalMarks: 60,
     questions: [2, 4, 6, 8, 10],
-    date: '2024-03-25',
-  },
-];
+    date: '2024-03-25'
+  }
+]
 
 export const courses = [
   {
@@ -91,16 +91,16 @@ export const courses = [
       {
         title: 'مقدمة في التفاضل',
         duration: '45 دقيقة',
-        videoUrl: '/videos/calc-intro.mp4',
+        videoUrl: '/videos/calc-intro.mp4'
       },
       {
         title: 'قواعد الاشتقاق',
         duration: '60 دقيقة',
-        videoUrl: '/videos/calc-rules.mp4',
-      },
+        videoUrl: '/videos/calc-rules.mp4'
+      }
     ],
     price: 'مجاناً',
-    image: '/img/calc-course.jpg',
+    image: '/img/calc-course.jpg'
   },
   {
     id: 2,
@@ -112,15 +112,15 @@ export const courses = [
       {
         title: 'القوة والحركة',
         duration: '50 دقيقة',
-        videoUrl: '/videos/mechanics-intro.mp4',
+        videoUrl: '/videos/mechanics-intro.mp4'
       },
       {
         title: 'قوانين نيوتن',
         duration: '55 دقيقة',
-        videoUrl: '/videos/newton-laws.mp4',
-      },
+        videoUrl: '/videos/newton-laws.mp4'
+      }
     ],
     price: 'مجاناً',
-    image: '/img/mechanics-course.jpg',
-  },
-];
+    image: '/img/mechanics-course.jpg'
+  }
+]

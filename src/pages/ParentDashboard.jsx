@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Dashboard.css';
-import { subjects, exams, courses } from '../data/mockData';
-import logo from '../styles/img/logo.png';
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
+import '../styles/Dashboard.css'
+import { subjects, exams, courses } from '../data/mockData'
+import logo from '../styles/img/logo.png'
 
 const ParentDashboard = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState('overview')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     // التحقق من حالة تسجيل الدخول
-    const userType = localStorage.getItem('userType');
-    const loggedIn = localStorage.getItem('isLoggedIn');
+    const userType = localStorage.getItem('userType')
+    const loggedIn = localStorage.getItem('isLoggedIn')
 
     if (loggedIn !== 'true' || userType !== 'parent') {
-      navigate('/login');
+      navigate('/login')
     } else {
-      setIsLoggedIn(true);
+      setIsLoggedIn(true)
     }
-  }, [navigate]);
+  }, [navigate])
 
   if (!isLoggedIn) {
-    return null; // أو يمكنك إظهار شاشة تحميل
+    return null // أو يمكنك إظهار شاشة تحميل
   }
 
   const children = [
@@ -36,8 +36,8 @@ const ParentDashboard = () => {
       subjects: subjects.map(subject => ({
         name: subject.name,
         progress: Math.floor(Math.random() * 30) + 70, // 70-100
-        score: Math.floor(Math.random() * 20) + 75, // 75-95
-      })),
+        score: Math.floor(Math.random() * 20) + 75 // 75-95
+      }))
     },
     {
       id: 2,
@@ -48,15 +48,15 @@ const ParentDashboard = () => {
       subjects: subjects.map(subject => ({
         name: subject.name,
         progress: Math.floor(Math.random() * 30) + 70,
-        score: Math.floor(Math.random() * 20) + 75,
-      })),
-    },
-  ];
+        score: Math.floor(Math.random() * 20) + 75
+      }))
+    }
+  ]
 
   const upcomingExams = exams.map(exam => ({
     ...exam,
-    studentName: Math.random() > 0.5 ? 'أحمد' : 'سارة',
-  }));
+    studentName: Math.random() > 0.5 ? 'أحمد' : 'سارة'
+  }))
 
   const renderContent = () => {
     switch (activeTab) {
@@ -64,12 +64,7 @@ const ParentDashboard = () => {
         return (
           <div className="detailed-progress">
             {children.map(child => (
-              <motion.div
-                key={child.id}
-                className="progress-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
+              <motion.div key={child.id} className="progress-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 <h2>{child.name} - تفاصيل التقدم</h2>
                 <div className="subjects-progress-detailed">
                   {child.subjects.map((subject, index) => (
@@ -79,20 +74,14 @@ const ParentDashboard = () => {
                         <div className="progress-stat">
                           <span>نسبة الإنجاز</span>
                           <div className="progress-bar">
-                            <div
-                              className="progress-fill"
-                              style={{ width: `${subject.progress}%` }}
-                            ></div>
+                            <div className="progress-fill" style={{ width: `${subject.progress}%` }}></div>
                           </div>
                           <span>{subject.progress}%</span>
                         </div>
                         <div className="progress-stat">
                           <span>متوسط الدرجات</span>
                           <div className="progress-bar">
-                            <div
-                              className="progress-fill"
-                              style={{ width: `${subject.score}%` }}
-                            ></div>
+                            <div className="progress-fill" style={{ width: `${subject.score}%` }}></div>
                           </div>
                           <span>{subject.score}%</span>
                         </div>
@@ -103,7 +92,7 @@ const ParentDashboard = () => {
               </motion.div>
             ))}
           </div>
-        );
+        )
 
       case 'exams':
         return (
@@ -111,12 +100,7 @@ const ParentDashboard = () => {
             <h2>الاختبارات القادمة</h2>
             <div className="exams-grid">
               {upcomingExams.map(exam => (
-                <motion.div
-                  key={exam.id}
-                  className="exam-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                <motion.div key={exam.id} className="exam-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                   <h3>{exam.title}</h3>
                   <div className="exam-info">
                     <p>الطالب: {exam.studentName}</p>
@@ -129,7 +113,7 @@ const ParentDashboard = () => {
               ))}
             </div>
           </div>
-        );
+        )
 
       case 'courses':
         return (
@@ -137,12 +121,7 @@ const ParentDashboard = () => {
             <h2>الدورات المتاحة</h2>
             <div className="courses-grid">
               {courses.map(course => (
-                <motion.div
-                  key={course.id}
-                  className="course-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                <motion.div key={course.id} className="course-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                   <h3>{course.title}</h3>
                   <div className="course-info">
                     <p>المدرس: {course.instructor}</p>
@@ -155,19 +134,13 @@ const ParentDashboard = () => {
               ))}
             </div>
           </div>
-        );
+        )
 
       default:
         return (
           <>
             {children.map(child => (
-              <motion.div
-                key={child.id}
-                className="student-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
+              <motion.div key={child.id} className="student-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                 <div className="student-header">
                   <h2>{child.name}</h2>
                   <span className="grade">{child.grade}</span>
@@ -192,10 +165,7 @@ const ParentDashboard = () => {
                           <span className="subject-score">{subject.score}%</span>
                         </div>
                         <div className="progress-bar">
-                          <div
-                            className="progress-fill"
-                            style={{ width: `${subject.progress}%` }}
-                          ></div>
+                          <div className="progress-fill" style={{ width: `${subject.progress}%` }}></div>
                         </div>
                       </div>
                     ))}
@@ -204,9 +174,9 @@ const ParentDashboard = () => {
               </motion.div>
             ))}
           </>
-        );
+        )
     }
-  };
+  }
 
   return (
     <div className="dashboard-page">
@@ -215,28 +185,16 @@ const ParentDashboard = () => {
           <img src={logo} alt="Syria Acadime Logo" className="dashboard-logo" />
         </div>
         <nav className="dashboard-nav">
-          <button
-            className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('overview')}
-          >
+          <button className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}>
             نظرة عامة
           </button>
-          <button
-            className={`nav-item ${activeTab === 'progress' ? 'active' : ''}`}
-            onClick={() => setActiveTab('progress')}
-          >
+          <button className={`nav-item ${activeTab === 'progress' ? 'active' : ''}`} onClick={() => setActiveTab('progress')}>
             تفاصيل التقدم
           </button>
-          <button
-            className={`nav-item ${activeTab === 'exams' ? 'active' : ''}`}
-            onClick={() => setActiveTab('exams')}
-          >
+          <button className={`nav-item ${activeTab === 'exams' ? 'active' : ''}`} onClick={() => setActiveTab('exams')}>
             الاختبارات
           </button>
-          <button
-            className={`nav-item ${activeTab === 'courses' ? 'active' : ''}`}
-            onClick={() => setActiveTab('courses')}
-          >
+          <button className={`nav-item ${activeTab === 'courses' ? 'active' : ''}`} onClick={() => setActiveTab('courses')}>
             الدورات المتاحة
           </button>
         </nav>
@@ -250,7 +208,7 @@ const ParentDashboard = () => {
         <div className="dashboard-content">{renderContent()}</div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default ParentDashboard;
+export default ParentDashboard

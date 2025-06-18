@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
-import '../styles/TeacherSignup.css';
-import { auth, db, storage } from '../config/firebase';
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  updateProfile,
-} from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import api from '../services/api';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
+import '../styles/TeacherSignup.css'
+import { auth, db, storage } from '../config/firebase'
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import api from '../services/api'
 
 function TeacherSignup() {
-  const { theme } = useTheme();
-  const navigate = useNavigate();
-  const [step, setStep] = useState(1);
-  const [showPassword, setShowPassword] = useState(false);
+  const { theme } = useTheme()
+  const navigate = useNavigate()
+  const [step, setStep] = useState(1)
+  const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -33,72 +29,57 @@ function TeacherSignup() {
     specialization: '',
     certificates: [],
     courses: [],
-    achievements: [],
-  });
-  const [errors, setErrors] = useState({});
-  const [showActivation, setShowActivation] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [verificationSent, setVerificationSent] = useState(false);
+    achievements: []
+  })
+  const [errors, setErrors] = useState({})
+  const [showActivation, setShowActivation] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [verificationSent, setVerificationSent] = useState(false)
 
-  const specialties = [
-    'الرياضيات',
-    'العلوم',
-    'اللغة العربية',
-    'اللغة الإنجليزية',
-    'الفيزياء',
-    'الكيمياء',
-    'البيولوجيا',
-    'التاريخ',
-    'الجغرافيا',
-  ];
+  const specialties = ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'الفيزياء', 'الكيمياء', 'البيولوجيا', 'التاريخ', 'الجغرافيا']
 
-  const educationLevels = ['الابتدائي', 'الإعدادي', 'الثانوي'];
+  const educationLevels = ['الابتدائي', 'الإعدادي', 'الثانوي']
 
   const validateStep1 = () => {
-    const newErrors = {};
-    if (!formData.fullName) newErrors.fullName = 'الاسم الكامل مطلوب';
-    if (!formData.email) newErrors.email = 'البريد الإلكتروني مطلوب';
-    if (!formData.password) newErrors.password = 'كلمة المرور مطلوبة';
-    if (formData.password.length < 8)
-      newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-    if (!/[A-Z]/.test(formData.password))
-      newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف كبير على الأقل';
-    if (!/[a-z]/.test(formData.password))
-      newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف صغير على الأقل';
-    if (!/[0-9]/.test(formData.password))
-      newErrors.password = 'يجب أن تحتوي كلمة المرور على رقم على الأقل';
-    if (formData.specialties.length === 0) newErrors.specialties = 'يجب اختيار تخصص واحد على الأقل';
-    if (formData.educationLevels.length === 0)
-      newErrors.educationLevels = 'يجب اختيار مرحلة تعليمية واحدة على الأقل';
+    const newErrors = {}
+    if (!formData.fullName) newErrors.fullName = 'الاسم الكامل مطلوب'
+    if (!formData.email) newErrors.email = 'البريد الإلكتروني مطلوب'
+    if (!formData.password) newErrors.password = 'كلمة المرور مطلوبة'
+    if (formData.password.length < 8) newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل'
+    if (!/[A-Z]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف كبير على الأقل'
+    if (!/[a-z]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف صغير على الأقل'
+    if (!/[0-9]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على رقم على الأقل'
+    if (formData.specialties.length === 0) newErrors.specialties = 'يجب اختيار تخصص واحد على الأقل'
+    if (formData.educationLevels.length === 0) newErrors.educationLevels = 'يجب اختيار مرحلة تعليمية واحدة على الأقل'
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const validateStep2 = () => {
-    const newErrors = {};
-    if (!formData.profileImage) newErrors.profileImage = 'الصورة الشخصية مطلوبة';
-    if (!formData.degreeCertificate) newErrors.degreeCertificate = 'شهادة التخرج مطلوبة';
-    if (!formData.idDocument) newErrors.idDocument = 'الهوية الرسمية مطلوبة';
+    const newErrors = {}
+    if (!formData.profileImage) newErrors.profileImage = 'الصورة الشخصية مطلوبة'
+    if (!formData.degreeCertificate) newErrors.degreeCertificate = 'شهادة التخرج مطلوبة'
+    if (!formData.idDocument) newErrors.idDocument = 'الهوية الرسمية مطلوبة'
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const uploadFile = async (file, path) => {
-    if (!file) return null;
-    const storageRef = ref(storage, path);
-    await uploadBytes(storageRef, file);
-    return getDownloadURL(storageRef);
-  };
+    if (!file) return null
+    const storageRef = ref(storage, path)
+    await uploadBytes(storageRef, file)
+    return getDownloadURL(storageRef)
+  }
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    if (step === 1 && !validateStep1()) return;
-    if (step === 2 && !validateStep2()) return;
+    e.preventDefault()
+    if (step === 1 && !validateStep1()) return
+    if (step === 2 && !validateStep2()) return
 
     if (step === 1) {
-      setLoading(true);
+      setLoading(true)
       try {
         // إرسال بيانات التسجيل إلى backend بدلاً من Firebase مباشرة
         const registerResponse = await api.post('/auth/register', {
@@ -121,24 +102,24 @@ function TeacherSignup() {
             educationLevels: formData.educationLevels,
             status: 'pending',
             createdAt: new Date(),
-            verified: false,
-          },
-        });
+            verified: false
+          }
+        })
         // بعد نجاح التسجيل في backend، أكمل الخطوات التالية (رفع الملفات، إلخ)
-        setVerificationSent(true);
-        setShowActivation(true);
-        setStep(2);
+        setVerificationSent(true)
+        setShowActivation(true)
+        setStep(2)
       } catch (error) {
-        let errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
+        let errorMessage = 'حدث خطأ أثناء إنشاء الحساب'
         if (error.response?.data?.error) {
-          errorMessage = error.response.data.error;
+          errorMessage = error.response.data.error
         }
-        setErrors({ submit: errorMessage });
+        setErrors({ submit: errorMessage })
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     } else if (step === 2) {
-      setLoading(true);
+      setLoading(true)
       try {
         // تجاوز رفع الملفات مؤقتاً
         // const user = auth.currentUser;
@@ -159,23 +140,23 @@ function TeacherSignup() {
         //   },
         //   { merge: true }
         // );
-        setStep(3);
+        setStep(3)
       } catch (error) {
-        console.error('خطأ في رفع الملفات:', error);
-        setErrors({ submit: 'حدث خطأ أثناء رفع الملفات' });
+        console.error('خطأ في رفع الملفات:', error)
+        setErrors({ submit: 'حدث خطأ أثناء رفع الملفات' })
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     } else if (step === 3) {
-      setLoading(true);
+      setLoading(true)
       try {
-        const user = auth.currentUser;
-        if (!user) throw new Error('لم يتم العثور على المستخدم');
+        const user = auth.currentUser
+        if (!user) throw new Error('لم يتم العثور على المستخدم')
 
         // التحقق من حالة البريد الإلكتروني
-        await user.reload();
+        await user.reload()
         if (!user.emailVerified) {
-          throw new Error('يرجى التحقق من بريدك الإلكتروني أولاً');
+          throw new Error('يرجى التحقق من بريدك الإلكتروني أولاً')
         }
 
         // تحديث حالة المدرس في Firestore
@@ -188,55 +169,55 @@ function TeacherSignup() {
             grades: formData.educationLevels || [],
             verified: true,
             status: 'active',
-            verifiedAt: new Date(),
+            verifiedAt: new Date()
           },
           { merge: true }
-        );
+        )
 
         // تسجيل الدخول تلقائياً
-        localStorage.setItem('userType', 'teacher');
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('teacherName', formData.fullName);
+        localStorage.setItem('userType', 'teacher')
+        localStorage.setItem('isLoggedIn', 'true')
+        localStorage.setItem('teacherName', formData.fullName)
 
-        navigate('/teacher-dashboard');
+        navigate('/teacher-dashboard')
       } catch (error) {
-        console.error('خطأ في التحقق:', error);
-        setErrors({ submit: error.message || 'حدث خطأ أثناء التحقق من الحساب' });
+        console.error('خطأ في التحقق:', error)
+        setErrors({ submit: error.message || 'حدث خطأ أثناء التحقق من الحساب' })
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
-  };
+  }
 
   const handleChange = e => {
-    const { name, value, type, files } = e.target;
+    const { name, value, type, files } = e.target
 
     if (type === 'file') {
       setFormData(prev => ({
         ...prev,
-        [name]: files[0],
-      }));
+        [name]: files[0]
+      }))
     } else if (type === 'checkbox') {
-      const { checked } = e.target;
+      const { checked } = e.target
       setFormData(prev => ({
         ...prev,
-        [name]: checked ? [...prev[name], value] : prev[name].filter(item => item !== value),
-      }));
+        [name]: checked ? [...prev[name], value] : prev[name].filter(item => item !== value)
+      }))
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: value,
-      }));
+        [name]: value
+      }))
     }
 
     // مسح خطأ الحقل عند التعديل
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
-        [name]: '',
-      }));
+        [name]: ''
+      }))
     }
-  };
+  }
 
   return (
     <div className={`teacher-signup ${theme}`}>
@@ -253,25 +234,13 @@ function TeacherSignup() {
             <div className="form-step">
               <div className="form-group">
                 <label>الاسم الكامل</label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className={errors.fullName ? 'error' : ''}
-                />
+                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} className={errors.fullName ? 'error' : ''} />
                 {errors.fullName && <span className="error-message">{errors.fullName}</span>}
               </div>
 
               <div className="form-group">
                 <label>البريد الإلكتروني</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={errors.email ? 'error' : ''}
-                />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} className={errors.email ? 'error' : ''} />
                 {errors.email && <span className="error-message">{errors.email}</span>}
               </div>
 
@@ -282,9 +251,8 @@ function TeacherSignup() {
                   style={{
                     position: 'relative',
                     display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
+                    alignItems: 'center'
+                  }}>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
@@ -294,7 +262,7 @@ function TeacherSignup() {
                     style={{
                       paddingRight: '45px',
                       width: '100%',
-                      transition: 'all 0.3s ease',
+                      transition: 'all 0.3s ease'
                     }}
                   />
                   <button
@@ -317,18 +285,17 @@ function TeacherSignup() {
                       justifyContent: 'center',
                       borderRadius: '50%',
                       width: '35px',
-                      height: '35px',
+                      height: '35px'
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
-                      e.currentTarget.style.color = '#333';
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'
+                      e.currentTarget.style.color = '#333'
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = '#666';
+                      e.currentTarget.style.backgroundColor = 'transparent'
+                      e.currentTarget.style.color = '#666'
                     }}
-                    aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                  >
+                    aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}>
                     {showPassword ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -342,9 +309,8 @@ function TeacherSignup() {
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)',
-                        }}
-                      >
+                          transform: 'scale(1.1)'
+                        }}>
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                         <line x1="1" y1="1" x2="23" y2="23"></line>
                       </svg>
@@ -361,9 +327,8 @@ function TeacherSignup() {
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)',
-                        }}
-                      >
+                          transform: 'scale(1.1)'
+                        }}>
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                       </svg>
@@ -378,13 +343,7 @@ function TeacherSignup() {
                 <div className="checkbox-group">
                   {specialties.map(specialty => (
                     <label key={specialty} className="checkbox-label">
-                      <input
-                        type="checkbox"
-                        name="specialties"
-                        value={specialty}
-                        checked={formData.specialties.includes(specialty)}
-                        onChange={handleChange}
-                      />
+                      <input type="checkbox" name="specialties" value={specialty} checked={formData.specialties.includes(specialty)} onChange={handleChange} />
                       <span>{specialty}</span>
                     </label>
                   ))}
@@ -397,20 +356,12 @@ function TeacherSignup() {
                 <div className="checkbox-group">
                   {educationLevels.map(level => (
                     <label key={level} className="checkbox-label">
-                      <input
-                        type="checkbox"
-                        name="educationLevels"
-                        value={level}
-                        checked={formData.educationLevels.includes(level)}
-                        onChange={handleChange}
-                      />
+                      <input type="checkbox" name="educationLevels" value={level} checked={formData.educationLevels.includes(level)} onChange={handleChange} />
                       <span>{level}</span>
                     </label>
                   ))}
                 </div>
-                {errors.educationLevels && (
-                  <span className="error-message">{errors.educationLevels}</span>
-                )}
+                {errors.educationLevels && <span className="error-message">{errors.educationLevels}</span>}
               </div>
             </div>
           )}
@@ -466,21 +417,9 @@ function TeacherSignup() {
             <div className="form-step">
               <div className="form-group">
                 <label>رمز التفعيل</label>
-                <input
-                  type="text"
-                  name="activationCode"
-                  value={formData.activationCode}
-                  onChange={handleChange}
-                  className={errors.activationCode ? 'error' : ''}
-                />
-                {errors.activationCode && (
-                  <span className="error-message">{errors.activationCode}</span>
-                )}
-                {verificationSent && (
-                  <p className="verification-message">
-                    تم إرسال رمز التحقق إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد الخاص بك.
-                  </p>
-                )}
+                <input type="text" name="activationCode" value={formData.activationCode} onChange={handleChange} className={errors.activationCode ? 'error' : ''} />
+                {errors.activationCode && <span className="error-message">{errors.activationCode}</span>}
+                {verificationSent && <p className="verification-message">تم إرسال رمز التحقق إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد الخاص بك.</p>}
               </div>
             </div>
           )}
@@ -489,12 +428,7 @@ function TeacherSignup() {
 
           <div className="form-actions">
             {step > 1 && (
-              <button
-                type="button"
-                onClick={() => setStep(step - 1)}
-                className="back-button"
-                disabled={loading}
-              >
+              <button type="button" onClick={() => setStep(step - 1)} className="back-button" disabled={loading}>
                 رجوع
               </button>
             )}
@@ -505,7 +439,7 @@ function TeacherSignup() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
-export default TeacherSignup;
+export default TeacherSignup

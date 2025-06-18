@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
-import '../styles/TeacherProfile.css';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { doc, getDoc, updateDoc, setDoc, collection, getDocs } from 'firebase/firestore'
+import { db } from '../config/firebase'
+import '../styles/TeacherProfile.css'
 
 const TeacherProfile = () => {
-  const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate()
+  const [isEditing, setIsEditing] = useState(false)
   const [teacherData, setTeacherData] = useState({
     personalInfo: {
       fullName: '',
@@ -14,35 +14,37 @@ const TeacherProfile = () => {
       phone: '',
       qualification: '',
       experience: '',
-      specialization: '',
+      specialization: ''
     },
     professionalInfo: {
       subjects: [],
       certificates: [],
       courses: [],
       achievements: [],
-      grades: [],
-    },
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [saving, setSaving] = useState(false);
+      grades: []
+    }
+  })
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [saving, setSaving] = useState(false)
+  const [showPosts, setShowPosts] = useState(false)
+  const [myQuestions, setMyQuestions] = useState([])
 
-  const user = JSON.parse(localStorage.getItem('user'));
-  const uid = user?.uid;
+  const user = JSON.parse(localStorage.getItem('user'))
+  const uid = user?.uid
 
   const fetchTeacherData = async () => {
     if (!user || user.role !== 'teacher' || !uid) {
-      setError('يجب تسجيل الدخول كمدرس للوصول إلى هذه الصفحة');
-      setLoading(false);
-      return;
+      setError('يجب تسجيل الدخول كمدرس للوصول إلى هذه الصفحة')
+      setLoading(false)
+      return
     }
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
     try {
-      const teacherDoc = await getDoc(doc(db, 'teachers', uid));
+      const teacherDoc = await getDoc(doc(db, 'teachers', uid))
       if (teacherDoc.exists()) {
-        const data = teacherDoc.data();
+        const data = teacherDoc.data()
         setTeacherData({
           personalInfo: {
             fullName: data.fullName || '',
@@ -50,76 +52,82 @@ const TeacherProfile = () => {
             phone: data.phone || '',
             qualification: data.qualification || '',
             experience: data.experience || '',
-            specialization: data.specialization || '',
+            specialization: data.specialization || ''
           },
           professionalInfo: {
             subjects: Array.isArray(data.subjects) ? data.subjects : [],
             certificates: Array.isArray(data.certificates) ? data.certificates : [],
             courses: Array.isArray(data.courses) ? data.courses : [],
             achievements: Array.isArray(data.achievements) ? data.achievements : [],
-            grades: Array.isArray(data.grades) ? data.grades : [],
-          },
-        });
+            grades: Array.isArray(data.grades) ? data.grades : []
+          }
+        })
       } else {
-        setError('لم يتم العثور على بيانات المدرس');
+        setError('لم يتم العثور على بيانات المدرس')
       }
     } catch (error) {
-      setError('فشل في جلب البيانات');
+      setError('فشل في جلب البيانات')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchTeacherData();
+    fetchTeacherData()
     // eslint-disable-next-line
-  }, [uid]);
+  }, [uid])
 
   const handleInputChange = (section, field, value) => {
     setTeacherData(prev => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [field]: value,
-      },
-    }));
-  };
+        [field]: value
+      }
+    }))
+  }
 
   const handleArrayInputChange = (section, field, value) => {
-    const array = value.split(',').map(item => item.trim());
+    const array = value.split(',').map(item => item.trim())
     setTeacherData(prev => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [field]: array,
-      },
-    }));
-  };
+        [field]: array
+      }
+    }))
+  }
 
   const handleSave = async () => {
-    setSaving(true);
-    setError(null);
+    setSaving(true)
+    setError(null)
     try {
-      const docRef = doc(db, 'teachers', uid);
+      const docRef = doc(db, 'teachers', uid)
       const dataToSave = {
         ...teacherData.personalInfo,
-        ...teacherData.professionalInfo,
-      };
-      await setDoc(docRef, dataToSave, { merge: true });
-      setIsEditing(false);
+        ...teacherData.professionalInfo
+      }
+      await setDoc(docRef, dataToSave, { merge: true })
+      setIsEditing(false)
     } catch (error) {
-      setError('فشل في حفظ البيانات');
+      setError('فشل في حفظ البيانات')
     } finally {
-      setSaving(false);
+      setSaving(false)
     }
-  };
+  }
+
+  const handleShowPosts = async () => {
+    setShowPosts(true)
+    const snapshot = await getDocs(collection(db, `teacherPosts/${uid}/questions`))
+    setMyQuestions(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+  }
 
   if (loading) {
-    return <div className="loading">جاري التحميل...</div>;
+    return <div className="loading">جاري التحميل...</div>
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <div className="error">{error}</div>
   }
 
   return (
@@ -132,11 +140,7 @@ const TeacherProfile = () => {
       </div>
 
       <div className="edit-button-container">
-        <button
-          className={`edit-button ${isEditing ? 'save' : ''}`}
-          onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
-          disabled={saving}
-        >
+        <button className={`edit-button ${isEditing ? 'save' : ''}`} onClick={() => (isEditing ? handleSave() : setIsEditing(true))} disabled={saving}>
           {saving ? 'جاري الحفظ...' : isEditing ? 'حفظ التغييرات' : 'تعديل الملف'}
         </button>
       </div>
@@ -149,11 +153,7 @@ const TeacherProfile = () => {
             <div className="info-item">
               <label>الاسم الكامل</label>
               {isEditing ? (
-                <input
-                  type="text"
-                  value={teacherData?.personalInfo?.fullName || ''}
-                  onChange={e => handleInputChange('personalInfo', 'fullName', e.target.value)}
-                />
+                <input type="text" value={teacherData?.personalInfo?.fullName || ''} onChange={e => handleInputChange('personalInfo', 'fullName', e.target.value)} />
               ) : (
                 <p>{teacherData?.personalInfo?.fullName || ''}</p>
               )}
@@ -167,11 +167,7 @@ const TeacherProfile = () => {
             <div className="info-item">
               <label>رقم الهاتف</label>
               {isEditing ? (
-                <input
-                  type="tel"
-                  value={teacherData?.personalInfo?.phone || ''}
-                  onChange={e => handleInputChange('personalInfo', 'phone', e.target.value)}
-                />
+                <input type="tel" value={teacherData?.personalInfo?.phone || ''} onChange={e => handleInputChange('personalInfo', 'phone', e.target.value)} />
               ) : (
                 <p>{teacherData?.personalInfo?.phone || ''}</p>
               )}
@@ -180,11 +176,7 @@ const TeacherProfile = () => {
             <div className="info-item">
               <label>المؤهل العلمي</label>
               {isEditing ? (
-                <input
-                  type="text"
-                  value={teacherData?.personalInfo?.qualification || ''}
-                  onChange={e => handleInputChange('personalInfo', 'qualification', e.target.value)}
-                />
+                <input type="text" value={teacherData?.personalInfo?.qualification || ''} onChange={e => handleInputChange('personalInfo', 'qualification', e.target.value)} />
               ) : (
                 <p>{teacherData?.personalInfo?.qualification || ''}</p>
               )}
@@ -193,11 +185,7 @@ const TeacherProfile = () => {
             <div className="info-item">
               <label>سنوات الخبرة</label>
               {isEditing ? (
-                <input
-                  type="number"
-                  value={teacherData?.personalInfo?.experience || ''}
-                  onChange={e => handleInputChange('personalInfo', 'experience', e.target.value)}
-                />
+                <input type="number" value={teacherData?.personalInfo?.experience || ''} onChange={e => handleInputChange('personalInfo', 'experience', e.target.value)} />
               ) : (
                 <p>{teacherData?.personalInfo?.experience || ''} سنوات</p>
               )}
@@ -206,13 +194,7 @@ const TeacherProfile = () => {
             <div className="info-item">
               <label>التخصص</label>
               {isEditing ? (
-                <input
-                  type="text"
-                  value={teacherData?.personalInfo?.specialization || ''}
-                  onChange={e =>
-                    handleInputChange('personalInfo', 'specialization', e.target.value)
-                  }
-                />
+                <input type="text" value={teacherData?.personalInfo?.specialization || ''} onChange={e => handleInputChange('personalInfo', 'specialization', e.target.value)} />
               ) : (
                 <p>{teacherData?.personalInfo?.specialization || ''}</p>
               )}
@@ -229,9 +211,7 @@ const TeacherProfile = () => {
               {isEditing ? (
                 <textarea
                   value={teacherData?.professionalInfo?.subjects?.join(', ') || ''}
-                  onChange={e =>
-                    handleArrayInputChange('professionalInfo', 'subjects', e.target.value)
-                  }
+                  onChange={e => handleArrayInputChange('professionalInfo', 'subjects', e.target.value)}
                   placeholder="أدخل المواد مفصولة بفواصل"
                 />
               ) : (
@@ -250,9 +230,7 @@ const TeacherProfile = () => {
               {isEditing ? (
                 <textarea
                   value={teacherData?.professionalInfo?.certificates?.join(', ') || ''}
-                  onChange={e =>
-                    handleArrayInputChange('professionalInfo', 'certificates', e.target.value)
-                  }
+                  onChange={e => handleArrayInputChange('professionalInfo', 'certificates', e.target.value)}
                   placeholder="أدخل الشهادات مفصولة بفواصل"
                 />
               ) : (
@@ -271,9 +249,7 @@ const TeacherProfile = () => {
               {isEditing ? (
                 <textarea
                   value={teacherData?.professionalInfo?.courses?.join(', ') || ''}
-                  onChange={e =>
-                    handleArrayInputChange('professionalInfo', 'courses', e.target.value)
-                  }
+                  onChange={e => handleArrayInputChange('professionalInfo', 'courses', e.target.value)}
                   placeholder="أدخل الدورات مفصولة بفواصل"
                 />
               ) : (
@@ -292,9 +268,7 @@ const TeacherProfile = () => {
               {isEditing ? (
                 <textarea
                   value={teacherData?.professionalInfo?.grades?.join(', ') || ''}
-                  onChange={e =>
-                    handleArrayInputChange('professionalInfo', 'grades', e.target.value)
-                  }
+                  onChange={e => handleArrayInputChange('professionalInfo', 'grades', e.target.value)}
                   placeholder="أدخل الصفوف مفصولة بفواصل"
                 />
               ) : (
@@ -313,9 +287,7 @@ const TeacherProfile = () => {
               {isEditing ? (
                 <textarea
                   value={teacherData?.professionalInfo?.achievements?.join(', ') || ''}
-                  onChange={e =>
-                    handleArrayInputChange('professionalInfo', 'achievements', e.target.value)
-                  }
+                  onChange={e => handleArrayInputChange('professionalInfo', 'achievements', e.target.value)}
                   placeholder="أدخل الإنجازات مفصولة بفواصل"
                 />
               ) : (
@@ -330,9 +302,48 @@ const TeacherProfile = () => {
             </div>
           </div>
         </section>
-      </div>
-    </div>
-  );
-};
 
-export default TeacherProfile;
+        {/* أزرار إضافية */}
+        <div className="profile-actions">
+          <button className="profile-action-btn" onClick={handleShowPosts}>
+            عرض المنشورات
+          </button>
+          <button className="profile-action-btn" onClick={() => navigate('/teacher/exams')}>
+            عرض الاختبارات
+          </button>
+          <button className="profile-action-btn" onClick={() => navigate('/teacher/questions')}>
+            عرض الأسئلة
+          </button>
+        </div>
+      </div>
+
+      {showPosts && (
+        <div className="my-questions-list">
+          <h2>منشوراتك (أسئلتك الخاصة)</h2>
+          {myQuestions.length === 0 ? (
+            <p>لا يوجد منشورات بعد.</p>
+          ) : (
+            myQuestions.map(q => (
+              <div key={q.id} className="question-card">
+                <h3>{q.question}</h3>
+                <div className="question-meta">
+                  <span>المادة: {q.subject}</span>
+                  <span>الصف: {q.grade}</span>
+                  <span>الصعوبة: {q.difficulty}</span>
+                </div>
+                <div className="answer">
+                  <strong>الحل:</strong> {q.answer}
+                </div>
+                <div className="explanation">
+                  <strong>التفسير:</strong> {q.explanation}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default TeacherProfile

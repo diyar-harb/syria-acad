@@ -1,53 +1,42 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import '../styles/Home.css';
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import '../styles/Home.css'
 
 const Home = () => {
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  const { scrollYProgress } = useScroll()
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0)
+  }, [])
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 },
-  };
+    transition: { duration: 0.6 }
+  }
 
   const staggerContainer = {
     animate: {
       transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
+        staggerChildren: 0.2
+      }
+    }
+  }
 
   return (
     <div className="home">
       {/* Hero Section with Parallax */}
-      <motion.section
-        className="hero"
-        style={{ opacity, scale }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
+      <motion.section className="hero" style={{ opacity, scale }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
         <div className="hero-background">
           <svg className="hero-shape" viewBox="0 0 100 100" preserveAspectRatio="none">
             <path d="M0,0 L100,0 L100,100 Q50,80 0,100 Z" fill="currentColor" />
           </svg>
         </div>
         <div className="container">
-          <motion.div
-            className="hero-content"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-          >
+          <motion.div className="hero-content" variants={staggerContainer} initial="initial" animate="animate">
             <motion.h1 variants={fadeIn} className="hero-title">
               <span className="gradient-text">مرحباً بك في Syria Acadime</span>
             </motion.h1>
@@ -69,22 +58,10 @@ const Home = () => {
       {/* Features Section with 3D Cards */}
       <section className="features">
         <div className="container">
-          <motion.h2
-            className="section-title"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.h2 className="section-title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             مميزات المنصة
           </motion.h2>
-          <motion.div
-            className="features-grid"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
+          <motion.div className="features-grid" variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }}>
             <motion.div className="feature-card" variants={fadeIn} whileHover={{ scale: 1.05 }}>
               <div className="feature-icon">
                 <svg className="feature-svg" viewBox="0 0 24 24">
@@ -127,57 +104,29 @@ const Home = () => {
       </section>
 
       {/* Stats Section with Animated Numbers */}
-      <motion.section
-        className="stats"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
+      <motion.section className="stats" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
         <div className="container">
-          <motion.div
-            className="stats-grid"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
+          <motion.div className="stats-grid" variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }}>
             <motion.div className="stat-card" variants={fadeIn} whileHover={{ scale: 1.1 }}>
-              <motion.h3
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <motion.h3 initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
                 +1000
               </motion.h3>
               <p>درس تعليمي</p>
             </motion.div>
             <motion.div className="stat-card" variants={fadeIn} whileHover={{ scale: 1.1 }}>
-              <motion.h3
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <motion.h3 initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
                 +5000
               </motion.h3>
               <p>سؤال في بنك الأسئلة</p>
             </motion.div>
             <motion.div className="stat-card" variants={fadeIn} whileHover={{ scale: 1.1 }}>
-              <motion.h3
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <motion.h3 initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
                 +10000
               </motion.h3>
               <p>طالب مسجل</p>
             </motion.div>
             <motion.div className="stat-card" variants={fadeIn} whileHover={{ scale: 1.1 }}>
-              <motion.h3
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <motion.h3 initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
                 +200
               </motion.h3>
               <p>معلم متخصص</p>
@@ -186,7 +135,7 @@ const Home = () => {
         </div>
       </motion.section>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
