@@ -10,7 +10,7 @@ const TeacherDashboard = () => {
     totalStudents: 0,
     activeCourses: 0,
     totalEarnings: 0,
-    pendingReviews: 0
+    pendingReviews: 0,
   });
   const [recentStudents, setRecentStudents] = useState([]);
   const [recentCourses, setRecentCourses] = useState([]);
@@ -25,19 +25,19 @@ const TeacherDashboard = () => {
           totalStudents: 150,
           activeCourses: 8,
           totalEarnings: 2500,
-          pendingReviews: 12
+          pendingReviews: 12,
         });
 
         setRecentStudents([
           { id: 1, name: 'أحمد محمد', course: 'الرياضيات', progress: 75 },
           { id: 2, name: 'سارة أحمد', course: 'الفيزياء', progress: 60 },
-          { id: 3, name: 'محمد علي', course: 'الكيمياء', progress: 85 }
+          { id: 3, name: 'محمد علي', course: 'الكيمياء', progress: 85 },
         ]);
 
         setRecentCourses([
           { id: 1, title: 'الرياضيات المتقدمة', students: 25, rating: 4.8 },
           { id: 2, title: 'الفيزياء النووية', students: 18, rating: 4.6 },
-          { id: 3, title: 'الكيمياء العضوية', students: 30, rating: 4.9 }
+          { id: 3, title: 'الكيمياء العضوية', students: 30, rating: 4.9 },
         ]);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -56,16 +56,13 @@ const TeacherDashboard = () => {
       field: 'progress',
       headerName: 'التقدم',
       flex: 1,
-      renderCell: (params) => (
+      renderCell: params => (
         <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${params.value}%` }}
-          />
+          <div className="progress-fill" style={{ width: `${params.value}%` }} />
           <span>{params.value}%</span>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const courseColumns = [
@@ -75,13 +72,13 @@ const TeacherDashboard = () => {
       field: 'rating',
       headerName: 'التقييم',
       flex: 1,
-      renderCell: (params) => (
+      renderCell: params => (
         <div className="rating">
           <span className="stars">★★★★★</span>
           <span className="rating-value">{params.value}</span>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -150,4 +147,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard; 
+export default TeacherDashboard;

@@ -6,9 +6,7 @@ const { authenticateUser, checkRole } = require('../middleware/auth');
 // الحصول على جميع الاختبارات
 router.get('/', authenticateUser, async (req, res) => {
   try {
-    const examsSnapshot = await db.collection('exams')
-      .where('isActive', '==', true)
-      .get();
+    const examsSnapshot = await db.collection('exams').where('isActive', '==', true).get();
 
     const exams = [];
     examsSnapshot.forEach(doc => {
@@ -36,7 +34,7 @@ router.post('/', authenticateUser, checkRole(['teacher']), async (req, res) => {
       questions,
       createdBy: req.user.uid,
       createdAt: new Date(),
-      isActive: true
+      isActive: true,
     });
 
     res.status(201).json({ id: examRef.id, message: 'تم إنشاء الاختبار بنجاح' });
@@ -50,7 +48,7 @@ router.post('/', authenticateUser, checkRole(['teacher']), async (req, res) => {
 router.get('/:examId', authenticateUser, async (req, res) => {
   try {
     const examDoc = await db.collection('exams').doc(req.params.examId).get();
-    
+
     if (!examDoc.exists) {
       return res.status(404).json({ error: 'الاختبار غير موجود' });
     }
@@ -67,7 +65,7 @@ router.post('/:examId/submit', authenticateUser, checkRole(['student']), async (
   try {
     const { answers } = req.body;
     const examDoc = await db.collection('exams').doc(req.params.examId).get();
-    
+
     if (!examDoc.exists) {
       return res.status(404).json({ error: 'الاختبار غير موجود' });
     }
@@ -80,7 +78,7 @@ router.post('/:examId/submit', authenticateUser, checkRole(['student']), async (
     for (const questionId of exam.questions) {
       const questionDoc = await db.collection('questions').doc(questionId).get();
       const question = questionDoc.data();
-      
+
       totalPoints += question.points;
       if (answers[questionId] === question.correctAnswer) {
         totalScore += question.points;
@@ -98,7 +96,7 @@ router.post('/:examId/submit', authenticateUser, checkRole(['student']), async (
       score: percentage,
       totalPoints,
       passed,
-      completedAt: new Date()
+      completedAt: new Date(),
     });
 
     res.json({
@@ -106,7 +104,7 @@ router.post('/:examId/submit', authenticateUser, checkRole(['student']), async (
       score: percentage,
       passed,
       totalScore,
-      totalPoints
+      totalPoints,
     });
   } catch (error) {
     console.error('خطأ في تقديم الاختبار:', error);
@@ -114,4 +112,4 @@ router.post('/:examId/submit', authenticateUser, checkRole(['student']), async (
   }
 });
 
-module.exports = router; 
+module.exports = router;

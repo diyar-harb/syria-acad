@@ -7,13 +7,13 @@ export const testFirebaseConnection = async () => {
     const testCollection = collection(db, 'test');
     await addDoc(testCollection, {
       message: 'Test connection',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
 
     // قراءة البيانات للتأكد
     const querySnapshot = await getDocs(testCollection);
     const results = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       results.push({ id: doc.id, ...doc.data() });
     });
 
@@ -23,4 +23,4 @@ export const testFirebaseConnection = async () => {
     console.error('Firebase connection error:', error);
     return false;
   }
-}; 
+};

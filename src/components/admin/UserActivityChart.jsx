@@ -14,7 +14,7 @@ function UserActivityChart() {
       }
 
       const ctx = chartRef.current.getContext('2d');
-      
+
       // بيانات نموذجية
       const data = {
         labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
@@ -25,7 +25,7 @@ function UserActivityChart() {
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
-            tension: 0.4
+            tension: 0.4,
           },
           {
             label: 'المستخدمون النشطون',
@@ -33,9 +33,9 @@ function UserActivityChart() {
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 2,
-            tension: 0.4
-          }
-        ]
+            tension: 0.4,
+          },
+        ],
       };
 
       const options = {
@@ -46,25 +46,25 @@ function UserActivityChart() {
             position: 'top',
             labels: {
               font: {
-                size: 12
-              }
-            }
-          }
+                size: 12,
+              },
+            },
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-              stepSize: 20
-            }
-          }
-        }
+              stepSize: 20,
+            },
+          },
+        },
       };
 
       chartInstance.current = new Chart(ctx, {
         type: 'line',
         data: data,
-        options: options
+        options: options,
       });
     }
 
@@ -82,4 +82,4 @@ function UserActivityChart() {
   );
 }
 
-export default UserActivityChart; 
+export default UserActivityChart;

@@ -10,35 +10,51 @@ const Courses = () => {
     { id: 'math', name: 'الرياضيات' },
     { id: 'science', name: 'العلوم' },
     { id: 'arabic', name: 'اللغة العربية' },
-    { id: 'english', name: 'اللغة الإنجليزية' }
+    { id: 'english', name: 'اللغة الإنجليزية' },
   ];
 
   const courses = [
-    { id: 1, title: 'الرياضيات المتقدمة', teacher: 'أ. سامر', description: 'دورة شاملة في الرياضيات للمرحلة الثانوية.' },
-    { id: 2, title: 'الفيزياء النووية', teacher: 'أ. ليلى', description: 'مفاهيم الفيزياء النووية والتطبيقات العملية.' },
-    { id: 3, title: 'اللغة الإنجليزية', teacher: 'أ. أحمد', description: 'تطوير مهارات اللغة الإنجليزية لجميع المستويات.' }
+    {
+      id: 1,
+      title: 'الرياضيات المتقدمة',
+      teacher: 'أ. سامر',
+      description: 'دورة شاملة في الرياضيات للمرحلة الثانوية.',
+    },
+    {
+      id: 2,
+      title: 'الفيزياء النووية',
+      teacher: 'أ. ليلى',
+      description: 'مفاهيم الفيزياء النووية والتطبيقات العملية.',
+    },
+    {
+      id: 3,
+      title: 'اللغة الإنجليزية',
+      teacher: 'أ. أحمد',
+      description: 'تطوير مهارات اللغة الإنجليزية لجميع المستويات.',
+    },
   ];
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6 },
   };
 
-  const filteredCourses = selectedCategory === 'all' 
-    ? courses 
-    : courses.filter(course => course.category === selectedCategory);
+  const filteredCourses =
+    selectedCategory === 'all'
+      ? courses
+      : courses.filter(course => course.category === selectedCategory);
 
   return (
     <div className="courses-page">
-      <motion.section 
+      <motion.section
         className="courses-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
         <div className="container">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -57,7 +73,7 @@ const Courses = () => {
 
       <section className="courses-content">
         <div className="container">
-          <motion.div 
+          <motion.div
             className="categories"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,20 +90,20 @@ const Courses = () => {
             ))}
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="courses-list"
             initial="initial"
             animate="animate"
             variants={{
               animate: {
                 transition: {
-                  staggerChildren: 0.1
-                }
-              }
+                  staggerChildren: 0.1,
+                },
+              },
             }}
           >
             {filteredCourses.map(course => (
-              <motion.div 
+              <motion.div
                 key={course.id}
                 className="course-card"
                 variants={fadeIn}
@@ -106,4 +122,4 @@ const Courses = () => {
   );
 };
 
-export default Courses; 
+export default Courses;

@@ -51,4 +51,4 @@ function DashboardStats({ stats }) {
   );
 }
 
-export default DashboardStats; 
+export default DashboardStats;

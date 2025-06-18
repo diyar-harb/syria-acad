@@ -16,22 +16,22 @@ const LearningContent = () => {
       title: 'ملخص التفاضل والتكامل',
       type: 'pdf',
       size: '2.5 MB',
-      downloads: 234
+      downloads: 234,
     },
     {
       id: 2,
       title: 'تمارين محلولة - المتجهات',
       type: 'pdf',
       size: '1.8 MB',
-      downloads: 156
+      downloads: 156,
     },
     {
       id: 3,
       title: 'شرح قوانين نيوتن',
       type: 'video',
       duration: '15:30',
-      views: 789
-    }
+      views: 789,
+    },
   ];
 
   const renderContent = () => {
@@ -185,12 +185,10 @@ const LearningContent = () => {
           </div>
         </header>
 
-        <div className="content-body">
-          {renderContent()}
-        </div>
+        <div className="content-body">{renderContent()}</div>
       </main>
     </div>
   );
 };
 
-export default LearningContent; 
+export default LearningContent;

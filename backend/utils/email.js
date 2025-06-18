@@ -20,22 +20,12 @@ const transporter = nodemailer.createTransport({
  * @param {string} options.html - HTML content
  */
 const sendEmail = async (options) => {
-  try {
-    const mailOptions = {
-      from: process.env.SMTP_FROM,
-      to: options.to,
-      subject: options.subject,
-      text: options.text,
-      html: options.html
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
-    return info;
-  } catch (error) {
-    console.error('Error sending email:', error);
-    throw error;
-  }
+  console.log('*** Email sending is DISABLED in development mode ***');
+  console.log('To:', options.to);
+  console.log('Subject:', options.subject);
+  console.log('Text:', options.text);
+  // لا يتم إرسال الإيميل فعليًا
+  return true;
 };
 
 module.exports = {

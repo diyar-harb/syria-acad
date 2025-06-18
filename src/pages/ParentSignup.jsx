@@ -15,7 +15,7 @@ function ParentSignup() {
     relationship: '',
     otp: '',
     studentCode: '',
-    studentEmail: ''
+    studentEmail: '',
   });
   const [errors, setErrors] = useState({});
   const [showOTP, setShowOTP] = useState(false);
@@ -26,18 +26,19 @@ function ParentSignup() {
     if (!formData.phone) newErrors.phone = 'رقم الهاتف مطلوب';
     if (!formData.email) newErrors.email = 'البريد الإلكتروني مطلوب';
     if (!formData.password) newErrors.password = 'كلمة المرور مطلوبة';
-    if (formData.password.length < 8) newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+    if (formData.password.length < 8)
+      newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
     if (!formData.relationship) newErrors.relationship = 'صلة القرابة مطلوبة';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (step === 1 && !validateStep1()) return;
-    
+
     if (step === 2) {
       // التحقق من صحة OTP
       if (!formData.otp) {
@@ -46,7 +47,7 @@ function ParentSignup() {
       }
       // هنا سيتم التحقق من OTP مع الخادم
     }
-    
+
     if (step === 3) {
       // التحقق من وجود كود الطالب أو البريد الإلكتروني
       if (!formData.studentCode && !formData.studentEmail) {
@@ -70,17 +71,17 @@ function ParentSignup() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // مسح خطأ الحقل عند التعديل
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
@@ -170,7 +171,9 @@ function ParentSignup() {
                   <option value="mother">أم</option>
                   <option value="guardian">وصي</option>
                 </select>
-                {errors.relationship && <span className="error-message">{errors.relationship}</span>}
+                {errors.relationship && (
+                  <span className="error-message">{errors.relationship}</span>
+                )}
               </div>
             </div>
           )}
@@ -233,4 +236,4 @@ function ParentSignup() {
   );
 }
 
-export default ParentSignup; 
+export default ParentSignup;

@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // تسجيل الدخول
-  const login = async (credentials) => {
+  const login = async credentials => {
     setLoading(true);
     try {
       const response = await authService.login(credentials);
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // تسجيل حساب جديد
-  const register = async (userData) => {
+  const register = async userData => {
     setLoading(true);
     try {
       const response = await authService.register(userData);
@@ -107,15 +107,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // تحديث معلومات المستخدم
-  const updateUser = (userData) => {
+  const updateUser = userData => {
     setUser(prevUser => ({
       ...prevUser,
-      ...userData
+      ...userData,
     }));
   };
 
   // التحقق من الصلاحيات
-  const hasRole = (requiredRoles) => {
+  const hasRole = requiredRoles => {
     if (!user) return false;
     if (!requiredRoles || requiredRoles.length === 0) return true;
     return requiredRoles.some(role => user.roles.includes(role));
@@ -134,11 +134,7 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export default AuthContext; 
+export default AuthContext;

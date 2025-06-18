@@ -14,7 +14,7 @@ function Dashboard() {
     totalUsers: 0,
     activeCourses: 0,
     monthlyRevenue: 0,
-    activeTeachers: 0
+    activeTeachers: 0,
   });
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function Dashboard() {
           totalUsers: 1250,
           activeCourses: 45,
           monthlyRevenue: 15000,
-          activeTeachers: 35
+          activeTeachers: 35,
         };
         setStats(mockData);
       } catch (error) {
@@ -73,4 +73,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

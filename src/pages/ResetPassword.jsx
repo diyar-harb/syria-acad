@@ -10,21 +10,21 @@ const ResetPassword = () => {
     email: '',
     otp: '',
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = password => {
     if (password.length < 8) return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
     if (!/[A-Z]/.test(password)) return 'يجب أن تحتوي كلمة المرور على حرف كبير على الأقل';
     if (!/[a-z]/.test(password)) return 'يجب أن تحتوي كلمة المرور على حرف صغير على الأقل';
@@ -32,7 +32,7 @@ const ResetPassword = () => {
     return '';
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -108,7 +108,7 @@ const ResetPassword = () => {
                 <label htmlFor="newPassword">كلمة المرور الجديدة</label>
                 <div className="password-input-container">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     id="newPassword"
                     name="newPassword"
                     value={formData.newPassword}
@@ -120,7 +120,7 @@ const ResetPassword = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="password-toggle-btn"
                   >
-                    {showPassword ? "إخفاء" : "إظهار"}
+                    {showPassword ? 'إخفاء' : 'إظهار'}
                   </button>
                 </div>
               </div>
@@ -129,7 +129,7 @@ const ResetPassword = () => {
                 <label htmlFor="confirmPassword">تأكيد كلمة المرور</label>
                 <div className="password-input-container">
                   <input
-                    type={showConfirmPassword ? "text" : "password"}
+                    type={showConfirmPassword ? 'text' : 'password'}
                     id="confirmPassword"
                     name="confirmPassword"
                     value={formData.confirmPassword}
@@ -141,7 +141,7 @@ const ResetPassword = () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="password-toggle-btn"
                   >
-                    {showConfirmPassword ? "إخفاء" : "إظهار"}
+                    {showConfirmPassword ? 'إخفاء' : 'إظهار'}
                   </button>
                 </div>
               </div>
@@ -149,13 +149,15 @@ const ResetPassword = () => {
           )}
 
           {error && <p className="error-message">{error}</p>}
-          
+
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'جاري المعالجة...' : 
-              step === 1 ? 'إرسال رمز التحقق' :
-              step === 2 ? 'التحقق من الرمز' :
-              'تغيير كلمة المرور'
-            }
+            {loading
+              ? 'جاري المعالجة...'
+              : step === 1
+                ? 'إرسال رمز التحقق'
+                : step === 2
+                  ? 'التحقق من الرمز'
+                  : 'تغيير كلمة المرور'}
           </button>
         </form>
       </div>
@@ -163,4 +165,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword; 
+export default ResetPassword;

@@ -12,7 +12,7 @@ function ContentManagement() {
   const [filters, setFilters] = useState({
     category: 'all',
     status: 'all',
-    level: 'all'
+    level: 'all',
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function ContentManagement() {
             status: 'منشور',
             teacher: 'د. أحمد محمد',
             students: 150,
-            rating: 4.8
+            rating: 4.8,
           },
           {
             id: 2,
@@ -39,7 +39,7 @@ function ContentManagement() {
             status: 'قيد المراجعة',
             teacher: 'د. سارة أحمد',
             students: 85,
-            rating: 4.5
+            rating: 4.5,
           },
           // ... المزيد من المحتوى
         ];
@@ -61,36 +61,36 @@ function ContentManagement() {
       { key: 'level', label: 'المستوى' },
       { key: 'status', label: 'الحالة' },
       { key: 'teacher', label: 'المدرس' },
-      { 
-        key: 'students', 
+      {
+        key: 'students',
         label: 'عدد الطلاب',
-        render: (item) => `${item.students} طالب`
+        render: item => `${item.students} طالب`,
       },
-      { 
-        key: 'rating', 
+      {
+        key: 'rating',
         label: 'التقييم',
-        render: (item) => `${item.rating} / 5`
+        render: item => `${item.rating} / 5`,
       },
       {
         key: 'actions',
         label: 'الإجراءات',
-        render: (item) => (
+        render: item => (
           <div className="actions">
-            <button 
+            <button
               className="action-button preview"
               title="معاينة"
               onClick={() => handlePreview(item.id)}
             >
               <i className="fas fa-eye" />
             </button>
-            <button 
+            <button
               className="action-button edit"
               title="تعديل"
               onClick={() => handleEdit(item.id)}
             >
               <i className="fas fa-edit" />
             </button>
-            <button 
+            <button
               className="action-button delete"
               title="حذف"
               onClick={() => handleDelete(item.id)}
@@ -110,16 +110,16 @@ function ContentManagement() {
       {
         key: 'actions',
         label: 'الإجراءات',
-        render: (item) => (
+        render: item => (
           <div className="actions">
-            <button 
+            <button
               className="action-button preview"
               title="معاينة"
               onClick={() => handlePreviewExam(item.id)}
             >
               <i className="fas fa-eye" />
             </button>
-            <button 
+            <button
               className="action-button edit"
               title="تعديل"
               onClick={() => handleEditExam(item.id)}
@@ -129,30 +129,30 @@ function ContentManagement() {
           </div>
         ),
       },
-    ]
+    ],
   };
 
-  const handlePreview = (id) => {
+  const handlePreview = id => {
     // معالجة معاينة المحتوى
     console.log('Preview content:', id);
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = id => {
     // معالجة تعديل المحتوى
     console.log('Edit content:', id);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     // معالجة حذف المحتوى
     console.log('Delete content:', id);
   };
 
-  const handlePreviewExam = (id) => {
+  const handlePreviewExam = id => {
     // معالجة معاينة الاختبار
     console.log('Preview exam:', id);
   };
 
-  const handleEditExam = (id) => {
+  const handleEditExam = id => {
     // معالجة تعديل الاختبار
     console.log('Edit exam:', id);
   };
@@ -171,13 +171,13 @@ function ContentManagement() {
         </div>
 
         <div className="content-tabs">
-          <button 
+          <button
             className={`tab-button ${activeTab === 'courses' ? 'active' : ''}`}
             onClick={() => setActiveTab('courses')}
           >
             الدورات
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'exams' ? 'active' : ''}`}
             onClick={() => setActiveTab('exams')}
           >
@@ -188,9 +188,9 @@ function ContentManagement() {
         <div className="filters-section">
           <div className="filter-group">
             <label>التصنيف:</label>
-            <select 
+            <select
               value={filters.category}
-              onChange={(e) => setFilters({...filters, category: e.target.value})}
+              onChange={e => setFilters({ ...filters, category: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="math">الرياضيات</option>
@@ -201,9 +201,9 @@ function ContentManagement() {
 
           <div className="filter-group">
             <label>الحالة:</label>
-            <select 
+            <select
               value={filters.status}
-              onChange={(e) => setFilters({...filters, status: e.target.value})}
+              onChange={e => setFilters({ ...filters, status: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="published">منشور</option>
@@ -214,9 +214,9 @@ function ContentManagement() {
 
           <div className="filter-group">
             <label>المستوى:</label>
-            <select 
+            <select
               value={filters.level}
-              onChange={(e) => setFilters({...filters, level: e.target.value})}
+              onChange={e => setFilters({ ...filters, level: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="beginner">مبتدئ</option>
@@ -239,4 +239,4 @@ function ContentManagement() {
   );
 }
 
-export default ContentManagement; 
+export default ContentManagement;

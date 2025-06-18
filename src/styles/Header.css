@@ -6,16 +6,21 @@
   left: 0;
   right: 0;
   z-index: var(--z-index-fixed);
-  transition: background-color var(--transition-normal);
-  height: 72px; /* Fixed height for the header */
+  transition: all var(--transition-normal);
+  height: 72px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header.scrolled {
+  background-color: rgba(var(--bg-primary-rgb), 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Add styles for main content spacing */
 main {
   padding-top: 72px; /* Same as header height */
-  min-height: calc(
-    100vh - 72px
-  ); /* Ensure content takes full viewport height minus header */
+  min-height: calc(100vh - 72px); /* Ensure content takes full viewport height minus header */
 }
 
 .container {
@@ -34,6 +39,11 @@ main {
 .logo-img {
   height: 40px;
   width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
 }
 
 .nav ul {
@@ -47,7 +57,24 @@ main {
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  transition: color var(--transition-normal);
+  transition: all var(--transition-normal);
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
 }
 
 .nav a:hover {
@@ -66,15 +93,32 @@ main {
   padding: 0.5rem;
   border-radius: 50%;
   transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
 }
 
-.theme-btn:hover {
-  background-color: var(--bg-secondary);
-  transform: scale(1.1);
+.theme-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.theme-btn:hover::before {
+  width: 100%;
+  height: 100%;
 }
 
 .theme-btn i {
   font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .menu-toggle {
@@ -87,6 +131,8 @@ main {
   border: none;
   cursor: pointer;
   padding: 0;
+  position: relative;
+  z-index: 100;
 }
 
 .menu-toggle span {
@@ -94,6 +140,7 @@ main {
   height: 3px;
   background-color: var(--text-primary);
   transition: all var(--transition-normal);
+  border-radius: 3px;
 }
 
 @media (max-width: 768px) {
@@ -113,6 +160,8 @@ main {
     opacity: 0;
     visibility: hidden;
     transition: all var(--transition-normal);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .nav.active {
@@ -150,7 +199,7 @@ main {
 
 /* Dark mode specific styles */
 .header.dark {
-  background-color: var(--bg-primary);
+  background-color: rgba(var(--bg-primary-rgb), 0.95);
 }
 
 .header.dark .nav a {
@@ -166,6 +215,26 @@ main {
   border-radius: var(--border-radius-md);
   font-weight: 600;
   transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn:hover::before {
+  width: 300%;
+  height: 300%;
 }
 
 .btn-primary {
@@ -176,6 +245,7 @@ main {
 .btn-primary:hover {
   background-color: var(--primary-light);
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3);
 }
 
 .btn-secondary {
@@ -186,6 +256,7 @@ main {
 .btn-secondary:hover {
   background-color: var(--accent-color);
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(var(--secondary-color-rgb), 0.3);
 }
 
 .logout-btn {
@@ -195,7 +266,23 @@ main {
   padding: 0.5rem 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: color var(--transition-normal);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.logout-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.logout-btn:hover::after {
+  width: 100%;
 }
 
 .logout-btn:hover {
@@ -237,32 +324,35 @@ main {
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal);
+}
+
+.dropdown-toggle:hover {
+  background-color: var(--bg-secondary);
 }
 
 .dropdown-menu {
   position: absolute;
   top: 110%;
   right: 0;
-  min-width: 170px;
-  background: var(--card-bg, #fff);
-  border-radius: var(--border-radius-md, 8px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  background: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.2s;
-}
-
-@keyframes fadeIn {
-  from {
     opacity: 0;
+  visibility: hidden;
     transform: translateY(-10px);
+  transition: all var(--transition-normal);
   }
-  to {
+
+.dropdown-menu.show {
     opacity: 1;
+  visibility: visible;
     transform: translateY(0);
-  }
 }
 
 .dropdown-item {
@@ -270,53 +360,59 @@ main {
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.2s, color 0.2s;
+  transition: all var(--transition-normal);
   cursor: pointer;
   border: none;
   background: none;
   text-align: right;
+  display: block;
+  width: 100%;
 }
 
 .dropdown-item:hover {
-  background: var(--bg-secondary, #f5f5f5);
+  background: var(--bg-secondary);
   color: var(--primary-color);
-}
-
-/* Show dropdown */
-.dropdown-menu.show {
-  display: flex;
-}
-
-/* Adjust login button */
-.login-btn {
-  margin-right: 0.5rem;
-}
-
-/* Responsive: stack actions on mobile */
-@media (max-width: 768px) {
-  .header-actions {
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-  .dropdown-menu {
-    right: auto;
-    left: 0;
-    min-width: 150px;
-  }
+  padding-right: 1.5rem;
 }
 
 /* Dark mode for dropdown */
 .header.dark .dropdown-menu {
-  background: var(--dark-card-bg, #232323);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  background: var(--dark-card-bg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
+
 .header.dark .dropdown-item {
-  color: var(--dark-text-color, #fff);
+  color: var(--dark-text-color);
 }
+
 .header.dark .dropdown-item:hover {
-  background: var(--dark-bg-secondary, #333);
+  background: var(--dark-bg-secondary);
   color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-actions.desktop-actions {
+    display: none;
+  }
+
+  .mobile-actions {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .mobile-actions .btn,
+  .mobile-actions .theme-toggle {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .mobile-actions .dropdown-menu {
+    left: 0;
+    right: auto;
+    min-width: 100%;
+  }
 }
 
 .header-actions.desktop-actions {
@@ -325,25 +421,4 @@ main {
 
 .mobile-actions {
   display: none;
-}
-
-@media (max-width: 768px) {
-  .header-actions.desktop-actions {
-    display: none;
-  }
-  .mobile-actions {
-    display: block;
-    margin-top: 1rem;
-  }
-  .mobile-actions .btn,
-  .mobile-actions .theme-toggle {
-    width: 100%;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-  .mobile-actions .dropdown-menu {
-    left: 0;
-    right: auto;
-    min-width: 100%;
-  }
 }

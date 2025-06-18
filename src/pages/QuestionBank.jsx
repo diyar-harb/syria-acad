@@ -7,14 +7,14 @@ const QuestionBank = () => {
   const subjects = [...new Set(questions.map(q => q.subject))];
 
   return (
-    <motion.div 
+    <motion.div
       className="question-bank"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <h1>بنك الأسئلة</h1>
-      
+
       {subjects.map(subject => (
         <div key={subject} className="subject-section">
           <h2>{subject}</h2>
@@ -22,7 +22,7 @@ const QuestionBank = () => {
             {questions
               .filter(q => q.subject === subject)
               .map(question => (
-                <motion.div 
+                <motion.div
                   key={question.id}
                   className="question-card"
                   whileHover={{ scale: 1.02 }}
@@ -54,4 +54,4 @@ const QuestionBank = () => {
   );
 };
 
-export default QuestionBank; 
+export default QuestionBank;

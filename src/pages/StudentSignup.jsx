@@ -20,17 +20,13 @@ function StudentSignup() {
     school: '',
     interests: [],
     profileImage: null,
-    activationCode: ''
+    activationCode: '',
   });
   const [errors, setErrors] = useState({});
   const [showActivation, setShowActivation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const educationLevels = [
-    'الابتدائي',
-    'الإعدادي',
-    'الثانوي'
-  ];
+  const educationLevels = ['الابتدائي', 'الإعدادي', 'الثانوي'];
 
   const interests = [
     'الرياضيات',
@@ -43,7 +39,7 @@ function StudentSignup() {
     'التاريخ',
     'الجغرافيا',
     'الفنون',
-    'البرمجة'
+    'البرمجة',
   ];
 
   const validateStep1 = () => {
@@ -54,29 +50,33 @@ function StudentSignup() {
       newErrors.email = 'البريد الإلكتروني غير صالح';
     }
     if (!formData.password) newErrors.password = 'كلمة المرور مطلوبة';
-    if (formData.password.length < 8) newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-    if (!/[A-Z]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف كبير على الأقل';
-    if (!/[a-z]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف صغير على الأقل';
-    if (!/[0-9]/.test(formData.password)) newErrors.password = 'يجب أن تحتوي كلمة المرور على رقم على الأقل';
+    if (formData.password.length < 8)
+      newErrors.password = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+    if (!/[A-Z]/.test(formData.password))
+      newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف كبير على الأقل';
+    if (!/[a-z]/.test(formData.password))
+      newErrors.password = 'يجب أن تحتوي كلمة المرور على حرف صغير على الأقل';
+    if (!/[0-9]/.test(formData.password))
+      newErrors.password = 'يجب أن تحتوي كلمة المرور على رقم على الأقل';
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'كلمات المرور غير متطابقة';
     }
     if (!formData.birthDate) newErrors.birthDate = 'تاريخ الميلاد مطلوب';
     if (!formData.educationLevel) newErrors.educationLevel = 'المرحلة الدراسية مطلوبة';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     if (step === 1 && !validateStep1()) {
       setIsLoading(false);
       return;
     }
-    
+
     if (step === 3) {
       if (!formData.activationCode) {
         setErrors({ activationCode: 'رمز التفعيل مطلوب' });
@@ -107,30 +107,28 @@ function StudentSignup() {
       }
       setStep(step + 1);
     }
-    
+
     setIsLoading(false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value, type, files } = e.target;
-    
+
     if (type === 'file') {
       setFormData(prev => ({
         ...prev,
-        [name]: files[0]
+        [name]: files[0],
       }));
     } else if (type === 'checkbox') {
       const { checked } = e.target;
       setFormData(prev => ({
         ...prev,
-        [name]: checked
-          ? [...prev[name], value]
-          : prev[name].filter(item => item !== value)
+        [name]: checked ? [...prev[name], value] : prev[name].filter(item => item !== value),
       }));
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
 
@@ -138,13 +136,13 @@ function StudentSignup() {
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
   return (
-    <motion.div 
+    <motion.div
       className={`student-signup ${theme}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -160,7 +158,7 @@ function StudentSignup() {
 
         <form onSubmit={handleSubmit}>
           {step === 1 && (
-            <motion.div 
+            <motion.div
               className="form-step"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -194,22 +192,25 @@ function StudentSignup() {
 
               <div className="form-group">
                 <label>كلمة المرور</label>
-                <div className="password-input-container" style={{ 
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                <input
-                    type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={errors.password ? 'error' : ''}
-                  placeholder="أدخل كلمة المرور"
-                    style={{ 
+                <div
+                  className="password-input-container"
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={errors.password ? 'error' : ''}
+                    placeholder="أدخل كلمة المرور"
+                    style={{
                       paddingRight: '45px',
                       width: '100%',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
                     }}
                   />
                   <button
@@ -232,51 +233,51 @@ function StudentSignup() {
                       justifyContent: 'center',
                       borderRadius: '50%',
                       width: '35px',
-                      height: '35px'
+                      height: '35px',
                     }}
-                    onMouseEnter={(e) => {
+                    onMouseEnter={e => {
                       e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
                       e.currentTarget.style.color = '#333';
                     }}
-                    onMouseLeave={(e) => {
+                    onMouseLeave={e => {
                       e.currentTarget.style.backgroundColor = 'transparent';
                       e.currentTarget.style.color = '#666';
                     }}
-                    aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                    aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                   >
                     {showPassword ? (
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)'
+                          transform: 'scale(1.1)',
                         }}
                       >
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                         <line x1="1" y1="1" x2="23" y2="23"></line>
                       </svg>
                     ) : (
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)'
+                          transform: 'scale(1.1)',
                         }}
                       >
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -290,22 +291,25 @@ function StudentSignup() {
 
               <div className="form-group">
                 <label>تأكيد كلمة المرور</label>
-                <div className="password-input-container" style={{ 
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                <input
-                    type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className={errors.confirmPassword ? 'error' : ''}
-                  placeholder="أعد إدخال كلمة المرور"
-                    style={{ 
+                <div
+                  className="password-input-container"
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className={errors.confirmPassword ? 'error' : ''}
+                    placeholder="أعد إدخال كلمة المرور"
+                    style={{
                       paddingRight: '45px',
                       width: '100%',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
                     }}
                   />
                   <button
@@ -328,51 +332,51 @@ function StudentSignup() {
                       justifyContent: 'center',
                       borderRadius: '50%',
                       width: '35px',
-                      height: '35px'
+                      height: '35px',
                     }}
-                    onMouseEnter={(e) => {
+                    onMouseEnter={e => {
                       e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
                       e.currentTarget.style.color = '#333';
                     }}
-                    onMouseLeave={(e) => {
+                    onMouseLeave={e => {
                       e.currentTarget.style.backgroundColor = 'transparent';
                       e.currentTarget.style.color = '#666';
                     }}
-                    aria-label={showConfirmPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                    aria-label={showConfirmPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                   >
                     {showConfirmPassword ? (
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)'
+                          transform: 'scale(1.1)',
                         }}
                       >
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                         <line x1="1" y1="1" x2="23" y2="23"></line>
                       </svg>
                     ) : (
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
                         strokeLinejoin="round"
                         style={{
                           transition: 'transform 0.3s ease',
-                          transform: 'scale(1.1)'
+                          transform: 'scale(1.1)',
                         }}
                       >
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -381,7 +385,9 @@ function StudentSignup() {
                     )}
                   </button>
                 </div>
-                {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+                {errors.confirmPassword && (
+                  <span className="error-message">{errors.confirmPassword}</span>
+                )}
               </div>
 
               <div className="form-group">
@@ -406,16 +412,20 @@ function StudentSignup() {
                 >
                   <option value="">اختر المرحلة</option>
                   {educationLevels.map(level => (
-                    <option key={level} value={level}>{level}</option>
+                    <option key={level} value={level}>
+                      {level}
+                    </option>
                   ))}
                 </select>
-                {errors.educationLevel && <span className="error-message">{errors.educationLevel}</span>}
+                {errors.educationLevel && (
+                  <span className="error-message">{errors.educationLevel}</span>
+                )}
               </div>
             </motion.div>
           )}
 
           {step === 2 && (
-            <motion.div 
+            <motion.div
               className="form-step"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -465,7 +475,7 @@ function StudentSignup() {
           )}
 
           {step === 3 && showActivation && (
-            <motion.div 
+            <motion.div
               className="form-step"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -485,7 +495,9 @@ function StudentSignup() {
                   className={errors.activationCode ? 'error' : ''}
                   placeholder="أدخل رمز التفعيل"
                 />
-                {errors.activationCode && <span className="error-message">{errors.activationCode}</span>}
+                {errors.activationCode && (
+                  <span className="error-message">{errors.activationCode}</span>
+                )}
               </div>
             </motion.div>
           )}
@@ -518,4 +530,4 @@ function StudentSignup() {
   );
 }
 
-export default StudentSignup; 
+export default StudentSignup;

@@ -22,13 +22,13 @@ const Exam = () => {
     const fetchExam = async () => {
       try {
         const exam = await examService.getExam(examId);
-      setCurrentExam(exam);
-      setTimeLeft(exam.duration * 60);
+        setCurrentExam(exam);
+        setTimeLeft(exam.duration * 60);
         setLoading(false);
       } catch (error) {
         setError('حدث خطأ في تحميل الاختبار');
         setLoading(false);
-    }
+      }
     };
 
     fetchExam();
@@ -43,7 +43,7 @@ const Exam = () => {
         correctAnswers: result.correctAnswers,
         totalQuestions: result.totalQuestions,
         totalScore: result.totalScore,
-        totalPoints: result.totalPoints
+        totalPoints: result.totalPoints,
       });
       setShowResults(true);
     } catch (error) {
@@ -65,7 +65,7 @@ const Exam = () => {
   const handleAnswerSelect = (questionId, answer) => {
     setAnswers(prev => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -99,7 +99,7 @@ const Exam = () => {
 
   if (showInstructions) {
     return (
-      <motion.div 
+      <motion.div
         className="exam-instructions"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -107,9 +107,15 @@ const Exam = () => {
       >
         <h2>{currentExam.title}</h2>
         <div className="exam-info">
-          <p><strong>المادة:</strong> {currentExam.subject}</p>
-          <p><strong>المدة:</strong> {currentExam.duration} دقيقة</p>
-          <p><strong>الدرجة المطلوبة للنجاح:</strong> {currentExam.passingGrade}%</p>
+          <p>
+            <strong>المادة:</strong> {currentExam.subject}
+          </p>
+          <p>
+            <strong>المدة:</strong> {currentExam.duration} دقيقة
+          </p>
+          <p>
+            <strong>الدرجة المطلوبة للنجاح:</strong> {currentExam.passingGrade}%
+          </p>
         </div>
         <div className="instructions">
           <h3>تعليمات الاختبار:</h3>
@@ -119,10 +125,7 @@ const Exam = () => {
             ))}
           </ul>
         </div>
-        <button 
-          className="btn btn-primary"
-          onClick={startExam}
-        >
+        <button className="btn btn-primary" onClick={startExam}>
           بدء الاختبار
         </button>
       </motion.div>
@@ -131,25 +134,24 @@ const Exam = () => {
 
   if (showResults) {
     return (
-      <motion.div 
+      <motion.div
         className="exam-results"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         <h2>نتيجة الاختبار</h2>
-        <div className={`score ${feedback.passed ? 'passed' : 'failed'}`}>
-          {Math.round(score)}%
-        </div>
+        <div className={`score ${feedback.passed ? 'passed' : 'failed'}`}>{Math.round(score)}%</div>
         <div className="feedback">
-          <p>عدد الإجابات الصحيحة: {feedback.correctAnswers} من {feedback.totalQuestions}</p>
-          <p>النقاط: {feedback.totalScore} من {feedback.totalPoints}</p>
+          <p>
+            عدد الإجابات الصحيحة: {feedback.correctAnswers} من {feedback.totalQuestions}
+          </p>
+          <p>
+            النقاط: {feedback.totalScore} من {feedback.totalPoints}
+          </p>
           <p>الحالة: {feedback.passed ? 'ناجح' : 'راسب'}</p>
         </div>
-        <button 
-          className="btn btn-primary"
-          onClick={() => navigate('/dashboard')}
-        >
+        <button className="btn btn-primary" onClick={() => navigate('/dashboard')}>
           العودة للرئيسية
         </button>
       </motion.div>
@@ -194,7 +196,7 @@ const Exam = () => {
         </div>
 
         <div className="navigation-buttons">
-          <button 
+          <button
             className="btn btn-secondary"
             onClick={handlePrevious}
             disabled={currentQuestionIndex === 0}
@@ -202,17 +204,11 @@ const Exam = () => {
             السابق
           </button>
           {currentQuestionIndex === currentExam.questions.length - 1 ? (
-            <button 
-              className="btn btn-primary"
-              onClick={handleSubmit}
-            >
+            <button className="btn btn-primary" onClick={handleSubmit}>
               إنهاء الاختبار
             </button>
           ) : (
-            <button 
-              className="btn btn-primary"
-              onClick={handleNext}
-            >
+            <button className="btn btn-primary" onClick={handleNext}>
               التالي
             </button>
           )}
@@ -222,4 +218,4 @@ const Exam = () => {
   );
 };
 
-export default Exam; 
+export default Exam;

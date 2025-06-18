@@ -58,7 +58,7 @@
 }
 
 .instructions li:before {
-  content: "•";
+  content: '•';
   color: var(--primary-color);
   position: absolute;
   right: 0;
@@ -260,4 +260,4 @@
   .options {
     grid-template-columns: 1fr;
   }
-} 
+}

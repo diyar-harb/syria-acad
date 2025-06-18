@@ -5,7 +5,7 @@ import '../styles/Questions.css';
 const Questions = () => {
   return (
     <div className="questions-page">
-      <motion.section 
+      <motion.section
         className="questions-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -29,4 +29,4 @@ const Questions = () => {
   );
 };
 
-export default Questions; 
+export default Questions;

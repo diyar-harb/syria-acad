@@ -28,7 +28,7 @@ const App = () => {
   useEffect(() => {
     // اختبار الاتصال بـ Firebase عند بدء التطبيق
     testFirebaseConnection();
-    
+
     // اختبار الاتصال بالخادم
     testBackendConnection();
   }, []);
@@ -66,4 +66,4 @@ const App = () => {
   );
 };
 
-export default App; 
+export default App;

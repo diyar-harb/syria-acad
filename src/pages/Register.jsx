@@ -7,13 +7,13 @@ const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignupClick = (type) => {
+  const handleSignupClick = type => {
     navigate(`/${type}-signup`);
   };
 
   return (
     <div className="auth-page">
-      <motion.div 
+      <motion.div
         className="auth-container"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,4 +39,4 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;

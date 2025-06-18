@@ -14,7 +14,7 @@ const TeacherDashboard = () => {
     // التحقق من حالة تسجيل الدخول
     const userType = localStorage.getItem('userType');
     const loggedIn = localStorage.getItem('isLoggedIn');
-    
+
     if (loggedIn !== 'true' || userType !== 'teacher') {
       navigate('/login');
     } else {
@@ -30,13 +30,18 @@ const TeacherDashboard = () => {
     totalStudents: 120,
     activeClasses: 5,
     totalQuestions: 250,
-    averageScore: 85
+    averageScore: 85,
   };
 
   const recentActivities = [
-    { id: 1, type: 'question', text: 'تم إضافة 10 أسئلة جديدة في مادة الرياضيات', time: 'منذ ساعتين' },
+    {
+      id: 1,
+      type: 'question',
+      text: 'تم إضافة 10 أسئلة جديدة في مادة الرياضيات',
+      time: 'منذ ساعتين',
+    },
     { id: 2, type: 'class', text: 'تم إنشاء فصل جديد: الفيزياء للصف العاشر', time: 'منذ 3 ساعات' },
-    { id: 3, type: 'exam', text: 'تم تصحيح اختبار نصف الفصل', time: 'منذ 5 ساعات' }
+    { id: 3, type: 'exam', text: 'تم تصحيح اختبار نصف الفصل', time: 'منذ 5 ساعات' },
   ];
 
   return (
@@ -46,25 +51,25 @@ const TeacherDashboard = () => {
           <img src={logo} alt="Syria Acadime Logo" className="dashboard-logo" />
         </div>
         <nav className="dashboard-nav">
-          <button 
+          <button
             className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             نظرة عامة
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'students' ? 'active' : ''}`}
             onClick={() => setActiveTab('students')}
           >
             الطلاب
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'questions' ? 'active' : ''}`}
             onClick={() => setActiveTab('questions')}
           >
             بنك الأسئلة
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'exams' ? 'active' : ''}`}
             onClick={() => setActiveTab('exams')}
           >
@@ -83,7 +88,7 @@ const TeacherDashboard = () => {
         </header>
 
         <div className="dashboard-content">
-          <motion.div 
+          <motion.div
             className="stats-grid"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,7 +112,7 @@ const TeacherDashboard = () => {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="recent-activities"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -132,4 +137,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard; 
+export default TeacherDashboard;

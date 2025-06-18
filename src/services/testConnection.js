@@ -11,4 +11,4 @@ export const testBackendConnection = async () => {
     console.error('Backend connection error:', error);
     return false;
   }
-}; 
+};

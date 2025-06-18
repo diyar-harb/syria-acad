@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { auth } from '../config/firebase';
+import { signInWithCustomToken } from 'firebase/auth';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -9,28 +11,38 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 دقائق
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 // إضافة التوكن لكل الطلبات
 api.interceptors.request.use(
-  (config) => {
+  config => {
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
   }
 );
 
 // معالجة تجديد التوكن التلقائي
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  response => response,
+  async error => {
+    // إذا كان الخطأ 401 أثناء تسجيل الدخول أو عند استدعاء /auth/login، لا تعيد المحاولة
+    if (
+      error.response?.status === 401 &&
+      error.config &&
+      error.config.url &&
+      error.config.url.includes('/auth/login')
+    ) {
+      return Promise.reject(error);
+    }
+    // منطق التجديد التلقائي للتوكن لباقي الطلبات فقط
     if (error.response?.status === 401) {
       try {
         const response = await authService.refreshToken();
@@ -50,11 +62,11 @@ api.interceptors.response.use(
 const cacheData = (key, data) => {
   cache.set(key, {
     data,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 };
 
-const getCachedData = (key) => {
+const getCachedData = key => {
   const cached = cache.get(key);
   if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
     return cached.data;
@@ -65,8 +77,16 @@ const getCachedData = (key) => {
 export const authService = {
   async login(email, password) {
     const response = await api.post('/auth/login', { email, password });
-    localStorage.setItem('token', response.data.token);
-    return response.data;
+    const customToken = response.data.token;
+    try {
+      await signInWithCustomToken(auth, customToken);
+      const idToken = await auth.currentUser.getIdToken();
+      localStorage.setItem('token', idToken);
+      return response.data;
+    } catch (error) {
+      console.error('Firebase signInWithCustomToken error:', error);
+      throw error;
+    }
   },
 
   async register(userData) {
@@ -91,14 +111,19 @@ export const authService = {
       this.logout();
       throw new Error('No token available to refresh.');
     }
-    
+
     try {
       // Send the expired token in the Authorization header for the refresh request
-      const response = await api.post('/auth/refresh-token', {}, { // Pass an empty body, headers as third arg
-        headers: {
-          'Authorization': `Bearer ${expiredToken}`
+      const response = await api.post(
+        '/auth/refresh-token',
+        {},
+        {
+          // Pass an empty body, headers as third arg
+          headers: {
+            Authorization: `Bearer ${expiredToken}`,
+          },
         }
-      });
+      );
       // The backend should return a new token in the response data
       return response.data;
     } catch (error) {
@@ -140,7 +165,7 @@ export const authService = {
       const response = await axios.post(`${API_URL}/auth/reset-password`, {
         email,
         otp,
-        newPassword
+        newPassword,
       });
       return response.data;
     } catch (error) {
@@ -150,7 +175,7 @@ export const authService = {
 
   handleError(error) {
     // Implementation of handleError method
-  }
+  },
 };
 
 export const examService = {
@@ -182,7 +207,7 @@ export const examService = {
     const response = await api.post(`/exams/${examId}/submit`, { answers });
     cache.delete(`exam_${examId}`); // مسح التخزين المؤقت للاختبار
     return response.data;
-  }
+  },
 };
 
-export default api; 
+export default api;

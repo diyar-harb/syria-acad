@@ -10,7 +10,7 @@ function RecentActivity() {
       action: 'تسجيل جديد',
       user: 'أحمد محمد',
       time: 'منذ 5 دقائق',
-      icon: 'fas fa-user-plus'
+      icon: 'fas fa-user-plus',
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ function RecentActivity() {
       action: 'إضافة دورة جديدة',
       user: 'د. سارة أحمد',
       time: 'منذ 15 دقيقة',
-      icon: 'fas fa-book'
+      icon: 'fas fa-book',
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ function RecentActivity() {
       action: 'اشتراك جديد',
       user: 'محمد علي',
       time: 'منذ 30 دقيقة',
-      icon: 'fas fa-credit-card'
+      icon: 'fas fa-credit-card',
     },
     {
       id: 4,
@@ -34,11 +34,11 @@ function RecentActivity() {
       action: 'إكمال اختبار',
       user: 'نورا خالد',
       time: 'منذ ساعة',
-      icon: 'fas fa-clipboard-check'
-    }
+      icon: 'fas fa-clipboard-check',
+    },
   ];
 
-  const getActivityColor = (type) => {
+  const getActivityColor = type => {
     switch (type) {
       case 'user':
         return 'var(--primary-color)';
@@ -57,7 +57,7 @@ function RecentActivity() {
     <div className="recent-activity-list">
       {activities.map(activity => (
         <div key={activity.id} className="activity-item">
-          <div 
+          <div
             className="activity-icon"
             style={{ backgroundColor: getActivityColor(activity.type) }}
           >
@@ -76,4 +76,4 @@ function RecentActivity() {
   );
 }
 
-export default RecentActivity; 
+export default RecentActivity;

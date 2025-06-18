@@ -75,9 +75,9 @@
   font-weight: 500;
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
+.form-group input[type='text'],
+.form-group input[type='email'],
+.form-group input[type='password'] {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
@@ -86,7 +86,7 @@
   color: var(--text-color);
 }
 
-.form-group input[type="file"] {
+.form-group input[type='file'] {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
@@ -123,7 +123,7 @@
   color: var(--text-color);
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type='checkbox'] {
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -165,8 +165,8 @@
 }
 
 .verification-message {
-  color: #4CAF50;
-  background-color: #E8F5E9;
+  color: #4caf50;
+  background-color: #e8f5e9;
   padding: 10px;
   border-radius: 4px;
   margin-top: 10px;
@@ -195,10 +195,10 @@
   color: var(--dark-text-color);
 }
 
-.dark .form-group input[type="text"],
-.dark .form-group input[type="email"],
-.dark .form-group input[type="password"],
-.dark .form-group input[type="file"] {
+.dark .form-group input[type='text'],
+.dark .form-group input[type='email'],
+.dark .form-group input[type='password'],
+.dark .form-group input[type='file'] {
   background-color: var(--dark-input-bg);
   border-color: var(--dark-border-color);
   color: var(--dark-text-color);
@@ -226,4 +226,4 @@
   .submit-button {
     width: 100%;
   }
-} 
+}

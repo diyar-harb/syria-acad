@@ -13,7 +13,7 @@ function RevenueChart() {
       }
 
       const ctx = chartRef.current.getContext('2d');
-      
+
       const data = {
         labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
         datasets: [
@@ -23,9 +23,9 @@ function RevenueChart() {
             backgroundColor: 'rgba(153, 102, 255, 0.2)',
             borderColor: 'rgba(153, 102, 255, 1)',
             borderWidth: 2,
-            tension: 0.4
-          }
-        ]
+            tension: 0.4,
+          },
+        ],
       };
 
       const options = {
@@ -36,34 +36,34 @@ function RevenueChart() {
             position: 'top',
             labels: {
               font: {
-                size: 12
-              }
-            }
+                size: 12,
+              },
+            },
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
+              label: function (context) {
                 return `$${context.raw.toLocaleString()}`;
-              }
-            }
-          }
+              },
+            },
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-              callback: function(value) {
+              callback: function (value) {
                 return `$${value.toLocaleString()}`;
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
 
       chartInstance.current = new Chart(ctx, {
         type: 'line',
         data: data,
-        options: options
+        options: options,
       });
     }
 
@@ -81,4 +81,4 @@ function RevenueChart() {
   );
 }
 
-export default RevenueChart; 
+export default RevenueChart;

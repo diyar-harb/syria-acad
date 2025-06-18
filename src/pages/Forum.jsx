@@ -12,7 +12,7 @@ const Forum = () => {
     { id: 'math', name: 'الرياضيات' },
     { id: 'physics', name: 'الفيزياء' },
     { id: 'general', name: 'مواضيع عامة' },
-    { id: 'homework', name: 'الواجبات المنزلية' }
+    { id: 'homework', name: 'الواجبات المنزلية' },
   ];
 
   const discussions = [
@@ -26,7 +26,7 @@ const Forum = () => {
       comments: 8,
       date: '2024-03-15',
       tags: ['تفاضل وتكامل', 'رياضيات متقدمة'],
-      solved: true
+      solved: true,
     },
     {
       id: 2,
@@ -38,22 +38,23 @@ const Forum = () => {
       comments: 12,
       date: '2024-03-14',
       tags: ['ميكانيكا', 'قوانين نيوتن'],
-      solved: false
-    }
+      solved: false,
+    },
   ];
 
   const filterDiscussions = () => {
     return discussions.filter(discussion => {
       const matchesCategory = activeCategory === 'all' || discussion.category === activeCategory;
-      const matchesSearch = discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          discussion.content.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch =
+        discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        discussion.content.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   };
 
   return (
     <div className="forum-container">
-      <motion.div 
+      <motion.div
         className="forum-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,16 +67,14 @@ const Forum = () => {
             type="text"
             placeholder="ابحث في المنتدى..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
           />
         </div>
-        <button className="btn btn-primary create-post-btn">
-          إنشاء موضوع جديد
-        </button>
+        <button className="btn btn-primary create-post-btn">إنشاء موضوع جديد</button>
       </motion.div>
 
       <div className="forum-content">
-        <motion.div 
+        <motion.div
           className="categories-list"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -92,7 +91,7 @@ const Forum = () => {
           ))}
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="discussions-list"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -109,11 +108,9 @@ const Forum = () => {
             >
               <div className="discussion-header">
                 <h3>{discussion.title}</h3>
-                {discussion.solved && (
-                  <span className="solved-badge">تم الحل</span>
-                )}
+                {discussion.solved && <span className="solved-badge">تم الحل</span>}
               </div>
-              
+
               <div className="discussion-meta">
                 <span className="author">{discussion.author}</span>
                 <span className="date">{discussion.date}</span>
@@ -123,7 +120,9 @@ const Forum = () => {
 
               <div className="tags-list">
                 {discussion.tags.map((tag, index) => (
-                  <span key={index} className="tag">{tag}</span>
+                  <span key={index} className="tag">
+                    {tag}
+                  </span>
                 ))}
               </div>
 
@@ -188,4 +187,4 @@ const Forum = () => {
   );
 };
 
-export default Forum; 
+export default Forum;

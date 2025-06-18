@@ -5,7 +5,7 @@ import '../styles/Exams.css';
 const Exams = () => {
   return (
     <div className="exams-page">
-      <motion.section 
+      <motion.section
         className="exams-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -29,4 +29,4 @@ const Exams = () => {
   );
 };
 
-export default Exams; 
+export default Exams;

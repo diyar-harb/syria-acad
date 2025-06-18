@@ -31,7 +31,7 @@
 }
 
 .progress-bar::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;
@@ -120,7 +120,7 @@
   cursor: pointer;
 }
 
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type='checkbox'] {
   width: auto;
   margin: 0;
 }

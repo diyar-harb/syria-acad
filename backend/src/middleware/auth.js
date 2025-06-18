@@ -17,7 +17,7 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-const checkRole = (roles) => {
+const checkRole = roles => {
   return async (req, res, next) => {
     try {
       const userDoc = await db.collection('users').doc(req.user.uid).get();
@@ -40,5 +40,5 @@ const checkRole = (roles) => {
 
 module.exports = {
   authenticateUser,
-  checkRole
-}; 
+  checkRole,
+};

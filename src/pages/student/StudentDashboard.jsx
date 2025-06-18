@@ -11,25 +11,49 @@ const StudentDashboard = () => {
     averageGrade: 0,
     activeCourses: 0,
     completedLessons: 0,
-    upcomingExams: 0
+    upcomingExams: 0,
   });
   const [recentCourses, setRecentCourses] = useState([]);
   const [upcomingExams, setUpcomingExams] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([
-    { id: 1, subject: 'الرياضيات', teacher: 'أ. سامر', content: 'يرجى مراجعة واجب الدرس الأخير.', date: '2024-03-18' },
-    { id: 2, subject: 'الفيزياء', teacher: 'أ. ليلى', content: 'تم تحديد موعد اختبار جديد.', date: '2024-03-19' }
+    {
+      id: 1,
+      subject: 'الرياضيات',
+      teacher: 'أ. سامر',
+      content: 'يرجى مراجعة واجب الدرس الأخير.',
+      date: '2024-03-18',
+    },
+    {
+      id: 2,
+      subject: 'الفيزياء',
+      teacher: 'أ. ليلى',
+      content: 'تم تحديد موعد اختبار جديد.',
+      date: '2024-03-19',
+    },
   ]);
   const [newMessage, setNewMessage] = useState({ subject: '', teacher: '', content: '' });
   const [loading, setLoading] = useState(true);
   const studentName = localStorage.getItem('studentName');
   const [lessons, setLessons] = useState([
-    { id: 1, subject: 'الرياضيات', title: 'المعادلات الخطية', homework: 'حل التمارين 1-5', due: '2024-03-22' },
-    { id: 2, subject: 'الفيزياء', title: 'الطاقة الحركية', homework: 'تقرير عملي', due: '2024-03-24' }
+    {
+      id: 1,
+      subject: 'الرياضيات',
+      title: 'المعادلات الخطية',
+      homework: 'حل التمارين 1-5',
+      due: '2024-03-22',
+    },
+    {
+      id: 2,
+      subject: 'الفيزياء',
+      title: 'الطاقة الحركية',
+      homework: 'تقرير عملي',
+      due: '2024-03-24',
+    },
   ]);
   const [reports, setReports] = useState([
     { id: 1, title: 'تقرير الأداء الفصلي', date: '2024-03-15', file: '#' },
-    { id: 2, title: 'تقرير درجات منتصف الفصل', date: '2024-02-10', file: '#' }
+    { id: 2, title: 'تقرير درجات منتصف الفصل', date: '2024-02-10', file: '#' },
   ]);
 
   useEffect(() => {
@@ -41,26 +65,36 @@ const StudentDashboard = () => {
           averageGrade: 85,
           activeCourses: 4,
           completedLessons: 32,
-          upcomingExams: 2
+          upcomingExams: 2,
         });
 
         // دورات حديثة وهمية
         setRecentCourses([
           { id: 1, title: 'الرياضيات المتقدمة', progress: 75, nextLesson: '2024-03-20' },
           { id: 2, title: 'الفيزياء النووية', progress: 60, nextLesson: '2024-03-22' },
-          { id: 3, title: 'الكيمياء العضوية', progress: 85, nextLesson: '2024-03-25' }
+          { id: 3, title: 'الكيمياء العضوية', progress: 85, nextLesson: '2024-03-25' },
         ]);
 
         // اختبارات قادمة وهمية
         setUpcomingExams([
           { id: 1, title: 'اختبار الرياضيات النهائي', date: '2024-04-01', duration: 60 },
-          { id: 2, title: 'اختبار العلوم الفصلي', date: '2024-03-25', duration: 45 }
+          { id: 2, title: 'اختبار العلوم الفصلي', date: '2024-03-25', duration: 45 },
         ]);
 
         // إشعارات وهمية
         setNotifications([
-          { id: 1, title: 'واجب جديد', message: 'تم نشر واجب جديد في مادة الرياضيات', date: '2024-03-18' },
-          { id: 2, title: 'تذكير بالاختبار', message: 'اختبار العلوم غداً الساعة 10 صباحاً', date: '2024-03-19' }
+          {
+            id: 1,
+            title: 'واجب جديد',
+            message: 'تم نشر واجب جديد في مادة الرياضيات',
+            date: '2024-03-18',
+          },
+          {
+            id: 2,
+            title: 'تذكير بالاختبار',
+            message: 'اختبار العلوم غداً الساعة 10 صباحاً',
+            date: '2024-03-19',
+          },
         ]);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -78,22 +112,19 @@ const StudentDashboard = () => {
       field: 'progress',
       headerName: 'التقدم',
       flex: 1,
-      renderCell: (params) => (
+      renderCell: params => (
         <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${params.value}%` }}
-          />
+          <div className="progress-fill" style={{ width: `${params.value}%` }} />
           <span>{params.value}%</span>
         </div>
-      )
+      ),
     },
     {
       field: 'nextLesson',
       headerName: 'الدرس القادم',
       flex: 1,
-      renderCell: (params) => new Date(params.value).toLocaleDateString('ar-SA')
-    }
+      renderCell: params => new Date(params.value).toLocaleDateString('ar-SA'),
+    },
   ];
 
   const examColumns = [
@@ -102,25 +133,25 @@ const StudentDashboard = () => {
       field: 'date',
       headerName: 'التاريخ',
       flex: 1,
-      renderCell: (params) => new Date(params.value).toLocaleDateString('ar-SA')
+      renderCell: params => new Date(params.value).toLocaleDateString('ar-SA'),
     },
     {
       field: 'duration',
       headerName: 'المدة',
       flex: 1,
-      renderCell: (params) => `${params.value} دقيقة`
-    }
+      renderCell: params => `${params.value} دقيقة`,
+    },
   ];
 
-  const handleMessageChange = (e) => {
+  const handleMessageChange = e => {
     setNewMessage({ ...newMessage, [e.target.name]: e.target.value });
   };
-  const handleSendMessage = (e) => {
+  const handleSendMessage = e => {
     e.preventDefault();
     if (!newMessage.subject || !newMessage.teacher || !newMessage.content) return;
     setMessages([
       ...messages,
-      { id: messages.length + 1, ...newMessage, date: new Date().toISOString().slice(0, 10) }
+      { id: messages.length + 1, ...newMessage, date: new Date().toISOString().slice(0, 10) },
     ]);
     setNewMessage({ subject: '', teacher: '', content: '' });
   };
@@ -136,9 +167,15 @@ const StudentDashboard = () => {
 
         {/* روابط سريعة */}
         <div className="quick-actions" style={{ marginBottom: '1.5rem', display: 'flex', gap: 12 }}>
-          <Link to="/question-bank" className="btn btn-primary">بنك الأسئلة</Link>
-          <Link to="/forum" className="btn btn-secondary">المنتدى</Link>
-          <Link to="/exams" className="btn btn-primary">بدء اختبار جديد</Link>
+          <Link to="/question-bank" className="btn btn-primary">
+            بنك الأسئلة
+          </Link>
+          <Link to="/forum" className="btn btn-secondary">
+            المنتدى
+          </Link>
+          <Link to="/exams" className="btn btn-primary">
+            بدء اختبار جديد
+          </Link>
         </div>
 
         <div className="stats-grid">
@@ -214,7 +251,11 @@ const StudentDashboard = () => {
         {/* قسم الرسائل */}
         <div className="messages-section">
           <h2>الرسائل مع المعلمين</h2>
-          <form className="send-message-form" onSubmit={handleSendMessage} style={{ marginBottom: '1rem' }}>
+          <form
+            className="send-message-form"
+            onSubmit={handleSendMessage}
+            style={{ marginBottom: '1rem' }}
+          >
             <input
               type="text"
               name="subject"
@@ -239,12 +280,16 @@ const StudentDashboard = () => {
               onChange={handleMessageChange}
               style={{ marginLeft: 8, width: 200 }}
             />
-            <button type="submit" className="btn btn-primary">إرسال</button>
+            <button type="submit" className="btn btn-primary">
+              إرسال
+            </button>
           </form>
           <div className="messages-list">
             {messages.map(msg => (
               <div key={msg.id} className="message-card">
-                <div><b>{msg.subject}</b> - {msg.teacher}</div>
+                <div>
+                  <b>{msg.subject}</b> - {msg.teacher}
+                </div>
                 <div>{msg.content}</div>
                 <div className="message-date">{new Date(msg.date).toLocaleDateString('ar-SA')}</div>
               </div>
@@ -283,8 +328,17 @@ const StudentDashboard = () => {
           <ul className="reports-list">
             {reports.map(report => (
               <li key={report.id}>
-                <span>{report.title} ({new Date(report.date).toLocaleDateString('ar-SA')})</span>
-                <a href={report.file} download className="btn btn-secondary" style={{ marginRight: 8 }}>تحميل</a>
+                <span>
+                  {report.title} ({new Date(report.date).toLocaleDateString('ar-SA')})
+                </span>
+                <a
+                  href={report.file}
+                  download
+                  className="btn btn-secondary"
+                  style={{ marginRight: 8 }}
+                >
+                  تحميل
+                </a>
               </li>
             ))}
           </ul>
@@ -294,4 +348,4 @@ const StudentDashboard = () => {
   );
 };
 
-export default StudentDashboard; 
+export default StudentDashboard;

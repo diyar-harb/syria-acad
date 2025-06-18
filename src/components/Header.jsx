@@ -28,9 +28,9 @@ const Header = () => {
     closeMenu();
   };
 
-  const handleDropdown = (e) => {
+  const handleDropdown = e => {
     e.stopPropagation();
-    setIsDropdownOpen((prev) => !prev);
+    setIsDropdownOpen(prev => !prev);
   };
 
   // Close dropdown on outside click
@@ -54,11 +54,31 @@ const Header = () => {
 
           <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
             <ul>
-              <li><Link to="/" onClick={closeMenu}>الرئيسية</Link></li>
-              <li><Link to="/teachers" onClick={closeMenu}>المعلمين</Link></li>
-              <li><Link to="/question-bank" onClick={closeMenu}>بنك الأسئلة</Link></li>
-              <li><Link to="/exams" onClick={closeMenu}>الاختبارات</Link></li>
-              <li><Link to="/forum" onClick={closeMenu}>المنتدى</Link></li>
+              <li>
+                <Link to="/" onClick={closeMenu}>
+                  الرئيسية
+                </Link>
+              </li>
+              <li>
+                <Link to="/teachers" onClick={closeMenu}>
+                  المعلمين
+                </Link>
+              </li>
+              <li>
+                <Link to="/question-bank" onClick={closeMenu}>
+                  بنك الأسئلة
+                </Link>
+              </li>
+              <li>
+                <Link to="/exams" onClick={closeMenu}>
+                  الاختبارات
+                </Link>
+              </li>
+              <li>
+                <Link to="/forum" onClick={closeMenu}>
+                  المنتدى
+                </Link>
+              </li>
               {/* Mobile actions */}
               <li className="mobile-actions">
                 {!isLoggedIn && (
@@ -69,19 +89,35 @@ const Header = () => {
                       </button>
                       {isDropdownOpen && (
                         <div className="dropdown-menu show">
-                          <Link to="/student-signup" className="dropdown-item" onClick={closeMenu}>كطالب</Link>
-                          <Link to="/teacher-signup" className="dropdown-item" onClick={closeMenu}>كمدرس</Link>
-                          <Link to="/parent-signup" className="dropdown-item" onClick={closeMenu}>كولي أمر</Link>
+                          <Link to="/student-signup" className="dropdown-item" onClick={closeMenu}>
+                            كطالب
+                          </Link>
+                          <Link to="/teacher-signup" className="dropdown-item" onClick={closeMenu}>
+                            كمدرس
+                          </Link>
+                          <Link to="/parent-signup" className="dropdown-item" onClick={closeMenu}>
+                            كولي أمر
+                          </Link>
                         </div>
                       )}
                     </div>
-                    <Link to="/login" className="btn btn-secondary login-btn" onClick={closeMenu}>تسجيل الدخول</Link>
+                    <Link to="/login" className="btn btn-secondary login-btn" onClick={closeMenu}>
+                      تسجيل الدخول
+                    </Link>
                   </>
                 )}
                 {isLoggedIn && (
                   <>
-                    <Link to={`/${userType}-dashboard`} className="btn btn-primary dashboard-btn" onClick={closeMenu}>لوحة التحكم</Link>
-                    <button onClick={handleLogout} className="logout-btn">تسجيل الخروج</button>
+                    <Link
+                      to={`/${userType}-dashboard`}
+                      className="btn btn-primary dashboard-btn"
+                      onClick={closeMenu}
+                    >
+                      لوحة التحكم
+                    </Link>
+                    <button onClick={handleLogout} className="logout-btn">
+                      تسجيل الخروج
+                    </button>
                   </>
                 )}
                 <div className="theme-toggle">
@@ -107,19 +143,35 @@ const Header = () => {
                   </button>
                   {isDropdownOpen && (
                     <div className="dropdown-menu show">
-                      <Link to="/student-signup" className="dropdown-item" onClick={closeMenu}>كطالب</Link>
-                      <Link to="/teacher-signup" className="dropdown-item" onClick={closeMenu}>كمدرس</Link>
-                      <Link to="/parent-signup" className="dropdown-item" onClick={closeMenu}>كولي أمر</Link>
+                      <Link to="/student-signup" className="dropdown-item" onClick={closeMenu}>
+                        كطالب
+                      </Link>
+                      <Link to="/teacher-signup" className="dropdown-item" onClick={closeMenu}>
+                        كمدرس
+                      </Link>
+                      <Link to="/parent-signup" className="dropdown-item" onClick={closeMenu}>
+                        كولي أمر
+                      </Link>
                     </div>
                   )}
                 </div>
-                <Link to="/login" className="btn btn-secondary login-btn" onClick={closeMenu}>تسجيل الدخول</Link>
+                <Link to="/login" className="btn btn-secondary login-btn" onClick={closeMenu}>
+                  تسجيل الدخول
+                </Link>
               </>
             )}
             {isLoggedIn && (
               <>
-                <Link to={`/${userType}-dashboard`} className="btn btn-primary dashboard-btn" onClick={closeMenu}>لوحة التحكم</Link>
-                <button onClick={handleLogout} className="logout-btn">تسجيل الخروج</button>
+                <Link
+                  to={`/${userType}-dashboard`}
+                  className="btn btn-primary dashboard-btn"
+                  onClick={closeMenu}
+                >
+                  لوحة التحكم
+                </Link>
+                <button onClick={handleLogout} className="logout-btn">
+                  تسجيل الخروج
+                </button>
               </>
             )}
             <div className="theme-toggle">
@@ -144,4 +196,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

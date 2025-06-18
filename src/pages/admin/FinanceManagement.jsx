@@ -12,7 +12,7 @@ function FinanceManagement() {
   const [filters, setFilters] = useState({
     type: 'all',
     status: 'all',
-    dateRange: 'all'
+    dateRange: 'all',
   });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function FinanceManagement() {
             status: 'مكتمل',
             date: '2024-03-20',
             user: 'أحمد محمد',
-            paymentMethod: 'بطاقة ائتمان'
+            paymentMethod: 'بطاقة ائتمان',
           },
           {
             id: 2,
@@ -37,7 +37,7 @@ function FinanceManagement() {
             status: 'قيد المعالجة',
             date: '2024-03-19',
             user: 'د. سارة أحمد',
-            paymentMethod: 'تحويل بنكي'
+            paymentMethod: 'تحويل بنكي',
           },
           // ... المزيد من المعاملات
         ];
@@ -54,24 +54,28 @@ function FinanceManagement() {
 
   const columns = {
     subscriptions: [
-      { key: 'date', label: 'التاريخ', render: (item) => new Date(item.date).toLocaleDateString('ar-SA') },
+      {
+        key: 'date',
+        label: 'التاريخ',
+        render: item => new Date(item.date).toLocaleDateString('ar-SA'),
+      },
       { key: 'user', label: 'المستخدم' },
-      { key: 'amount', label: 'المبلغ', render: (item) => `$${item.amount}` },
+      { key: 'amount', label: 'المبلغ', render: item => `$${item.amount}` },
       { key: 'paymentMethod', label: 'طريقة الدفع' },
       { key: 'status', label: 'الحالة' },
       {
         key: 'actions',
         label: 'الإجراءات',
-        render: (item) => (
+        render: item => (
           <div className="actions">
-            <button 
+            <button
               className="action-button view"
               title="عرض التفاصيل"
               onClick={() => handleViewDetails(item.id)}
             >
               <i className="fas fa-eye" />
             </button>
-            <button 
+            <button
               className="action-button refund"
               title="استرداد"
               onClick={() => handleRefund(item.id)}
@@ -83,31 +87,35 @@ function FinanceManagement() {
       },
     ],
     withdrawals: [
-      { key: 'date', label: 'التاريخ', render: (item) => new Date(item.date).toLocaleDateString('ar-SA') },
+      {
+        key: 'date',
+        label: 'التاريخ',
+        render: item => new Date(item.date).toLocaleDateString('ar-SA'),
+      },
       { key: 'user', label: 'المدرس' },
-      { key: 'amount', label: 'المبلغ', render: (item) => `$${item.amount}` },
+      { key: 'amount', label: 'المبلغ', render: item => `$${item.amount}` },
       { key: 'paymentMethod', label: 'طريقة السحب' },
       { key: 'status', label: 'الحالة' },
       {
         key: 'actions',
         label: 'الإجراءات',
-        render: (item) => (
+        render: item => (
           <div className="actions">
-            <button 
+            <button
               className="action-button view"
               title="عرض التفاصيل"
               onClick={() => handleViewDetails(item.id)}
             >
               <i className="fas fa-eye" />
             </button>
-            <button 
+            <button
               className="action-button approve"
               title="موافقة"
               onClick={() => handleApprove(item.id)}
             >
               <i className="fas fa-check" />
             </button>
-            <button 
+            <button
               className="action-button reject"
               title="رفض"
               onClick={() => handleReject(item.id)}
@@ -117,25 +125,25 @@ function FinanceManagement() {
           </div>
         ),
       },
-    ]
+    ],
   };
 
-  const handleViewDetails = (id) => {
+  const handleViewDetails = id => {
     // معالجة عرض تفاصيل المعاملة
     console.log('View details:', id);
   };
 
-  const handleRefund = (id) => {
+  const handleRefund = id => {
     // معالجة استرداد المبلغ
     console.log('Refund:', id);
   };
 
-  const handleApprove = (id) => {
+  const handleApprove = id => {
     // معالجة الموافقة على السحب
     console.log('Approve withdrawal:', id);
   };
 
-  const handleReject = (id) => {
+  const handleReject = id => {
     // معالجة رفض السحب
     console.log('Reject withdrawal:', id);
   };
@@ -154,13 +162,13 @@ function FinanceManagement() {
         </div>
 
         <div className="finance-tabs">
-          <button 
+          <button
             className={`tab-button ${activeTab === 'subscriptions' ? 'active' : ''}`}
             onClick={() => setActiveTab('subscriptions')}
           >
             الاشتراكات
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'withdrawals' ? 'active' : ''}`}
             onClick={() => setActiveTab('withdrawals')}
           >
@@ -171,9 +179,9 @@ function FinanceManagement() {
         <div className="filters-section">
           <div className="filter-group">
             <label>نوع المعاملة:</label>
-            <select 
+            <select
               value={filters.type}
-              onChange={(e) => setFilters({...filters, type: e.target.value})}
+              onChange={e => setFilters({ ...filters, type: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="subscription">اشتراك</option>
@@ -183,9 +191,9 @@ function FinanceManagement() {
 
           <div className="filter-group">
             <label>الحالة:</label>
-            <select 
+            <select
               value={filters.status}
-              onChange={(e) => setFilters({...filters, status: e.target.value})}
+              onChange={e => setFilters({ ...filters, status: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="completed">مكتمل</option>
@@ -196,9 +204,9 @@ function FinanceManagement() {
 
           <div className="filter-group">
             <label>الفترة الزمنية:</label>
-            <select 
+            <select
               value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+              onChange={e => setFilters({ ...filters, dateRange: e.target.value })}
             >
               <option value="all">الكل</option>
               <option value="today">اليوم</option>
@@ -239,4 +247,4 @@ function FinanceManagement() {
   );
 }
 
-export default FinanceManagement; 
+export default FinanceManagement;

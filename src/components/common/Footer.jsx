@@ -17,10 +17,18 @@ function Footer() {
         <div className="footer-section">
           <h3>روابط سريعة</h3>
           <ul>
-            <li><Link to="/courses">الدورات</Link></li>
-            <li><Link to="/teachers">المعلمين</Link></li>
-            <li><Link to="/about">عن الموقع</Link></li>
-            <li><Link to="/contact">اتصل بنا</Link></li>
+            <li>
+              <Link to="/courses">الدورات</Link>
+            </li>
+            <li>
+              <Link to="/teachers">المعلمين</Link>
+            </li>
+            <li>
+              <Link to="/about">عن الموقع</Link>
+            </li>
+            <li>
+              <Link to="/contact">اتصل بنا</Link>
+            </li>
           </ul>
         </div>
 
@@ -36,10 +44,18 @@ function Footer() {
         <div className="footer-section">
           <h3>تابعنا</h3>
           <div className="social-links">
-            <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              Facebook
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              Twitter
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              Instagram
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
@@ -51,4 +67,4 @@ function Footer() {
   );
 }
 
-export default Footer; 
+export default Footer;

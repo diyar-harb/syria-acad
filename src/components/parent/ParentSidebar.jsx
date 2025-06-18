@@ -10,38 +10,38 @@ function ParentSidebar() {
     {
       title: 'لوحة التحكم',
       path: '/parent/dashboard',
-      icon: 'fas fa-tachometer-alt'
+      icon: 'fas fa-tachometer-alt',
     },
     {
       title: 'الأداء الأكاديمي',
       path: '/parent/performance',
-      icon: 'fas fa-chart-line'
+      icon: 'fas fa-chart-line',
     },
     {
       title: 'السلوك والمشاركة',
       path: '/parent/behavior',
-      icon: 'fas fa-users'
+      icon: 'fas fa-users',
     },
     {
       title: 'المراسلات',
       path: '/parent/messages',
-      icon: 'fas fa-envelope'
+      icon: 'fas fa-envelope',
     },
     {
       title: 'التقارير',
       path: '/parent/reports',
-      icon: 'fas fa-file-alt'
+      icon: 'fas fa-file-alt',
     },
     {
       title: 'الدفع والمشتريات',
       path: '/parent/payments',
-      icon: 'fas fa-money-bill-wave'
+      icon: 'fas fa-money-bill-wave',
     },
     {
       title: 'الإعدادات',
       path: '/parent/settings',
-      icon: 'fas fa-cog'
-    }
+      icon: 'fas fa-cog',
+    },
   ];
 
   return (
@@ -50,13 +50,11 @@ function ParentSidebar() {
         <h2>ولي الأمر</h2>
       </div>
       <nav className="sidebar-nav">
-        {menuItems.map((item) => (
+        {menuItems.map(item => (
           <NavLink
             key={item.path}
             to={item.path}
-            className={({ isActive }) => 
-              `nav-item ${isActive ? 'active' : ''}`
-            }
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
           >
             <i className={item.icon} />
             <span>{item.title}</span>
@@ -82,4 +80,4 @@ function ParentSidebar() {
   );
 }
 
-export default ParentSidebar; 
+export default ParentSidebar;

@@ -25,9 +25,9 @@ function ParentDashboard() {
             subjects: [
               { name: 'الرياضيات', grade: 90, trend: 'up' },
               { name: 'العلوم', grade: 85, trend: 'stable' },
-              { name: 'اللغة العربية', grade: 80, trend: 'down' }
-            ]
-          }
+              { name: 'اللغة العربية', grade: 80, trend: 'down' },
+            ],
+          },
         ];
         setStudents(mockStudents);
         setLoading(false);
@@ -44,29 +44,29 @@ function ParentDashboard() {
     overview: [
       { key: 'name', label: 'اسم الطالب' },
       { key: 'grade', label: 'الصف' },
-      { 
-        key: 'attendance', 
+      {
+        key: 'attendance',
         label: 'معدل الحضور',
-        render: (item) => `${item.attendance}%`
+        render: item => `${item.attendance}%`,
       },
-      { 
-        key: 'average', 
+      {
+        key: 'average',
         label: 'المتوسط العام',
-        render: (item) => `${item.average}%`
+        render: item => `${item.average}%`,
       },
       {
         key: 'actions',
         label: 'الإجراءات',
-        render: (item) => (
+        render: item => (
           <div className="actions">
-            <button 
+            <button
               className="action-button view"
               title="عرض التفاصيل"
               onClick={() => handleViewDetails(item.id)}
             >
               <i className="fas fa-eye" />
             </button>
-            <button 
+            <button
               className="action-button message"
               title="مراسلة المدرسين"
               onClick={() => handleMessageTeachers(item.id)}
@@ -80,25 +80,25 @@ function ParentDashboard() {
     performance: [
       { key: 'subject', label: 'المادة' },
       { key: 'grade', label: 'الدرجة' },
-      { 
-        key: 'trend', 
+      {
+        key: 'trend',
         label: 'التوجه',
-        render: (item) => (
+        render: item => (
           <span className={`trend ${item.trend}`}>
             {item.trend === 'up' ? '↑' : item.trend === 'down' ? '↓' : '→'}
           </span>
-        )
+        ),
       },
-      { key: 'comments', label: 'ملاحظات المدرس' }
-    ]
+      { key: 'comments', label: 'ملاحظات المدرس' },
+    ],
   };
 
-  const handleViewDetails = (studentId) => {
+  const handleViewDetails = studentId => {
     // معالجة عرض تفاصيل الطالب
     console.log('View student details:', studentId);
   };
 
-  const handleMessageTeachers = (studentId) => {
+  const handleMessageTeachers = studentId => {
     // معالجة مراسلة المدرسين
     console.log('Message teachers for student:', studentId);
   };
@@ -117,25 +117,25 @@ function ParentDashboard() {
         </div>
 
         <div className="dashboard-tabs">
-          <button 
+          <button
             className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
             نظرة عامة
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'performance' ? 'active' : ''}`}
             onClick={() => setActiveTab('performance')}
           >
             الأداء الأكاديمي
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'behavior' ? 'active' : ''}`}
             onClick={() => setActiveTab('behavior')}
           >
             السلوك والمشاركة
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'messages' ? 'active' : ''}`}
             onClick={() => setActiveTab('messages')}
           >
@@ -198,4 +198,4 @@ function ParentDashboard() {
   );
 }
 
-export default ParentDashboard; 
+export default ParentDashboard;

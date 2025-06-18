@@ -8,14 +8,14 @@ const ExamsList = () => {
   const subjects = [...new Set(exams.map(exam => exam.subject))];
 
   return (
-    <motion.div 
+    <motion.div
       className="exams-list"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <h1>الاختبارات المتاحة</h1>
-      
+
       {subjects.map(subject => (
         <div key={subject} className="subject-section">
           <h2>{subject}</h2>
@@ -23,16 +23,18 @@ const ExamsList = () => {
             {exams
               .filter(exam => exam.subject === subject)
               .map(exam => (
-                <motion.div 
-                  key={exam.id}
-                  className="exam-card"
-                  whileHover={{ scale: 1.02 }}
-                >
+                <motion.div key={exam.id} className="exam-card" whileHover={{ scale: 1.02 }}>
                   <h3>{exam.title}</h3>
                   <div className="exam-info">
-                    <p><strong>المدة:</strong> {exam.duration} دقيقة</p>
-                    <p><strong>عدد الأسئلة:</strong> {exam.questions.length}</p>
-                    <p><strong>درجة النجاح:</strong> {exam.passingGrade}%</p>
+                    <p>
+                      <strong>المدة:</strong> {exam.duration} دقيقة
+                    </p>
+                    <p>
+                      <strong>عدد الأسئلة:</strong> {exam.questions.length}
+                    </p>
+                    <p>
+                      <strong>درجة النجاح:</strong> {exam.passingGrade}%
+                    </p>
                   </div>
                   <div className="exam-description">
                     <p>{exam.description}</p>
@@ -49,4 +51,4 @@ const ExamsList = () => {
   );
 };
 
-export default ExamsList; 
+export default ExamsList;
